@@ -1,6 +1,7 @@
 package com.vielheit.core.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name ="\"User\"", schema = "vielheit")
@@ -11,15 +12,19 @@ public class User {
     private Long id;
 
     @Column(name = "active", nullable = false)
+    @NotNull
     private Boolean active;
 
     @Column(name = "first_name", nullable = false)
+    @NotNull
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
+    @NotNull
     private String lastName;
 
     @Column(name = "email_address", nullable = false)
+    @NotNull
     private String emailAddress;
 
     public Long getId() {
