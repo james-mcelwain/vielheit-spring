@@ -12,7 +12,7 @@ import java.util.Optional;
 public class UserService extends AbstractService {
    private UserRepository userRepository;
 
-    @g sInject
+    @Inject
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

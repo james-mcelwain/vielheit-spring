@@ -52,11 +52,11 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
         LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
         
-        if (StringUtils.isBlank(loginRequest.getUsername()) || StringUtils.isBlank(loginRequest.getPassword())) {
+        if (StringUtils.isBlank(loginRequest.getEmailAddress()) || StringUtils.isBlank(loginRequest.getPassword())) {
             throw new AuthenticationServiceException("Username or Password not provided");
         }
 
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmailAddress(), loginRequest.getPassword());
 
         return this.getAuthenticationManager().authenticate(token);
     }
