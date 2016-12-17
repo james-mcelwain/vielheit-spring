@@ -24,6 +24,9 @@ public class User {
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
+    @Column(name = "password")
+    private String password;
+
     @OneToMany
     @JoinColumn(name = "userId")
     private List<UserRole> roles;
@@ -66,6 +69,14 @@ public class User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public List<UserRole> getRoles() {
