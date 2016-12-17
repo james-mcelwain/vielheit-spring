@@ -27,6 +27,10 @@ public class User {
     @NotNull
     private String emailAddress;
 
+    @Column(name = "role", nullable = false)
+    @NotNull
+    private String role;
+
     public Long getId() {
         return id;
     }
@@ -65,6 +69,14 @@ public class User {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
