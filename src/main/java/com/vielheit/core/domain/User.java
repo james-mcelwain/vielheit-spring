@@ -2,6 +2,7 @@ package com.vielheit.core.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name ="\"User\"", schema = "vielheit")
@@ -12,24 +13,20 @@ public class User {
     private Long id;
 
     @Column(name = "active", nullable = false)
-    @NotNull
     private Boolean active;
 
     @Column(name = "first_name", nullable = false)
-    @NotNull
     private String firstName;
 
     @Column(name = "last_name", nullable = false)
-    @NotNull
     private String lastName;
 
-    @Column(name = "email_address", nullable = false)
-    @NotNull
+    @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
-    @Column(name = "role", nullable = false)
-    @NotNull
-    private String role;
+    @OneToMany
+    @JoinColumn(name = "userId")
+    private List<UserRole> roles;
 
     public Long getId() {
         return id;
@@ -71,12 +68,12 @@ public class User {
         this.emailAddress = emailAddress;
     }
 
-    public String getRole() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
     @Override
