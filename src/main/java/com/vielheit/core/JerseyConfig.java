@@ -1,4 +1,4 @@
-package config;
+package com.vielheit.core;
 
 
 import com.vielheit.core.controller.Home;

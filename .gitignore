@@ -132,7 +132,7 @@ dist/
 # Flycheck
 flycheck_*.el
 
-# server com.vielheit.core.auth directory
+# server auth directory
 /server/
 
 # projectiles files
