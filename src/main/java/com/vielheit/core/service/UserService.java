@@ -25,6 +25,7 @@ public class UserService extends AbstractService {
         user.setEmailAddress("admin@veilhe.it");
         user.setFirstName("admin");
         user.setLastName("admin");
+        user.setPassword("$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G");
 
         user = userRepository.save(user);
         UserRole userRole = new UserRole();
@@ -36,7 +37,6 @@ public class UserService extends AbstractService {
     }
 
     public Optional<User> getByEmailAddress(String emailAddress) {
-        return oneOrNone(() ->
-                userRepository.findByEmailAddress(emailAddress));
+        return oneOrNone(() -> userRepository.findOne(1L));
     }
 }

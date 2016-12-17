@@ -1,6 +1,9 @@
 package com.vielheit.core.domain;
 
+import org.springframework.data.repository.cdi.Eager;
+
 import javax.persistence.*;
+import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -27,7 +30,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private List<UserRole> roles;
 

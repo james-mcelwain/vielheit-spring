@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "vielheit.security.jwt")
 public class JwtSettings {
-    private Integer tokenExpirationTime;
+    private Integer tokenExpirationTime = 60;
 
-    private String tokenIssuer;
+    private String tokenIssuer = "vielheit";
     
-    private Integer refreshTokenExpTime;
+    private Integer refreshTokenExpTime = 15;
     
     public Integer getRefreshTokenExpTime() {
         return refreshTokenExpTime;
