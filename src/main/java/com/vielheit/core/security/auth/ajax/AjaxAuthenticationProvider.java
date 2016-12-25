@@ -3,6 +3,7 @@ package com.vielheit.core.security.auth.ajax;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.security.model.UserContext;
 import com.vielheit.core.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private final BCryptPasswordEncoder encoder;
     private final UserService userService;
+    private final Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
 
     @Inject
     public AjaxAuthenticationProvider(final UserService userService, final BCryptPasswordEncoder encoder) {
@@ -37,6 +39,8 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
         String emailAddress = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
+
+        log.info("Attempting to authenticate " + emailAddress);
 
         User user = userService.getByEmailAddress(emailAddress).orElseThrow(() -> new UsernameNotFoundException("User not found: " + emailAddress));
 

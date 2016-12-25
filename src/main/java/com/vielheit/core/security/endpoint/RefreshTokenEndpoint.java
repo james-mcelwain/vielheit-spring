@@ -12,6 +12,7 @@ import com.vielheit.core.security.model.token.JwtToken;
 import com.vielheit.core.security.model.token.JwtTokenFactory;
 import com.vielheit.core.security.model.token.RawAccessJwtToken;
 import com.vielheit.core.security.model.token.RefreshToken;
+import com.vielheit.core.service.UserService;
 import com.vielheit.core.utility.KeyReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,12 +29,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 public class RefreshTokenEndpoint {
     @Autowired private JwtTokenFactory tokenFactory;
-    @Autowired private UserRepository userRepository;
+    @Autowired private UserService userService;
     @Autowired private TokenVerifier tokenVerifier;
     @Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
 
@@ -50,17 +52,17 @@ public class RefreshTokenEndpoint {
         }
 
         String subject = refreshToken.getSubject();
-        User user = userRepository.findByEmailAddress(subject);
-        if (user == null) {
+        Optional<User> user = userService.getByEmailAddress(subject);
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("User not foud" + subject);
         }
 
-        if (user.getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+        if (user.get().getRoles() == null) throw new InsufficientAuthenticationException("User has no roles assigned");
+        List<GrantedAuthority> authorities = user.get().getRoles().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
 
-        UserContext userContext = UserContext.create(user.getEmailAddress(), authorities);
+        UserContext userContext = UserContext.create(user.get().getEmailAddress(), authorities);
 
         return tokenFactory.createAccessJwtToken(userContext);
     }

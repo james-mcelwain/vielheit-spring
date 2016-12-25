@@ -5,7 +5,6 @@ import com.vielheit.core.domain.User;
 import com.vielheit.core.domain.UserRole;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.repository.UserRoleRepository;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -22,7 +21,7 @@ public class UserService extends AbstractService {
 
         User user = new User();
         user.setActive(true);
-        user.setEmailAddress("admin@veilhe.it");
+        user.setEmailAddress("admin@vielhe.it");
         user.setFirstName("admin");
         user.setLastName("admin");
         user.setPassword("$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G");
@@ -37,6 +36,8 @@ public class UserService extends AbstractService {
     }
 
     public Optional<User> getByEmailAddress(String emailAddress) {
-        return oneOrNone(() -> userRepository.findOne(1L));
+        return userRepository.findByEmailAddress(emailAddress)
+                .stream()
+                .findFirst();
     }
 }
