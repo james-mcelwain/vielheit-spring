@@ -1,10 +1,8 @@
 package com.vielheit.core.security.endpoint;
 
 import com.vielheit.core.domain.User;
-import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.security.auth.jwt.extractor.TokenExtractor;
 import com.vielheit.core.security.auth.jwt.verifier.TokenVerifier;
-import com.vielheit.core.security.config.JwtSettings;
 import com.vielheit.core.security.config.WebSecurityConfig;
 import com.vielheit.core.security.exceptions.InvalidJwtToken;
 import com.vielheit.core.security.model.UserContext;
