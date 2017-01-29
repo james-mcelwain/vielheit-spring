@@ -35,6 +35,10 @@ public class UserService extends AbstractService {
         userRepository.save(user);
     }
 
+    public Optional<User> getById(Long id) {
+        return Optional.ofNullable(userRepository.findOne(id));
+    }
+
     public Optional<User> getByEmailAddress(String emailAddress) {
         return userRepository.findByEmailAddress(emailAddress)
                 .stream()
