@@ -1,12 +1,14 @@
 package com.vielheit.core.security.auth.ajax;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.vielheit.core.security.exceptions.AuthMethodNotSupportedException;
 import com.vielheit.core.utility.WebUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationServiceExceptio
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -31,9 +34,9 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     private final AuthenticationFailureHandler failureHandler;
 
     private final ObjectMapper objectMapper;
-    
-    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler, 
-            AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
+
+    public AjaxLoginProcessingFilter(String defaultProcessUrl, AuthenticationSuccessHandler successHandler,
+                                     AuthenticationFailureHandler failureHandler, ObjectMapper mapper) {
         super(defaultProcessUrl);
         this.successHandler = successHandler;
         this.failureHandler = failureHandler;
@@ -48,26 +51,33 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
             throw new AuthMethodNotSupportedException("Authentication method not supported");
         }
 
-        LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-       
-        if (StringUtils.isBlank(loginRequest.getEmailAddress()) || StringUtils.isBlank(loginRequest.getPassword())) {
-            throw new AuthenticationServiceException("Username or Password not provided");
+        try {
+            LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
+
+
+            if (StringUtils.isBlank(loginRequest.getEmailAddress()) || StringUtils.isBlank(loginRequest.getPassword())) {
+                throw new AuthenticationServiceException("Username or Password not provided");
+            }
+
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmailAddress(), loginRequest.getPassword());
+
+            return this.getAuthenticationManager().authenticate(token);
+        } catch (JsonMappingException jmex) {
+            logger.error("Malformed login request " + jmex);
         }
-
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getEmailAddress(), loginRequest.getPassword());
-
-        return this.getAuthenticationManager().authenticate(token);
+        response.setStatus(401);
+        return null;
     }
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-            Authentication authResult) throws IOException, ServletException {
+                                            Authentication authResult) throws IOException, ServletException {
         successHandler.onAuthenticationSuccess(request, response, authResult);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
-            AuthenticationException failed) throws IOException, ServletException {
+                                              AuthenticationException failed) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
         failureHandler.onAuthenticationFailure(request, response, failed);
     }
