@@ -23,6 +23,24 @@ public class UserRole {
             this.userId = userId;
             this.role = role;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Id id = (Id) o;
+
+            if (!userId.equals(id.userId)) return false;
+            return role == id.role;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = userId.hashCode();
+            result = 31 * result + role.hashCode();
+            return result;
+        }
     }
 
     @EmbeddedId

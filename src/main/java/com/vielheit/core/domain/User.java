@@ -18,19 +18,19 @@ public class User {
     @Column(name = "active", nullable = false)
     private Boolean active;
 
-    @NotNull
+    @NotNull(message="{firstName.notnull}")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotNull
+    @NotNull(message="{lastName.notnull}")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull
+    @NotNull(message="{emailAddress.notnull}")
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
-    @NotNull
+    @NotNull(message="{password.notnull}")
     @Column(name = "password")
     private String password;
 

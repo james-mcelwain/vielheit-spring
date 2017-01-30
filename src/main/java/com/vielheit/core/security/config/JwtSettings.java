@@ -1,16 +1,17 @@
 package com.vielheit.core.security.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "vielheit.security.jwt")
+@ConfigurationProperties(prefix = "jwt")
 public class JwtSettings {
-    private Integer tokenExpirationTime = 60;
+    private Integer tokenExpirationTime;
 
-    private String tokenIssuer = "vielheit";
+    private String tokenIssuer;
     
-    private Integer refreshTokenExpTime = 15;
+    private Integer refreshTokenExpTime;
     
     public Integer getRefreshTokenExpTime() {
         return refreshTokenExpTime;
