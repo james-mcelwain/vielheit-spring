@@ -20,21 +20,6 @@ public class UserService extends AbstractService {
     public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
-
-        User user = new User();
-        user.setActive(true);
-        user.setEmailAddress("admin@vielhe.it");
-        user.setFirstName("admin");
-        user.setLastName("admin");
-        user.setPassword("$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G");
-
-        user = userRepository.save(user);
-        UserRole userRole = new UserRole();
-        userRole.setRole(Role.ADMIN);
-        userRole.setId(new UserRole.Id(user.getId(), Role.ADMIN));
-        userRoleRepository.save(userRole);
-        user.setRoles(Collections.singletonList(userRole));
-        userRepository.save(user);
     }
 
     public Optional<User> getById(Long id) {
