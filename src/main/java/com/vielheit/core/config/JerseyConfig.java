@@ -1,6 +1,7 @@
 package com.vielheit.core.config;
 
 
+import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
 import com.vielheit.core.security.controller.TokenController;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -15,5 +16,6 @@ public class JerseyConfig extends ResourceConfig {
     private void registerEndpoints() {
         register(TokenController.class);
         register(UserController.class);
+        register(RegisterController.class);
     }
 }

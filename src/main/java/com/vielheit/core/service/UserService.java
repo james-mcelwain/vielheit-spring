@@ -14,10 +14,12 @@ import java.util.Optional;
 @Component
 public class UserService extends AbstractService {
    private UserRepository userRepository;
+   private UserRoleRepository userRoleRepository;
 
     @Inject
     public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
 
         User user = new User();
         user.setActive(true);
@@ -37,6 +39,18 @@ public class UserService extends AbstractService {
 
     public Optional<User> getById(Long id) {
         return Optional.ofNullable(userRepository.findOne(id));
+    }
+
+    public boolean saveUser(User user) {
+        user = userRepository.save(user);
+        UserRole userRole = new UserRole();
+        userRole.setRole(Role.USER);
+        userRole.setId(new UserRole.Id(user.getId(), Role.USER));
+        userRoleRepository.save(userRole);
+        user.setRoles(Collections.singletonList(userRole));
+        userRepository.save(user);
+
+        return true;
     }
 
     public Optional<User> getByEmailAddress(String emailAddress) {
