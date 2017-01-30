@@ -18,15 +18,19 @@ public class User {
     @Column(name = "active", nullable = false)
     private Boolean active;
 
+    @NotNull
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
+    @NotNull
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @NotNull
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
+    @NotNull
     @Column(name = "password")
     private String password;
 
