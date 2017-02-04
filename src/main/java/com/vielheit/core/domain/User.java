@@ -8,7 +8,7 @@ import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Entity
+@Entity()
 @Table(name ="\"User\"", schema = "vielheit")
 public class User {
     @Id

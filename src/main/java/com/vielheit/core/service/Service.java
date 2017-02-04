@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface Service extends Loggable {
-    default public <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier   ) {
+    default <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier) {
         try {
             List<T> t = supplier.get();
             if (t == null) {
@@ -23,5 +23,14 @@ public interface Service extends Loggable {
         }
 
         return Optional.empty();
+    }
+
+    default <T> Optional<List<T>> any(final Supplier<List<T>> supplier) {
+        List<T> t = supplier.get();
+        if (t == null) {
+            return Optional.empty();
+        }
+
+        return Optional.of(t);
     }
 }

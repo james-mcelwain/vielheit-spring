@@ -1,2 +1,2 @@
-INSERT INTO vielheit."user"(first_name, last_name, email_address, password, active) VALUES ('admin', 'admin','admin@vielhe.it','$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G', TRUE);
-INSERT INTO vielheit.user_role (role, user_id) VALUES ('ADMIN', 1);
+INSERT INTO vielheit."User"(first_name, last_name, email_address, password, active) VALUES ('admin', 'admin','admin@vielhe.it','$2a$10$bnC26zz//2cavYoSCrlHdecWF8tkGfPodlHcYwlACBBwJvcEf0p2G', TRUE);
+INSERT INTO vielheit.UserRole (role, userId) VALUES ('ADMIN', 1);

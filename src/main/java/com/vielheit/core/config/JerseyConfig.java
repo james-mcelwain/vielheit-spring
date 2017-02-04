@@ -1,6 +1,7 @@
 package com.vielheit.core.config;
 
 
+import com.vielheit.app.controller.EntryController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
 import com.vielheit.core.security.controller.TokenController;
@@ -18,5 +19,8 @@ public class JerseyConfig extends ResourceConfig {
         register(TokenController.class);
         register(UserController.class);
         register(RegisterController.class);
+
+        // APP
+        register(EntryController.class);
     }
 }
