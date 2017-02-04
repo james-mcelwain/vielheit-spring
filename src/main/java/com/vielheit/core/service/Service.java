@@ -1,16 +1,14 @@
 package com.vielheit.core.service;
 
-import com.vielheit.core.utility.Retriever;
-import org.apache.log4j.Logger;
-
 import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 public interface Service extends Loggable {
-    default public <T> Optional<T> oneOrNone(final Retriever<List<T>> retriever) {
+    default public <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier   ) {
         try {
-            List<T> t = retriever.retrieve();
+            List<T> t = supplier.get();
             if (t == null) {
                 throw new NoResultException("Entity not found");
             }

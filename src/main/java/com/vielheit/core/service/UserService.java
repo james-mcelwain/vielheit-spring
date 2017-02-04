@@ -1,22 +1,16 @@
 package com.vielheit.core.service;
 
-import com.sun.org.apache.bcel.internal.generic.RET;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.domain.UserRole;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.repository.UserRoleRepository;
-import com.vielheit.core.utility.Retriever;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
-import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Component
 @Transactional
@@ -45,17 +39,7 @@ public class UserService implements Service {
         return userRepository.save(user);
     }
 
-    private <T> Retriever retrieverFactory(Supplier<List<T>> supplier) throws PersistenceException {
-        return new Retriever() {
-            @Override
-            public List<T> retrieve() throws NoResultException {
-                return supplier.get();
-            }
-        };
-
-    }
-
     public Optional<User> getByEmailAddress(String emailAddress) {
-        return oneOrNone(this.retrieverFactory((() -> userRepository.findByEmailAddress(emailAddress))));
+        return oneOrNone(() -> userRepository.findByEmailAddress(emailAddress));
     }
 }
