@@ -1,5 +1,7 @@
 package com.vielheit.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -44,6 +46,7 @@ public class UserRole {
     }
 
     @EmbeddedId
+    @JsonIgnore
     Id id = new Id();
 
     @Enumerated(EnumType.STRING)

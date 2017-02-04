@@ -1,5 +1,6 @@
 package com.vielheit.core.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class User {
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
+    @JsonIgnore
     @NotNull(message="{password.notnull}")
     @Column(name = "password")
     private String password;

@@ -13,19 +13,20 @@ import java.util.Optional;
 
 @Controller
 @Path("/api/users")
-public class UserController {
+public class UserController implements OptionalResponse {
     @Autowired UserService userService;
 
     @GET
     @Path("{id}")
     public Response getUserById(@PathParam("id") Long id) {
-        Optional<User> user = userService.getById(id);
+        return okIfPresent(userService.getById(id));
+    }
 
-        if (user.isPresent()) {
-            return Response.ok(user.get()).build();
-        }
 
-        return Response.status(Response.Status.NOT_FOUND).build();
+    @GET
+    @Path("email/{email}")
+    public Response getUserByEmail(@PathParam("email") String email) {
+        return okIfPresent(userService.getByEmailAddress(email));
     }
 
 }

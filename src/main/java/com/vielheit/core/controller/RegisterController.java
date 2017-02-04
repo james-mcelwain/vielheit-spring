@@ -17,8 +17,8 @@ public class RegisterController{
 
     @POST
     public Response registerUser(@Valid User user) {
+        User registeredUser = userService.saveUser(user);
 
-        System.out.println(user);
-        return Response.ok().build();
+        return Response.ok().entity(registeredUser).build();
     }
 }
