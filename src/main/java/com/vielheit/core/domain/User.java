@@ -1,10 +1,8 @@
 package com.vielheit.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.repository.cdi.Eager;
 
 import javax.persistence.*;
-import javax.persistence.criteria.Fetch;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 

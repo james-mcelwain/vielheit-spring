@@ -30,13 +30,13 @@ public class UserService implements Service {
     }
 
     public User saveUser(User user) {
-        user = userRepository.save(user);
+        User createUser = userRepository.save(user);
         UserRole userRole = new UserRole();
         userRole.setRole(Role.USER);
-        userRole.setId(new UserRole.Id(user.getId(), Role.USER));
+        userRole.setId(new UserRole.Id(createUser.getId(), Role.USER));
         userRoleRepository.save(userRole);
         user.setRoles(Collections.singletonList(userRole));
-        return userRepository.save(user);
+        return userRepository.save(createUser);
     }
 
     public Optional<User> getByEmailAddress(String emailAddress) {

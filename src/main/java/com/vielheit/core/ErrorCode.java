@@ -7,15 +7,15 @@ public enum ErrorCode {
 
     AUTHENTICATION(10), JWT_TOKEN_EXPIRED(11);
 
-    private int errorCode;
+    private int code;
 
-    ErrorCode(int errorCode) {
-        this.errorCode = errorCode;
+    ErrorCode(int code) {
+        this.code = code;
     }
 
     @JsonValue
     public int getErrorCode() {
-        return errorCode;
+        return code;
     }
 }
 

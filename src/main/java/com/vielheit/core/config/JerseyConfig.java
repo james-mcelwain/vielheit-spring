@@ -4,7 +4,7 @@ package com.vielheit.core.config;
 import com.vielheit.app.controller.EntryController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
-import com.vielheit.core.security.controller.TokenController;
+import com.vielheit.security.controller.TokenController;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 

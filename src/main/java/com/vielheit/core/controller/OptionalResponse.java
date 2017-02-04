@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public interface OptionalResponse {
     default Response okIfPresent(Optional optional) {
-        if (optional != null && optional.isPresent()) {
+        if (optional.isPresent()) {
             return Response.ok(optional.get()).build();
         }
 

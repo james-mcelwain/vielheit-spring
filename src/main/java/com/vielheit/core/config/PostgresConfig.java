@@ -21,7 +21,7 @@ import java.util.Properties;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "entityManagerFactory",
+       entityManagerFactoryRef = "entityManagerFactory",
         basePackages = "com.vielheit.core.repository")
 public class PostgresConfig {
     @Primary
@@ -57,9 +57,8 @@ public class PostgresConfig {
     }
 
 
-    Properties additionalProperties() {
+    private Properties additionalProperties() {
         Properties properties = new Properties();
-//        "create-drop"
         properties.setProperty("hibernate.hbm2ddl.auto","create-drop" );
         return properties;
     }

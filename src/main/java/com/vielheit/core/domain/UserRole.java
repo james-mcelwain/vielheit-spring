@@ -19,7 +19,7 @@ public class UserRole {
         @Column(name = "role")
         protected Role role;
 
-        public Id() { }
+        private Id() { }
 
         public Id(Long userId, Role role) {
             this.userId = userId;
@@ -28,12 +28,16 @@ public class UserRole {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o)
+                return true;
+            if (o == null || getClass() != o.getClass())
+                return false;
 
             Id id = (Id) o;
 
-            if (!userId.equals(id.userId)) return false;
+            if (!userId.equals(id.userId))
+                return false;
+
             return role == id.role;
         }
 
