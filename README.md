@@ -2,5 +2,4 @@
      |/ _| |/  | |\ |/ _|   |
                  - SPRING -
 
-~Non-linear micro-blogging~                        
 
