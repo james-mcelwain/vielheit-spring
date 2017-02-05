@@ -1,0 +1,15 @@
+version: '2'
+services:
+  services:
+    image: jmcelwain/vielheit-services:latest
+    ports:
+      - "8080:8080"
+    command: ["./wait-for-it.sh", "172.17.0.1:5432", "-t", "20", "--", "java", "-jar", "app.jar"]
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: vielheit_development

@@ -1,9 +1,14 @@
 package com.vielheit.security.utility;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.File;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -22,10 +27,12 @@ public class KeyReader {
     private KeyReader() {
     }
 
-    public static PrivateKey readPrivateKey()  {
-        if (KeyReader.privateKey == null) {
-            try {
-                File privateKeyFile = new ClassPathResource("keys/vielheit.der").getFile();
+    public static PrivateKey readPrivateKey() {
+        if (privateKey == null) {
+            try(InputStream inputStream = new ClassPathResource("keys/vielheit.der").getInputStream()) {
+                File privateKeyFile = File.createTempFile("privateKey", ".der");
+                FileUtils.copyInputStreamToFile(inputStream, privateKeyFile);
+
                 byte[] keyBytes = Files.readAllBytes(privateKeyFile.toPath());
 
                 PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
@@ -34,29 +41,27 @@ public class KeyReader {
 
             } catch (Exception ex) {
                 log.fatal("Could not read private key into memory", ex);
-                System.exit(1);
             }
         }
-
         return privateKey;
     }
 
     public static PublicKey readPublicKey() {
-        if (KeyReader.publicKey == null) {
-            try {
-            File publicKeyFile = new ClassPathResource("keys/vielheit_pub.der").getFile();
-            byte[] keyBytes = Files.readAllBytes(publicKeyFile.toPath());
+        if (publicKey == null) {
+            try (InputStream inputStream = new ClassPathResource("keys/vielhet_pub.der").getInputStream()) {
+                File publicKeyFile = File.createTempFile("publicKey", ".der");
+                FileUtils.copyInputStreamToFile(inputStream, publicKeyFile);
 
-            X509EncodedKeySpec spec = new X509EncodedKeySpec(keyBytes);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            publicKey = (RSAPublicKey) keyFactory.generatePublic(spec);
+                byte[] keyBytes = Files.readAllBytes(publicKeyFile.toPath());
+
+                PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(keyBytes);
+                KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+                publicKey = (RSAPublicKey) keyFactory.generatePublic(spec);
+
             } catch (Exception ex) {
                 log.fatal("Could not read public key into memory", ex);
-                System.exit(1);
             }
-
         }
-
         return publicKey;
     }
 }
