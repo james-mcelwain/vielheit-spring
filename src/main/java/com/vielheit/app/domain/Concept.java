@@ -9,7 +9,7 @@ public class Concept {
     @GraphId
     private Long id;
 
-    @Relationship(value="OWNS", direction=Relationship.OUTGOING)
+    @Relationship(type="OWNS", direction=Relationship.OUTGOING)
     private Long userId;
 
     private String name;

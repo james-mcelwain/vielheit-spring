@@ -1,4 +1,4 @@
-package com.vielheit.core.utility;
+package com.vielheit.security.utility;
 
 import javax.servlet.http.HttpServletRequest;
 

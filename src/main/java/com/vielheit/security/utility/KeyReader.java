@@ -1,4 +1,4 @@
-package com.vielheit.core.utility;
+package com.vielheit.security.utility;
 
 import org.apache.log4j.Logger;
 import org.springframework.core.io.ClassPathResource;

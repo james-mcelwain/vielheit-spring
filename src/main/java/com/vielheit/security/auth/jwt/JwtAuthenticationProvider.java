@@ -3,7 +3,7 @@ package com.vielheit.security.auth.jwt;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import com.vielheit.security.model.UserContext;
 import com.vielheit.security.model.token.RawAccessJwtToken;
-import com.vielheit.core.utility.KeyReader;
+import com.vielheit.security.utility.KeyReader;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import org.springframework.security.authentication.AuthenticationProvider;

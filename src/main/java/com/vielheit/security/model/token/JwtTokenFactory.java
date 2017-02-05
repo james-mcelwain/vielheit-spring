@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 import com.vielheit.security.config.JwtSettings;
 import com.vielheit.security.model.Scopes;
 import com.vielheit.security.model.UserContext;
-import com.vielheit.core.utility.KeyReader;
+import com.vielheit.security.utility.KeyReader;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

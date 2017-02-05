@@ -11,7 +11,7 @@ import com.vielheit.security.model.token.JwtTokenFactory;
 import com.vielheit.security.model.token.RawAccessJwtToken;
 import com.vielheit.security.model.token.RefreshToken;
 import com.vielheit.core.service.UserService;
-import com.vielheit.core.utility.KeyReader;
+import com.vielheit.security.utility.KeyReader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
