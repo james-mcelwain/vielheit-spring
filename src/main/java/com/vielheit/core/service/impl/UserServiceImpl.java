@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public Optional<User> saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActive(true);
         getLogger().info("\n" + user.getPassword());
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
         userRole.setId(new UserRole.Id(user.getId(), Role.USER));
         userRoleRepository.save(userRole);
         user.setRoles(new ArrayList<>(Collections.singletonList(userRole)));
-        return userRepository.save(user);
+        return one(() -> userRepository.save(user));
     }
 
     @Override

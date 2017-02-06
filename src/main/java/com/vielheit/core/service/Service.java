@@ -26,11 +26,11 @@ public interface Service extends Loggable {
     }
 
     default <T> Optional<List<T>> any(final Supplier<List<T>> supplier) {
-        List<T> t = supplier.get();
-        if (t == null) {
-            return Optional.empty();
-        }
-
-        return Optional.of(t);
+        return Optional.ofNullable(supplier.get());
     }
+
+    default <T> Optional<T> one(final Supplier<T> supplier) {
+        return Optional.ofNullable(supplier.get());
+    }
+
 }
