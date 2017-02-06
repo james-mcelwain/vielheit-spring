@@ -27,21 +27,22 @@ public class UserServiceImpl implements UserService {
         this.userRoleRepository = userRoleRepository;
     }
 
+    @Override
     public Optional<User> getById(Long id) {
-        return Optional.ofNullable(userRepository.findOne(id));
+        return one(() -> userRepository.findOne(id));
     }
 
     @Override
     public Optional<User> saveUser(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActive(true);
-        getLogger().info("\n" + user.getPassword());
         userRepository.save(user);
-        getLogger().info("\n" + user.getId());
+
         UserRole userRole = new UserRole();
         userRole.setRole(Role.USER);
         userRole.setId(new UserRole.Id(user.getId(), Role.USER));
         userRoleRepository.save(userRole);
+
         user.setRoles(new ArrayList<>(Collections.singletonList(userRole)));
         return one(() -> userRepository.save(user));
     }
