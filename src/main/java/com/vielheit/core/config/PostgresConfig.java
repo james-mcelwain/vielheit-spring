@@ -18,7 +18,6 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
 @EnableJpaRepositories(
        entityManagerFactoryRef = "entityManagerFactory",
@@ -49,7 +48,7 @@ public class PostgresConfig {
     }
 
     @Primary
-    @Bean
+    @Bean(value="coreTransactionManager")
     public PlatformTransactionManager transactionManager(
             EntityManagerFactory entityManagerFactory
     ) {

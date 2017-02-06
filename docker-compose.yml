@@ -2,9 +2,11 @@ version: '2'
 services:
   services:
     image: jmcelwain/vielheit-services:latest
+    volumes:
+      - ./target/:/www/
     ports:
       - "8080:8080"
-    command: ["./wait-for-it.sh", "172.17.0.1:5432", "-t", "20", "--", "java", "-jar", "app.jar"]
+    command: ["./wait-for-it.sh", "172.17.0.1:5432", "172.17.0.1:7474", "-t", "20", "--", "java", "-jar", "./www/vielheit-services-0.0.1-SNAPSHOT.jar"]
   postgres:
     image: postgres:latest
     ports:
@@ -13,3 +15,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: vielheit_development
+  neo4j:
+    image: neo4j
+    ports:
+      - "7474:7474"
+    environment:
+      NEO4J_AUTH: neo4j/neo4jdev

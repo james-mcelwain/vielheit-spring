@@ -1,8 +1,9 @@
 package com.vielheit.security.auth.ajax;
 
 import com.vielheit.core.domain.User;
-import com.vielheit.security.model.UserContext;
 import com.vielheit.core.service.UserService;
+import com.vielheit.security.model.UserContext;
+import com.vielheit.core.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;

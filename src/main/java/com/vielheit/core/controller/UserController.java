@@ -12,7 +12,8 @@ import javax.ws.rs.core.Response;
 @Controller
 @Path("/api/users")
 public class UserController implements OptionalResponse {
-    @Autowired UserService userService;
+    @Autowired
+    UserService userService;
 
     @GET
     @Path("{id}")

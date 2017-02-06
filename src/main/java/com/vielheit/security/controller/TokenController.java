@@ -1,6 +1,7 @@
 package com.vielheit.security.controller;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.service.UserService;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import com.vielheit.security.auth.jwt.verifier.TokenVerifier;
 import com.vielheit.security.config.WebSecurityConfig;
@@ -10,7 +11,7 @@ import com.vielheit.security.model.token.JwtToken;
 import com.vielheit.security.model.token.JwtTokenFactory;
 import com.vielheit.security.model.token.RawAccessJwtToken;
 import com.vielheit.security.model.token.RefreshToken;
-import com.vielheit.core.service.UserService;
+import com.vielheit.core.service.impl.UserServiceImpl;
 import com.vielheit.security.utility.KeyReader;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

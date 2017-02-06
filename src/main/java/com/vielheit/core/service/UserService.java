@@ -1,45 +1,16 @@
 package com.vielheit.core.service;
 
-import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
-import com.vielheit.core.domain.UserRole;
-import com.vielheit.core.repository.UserRepository;
-import com.vielheit.core.repository.UserRoleRepository;
-import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.Optional;
 
-@Component
-@Transactional
-@SuppressWarnings("unchecked")
-public class UserService implements Service {
-   private UserRepository userRepository;
-   private UserRoleRepository userRoleRepository;
+public interface UserService extends Service {
 
-    @Inject
-    public UserService(UserRepository userRepository, UserRoleRepository userRoleRepository) {
-        this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
-    }
+    @Transactional("coreTransactionManager")
+    User saveUser(User user);
 
-    public Optional<User> getById(Long id) {
-        return Optional.ofNullable(userRepository.findOne(id));
-    }
+    Optional<User> getByEmailAddress(String email);
 
-    public User saveUser(User user) {
-        User createUser = userRepository.save(user);
-        UserRole userRole = new UserRole();
-        userRole.setRole(Role.USER);
-        userRole.setId(new UserRole.Id(createUser.getId(), Role.USER));
-        userRoleRepository.save(userRole);
-        user.setRoles(Collections.singletonList(userRole));
-        return userRepository.save(createUser);
-    }
-
-    public Optional<User> getByEmailAddress(String emailAddress) {
-        return oneOrNone(() -> userRepository.findByEmailAddress(emailAddress));
-    }
+    Optional<User> getById(Long id);
 }

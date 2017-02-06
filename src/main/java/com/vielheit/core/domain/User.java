@@ -1,6 +1,7 @@
 package com.vielheit.core.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -29,7 +30,7 @@ public class User {
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
-    @JsonIgnore
+    @JsonProperty(access =  JsonProperty.Access.WRITE_ONLY)
     @NotNull(message="{password.notnull}")
     @Column(name = "password")
     private String password;
