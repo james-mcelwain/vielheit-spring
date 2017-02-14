@@ -23,7 +23,7 @@ public class Neo4jConfig extends Neo4jConfiguration {
         return new SessionFactory("com.vielheit.app.domain");
     }
 
-    @Bean
+    @Bean(value="graphTransactionManager")
     @Override
     public Neo4jTransactionManager transactionManager() {
         return new Neo4jTransactionManager(getSessionFactory().openSession());

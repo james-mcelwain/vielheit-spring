@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserService extends Service {
 
-    @Transactional("coreTransactionManager")
+    @Transactional(value="coreTransactionManager", rollbackFor=Exception.class)
     Optional<User> saveUser(User user);
 
     Optional<User> getByEmailAddress(String email);
