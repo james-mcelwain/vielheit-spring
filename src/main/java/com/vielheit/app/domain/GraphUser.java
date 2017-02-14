@@ -1,5 +1,6 @@
 package com.vielheit.app.domain;
 
+import com.vielheit.core.domain.User;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -7,9 +8,11 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.List;
 
 @NodeEntity
-public class User {
+public class GraphUser {
     @GraphId
     private Long id;
+
+    private Long userId;
 
     @Relationship(type="OWNS", direction=Relationship.OUTGOING)
     private List<Entry> entries;
@@ -29,6 +32,14 @@ public class User {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<Entry> getEntries() {

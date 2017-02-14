@@ -1,5 +1,6 @@
 package com.vielheit.core.service.impl;
 
+import com.vielheit.app.service.GraphUserService;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.domain.UserRole;
@@ -15,16 +16,17 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Component
-@SuppressWarnings("unchecked")
 public class UserServiceImpl implements UserService {
    private UserRepository userRepository;
    private UserRoleRepository userRoleRepository;
+   private GraphUserService graphUserService;
    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, GraphUserService graphUserService) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
+        this.graphUserService = graphUserService;
     }
 
     @Override
@@ -42,8 +44,8 @@ public class UserServiceImpl implements UserService {
         userRole.setRole(Role.USER);
         userRole.setId(new UserRole.Id(user.getId(), Role.USER));
         userRoleRepository.save(userRole);
-
         user.setRoles(new ArrayList<>(Collections.singletonList(userRole)));
+        graphUserService.saveUser(user);
         return one(() -> userRepository.save(user));
     }
 

@@ -13,13 +13,12 @@ import javax.ws.rs.core.Response;
 
 @Controller
 @Path("/api/auth/register")
-public class RegisterController{
+public class RegisterController implements  OptionalResponse {
     @Autowired
     UserService userService;
 
     @POST
     public Response registerUser(@NotNull @Valid User user) {
-        User registeredUser = userService.saveUser(user);
-        return Response.ok().entity(registeredUser).build();
+        return okIfPresent(userService.saveUser(user));
     }
 }
