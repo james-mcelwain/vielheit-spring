@@ -9,6 +9,7 @@ import com.vielheit.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import com.vielheit.security.auth.jwt.SkipPathRequestMatcher;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +25,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,24 +44,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
     public static final String REGISTER_POINT = "/api/auth/register";
 
-    @Inject
+    @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    @Inject
+    @Autowired
     private AuthenticationSuccessHandler authenticationSuccessHandler;
-    @Inject
+    @Autowired
     private AuthenticationFailureHandler authenticationFailureHandler;
-    @Inject
+    @Autowired
     private AjaxAuthenticationProvider ajaxAuthenticationProvider;
-    @Inject
+    @Autowired
     private JwtAuthenticationProvider jwtAuthenticationProvider;
 
-    @Inject
+    @Autowired
     private TokenExtractor tokenExtractor;
 
-    @Inject
+    @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Inject
+    @Autowired
     private ObjectMapper objectMapper;
 
     @Bean

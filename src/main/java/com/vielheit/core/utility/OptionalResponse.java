@@ -1,4 +1,4 @@
-package com.vielheit.core.controller;
+package com.vielheit.core.utility;
 
 import javax.ws.rs.core.Response;
 import java.util.Optional;

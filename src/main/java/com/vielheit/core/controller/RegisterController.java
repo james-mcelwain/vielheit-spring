@@ -2,6 +2,7 @@ package com.vielheit.core.controller;
 
 import com.vielheit.core.domain.User;
 import com.vielheit.core.service.UserService;
+import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -13,7 +14,7 @@ import javax.ws.rs.core.Response;
 
 @Controller
 @Path("/api/auth/register")
-public class RegisterController implements  OptionalResponse {
+public class RegisterController implements OptionalResponse {
     @Autowired
     UserService userService;
 

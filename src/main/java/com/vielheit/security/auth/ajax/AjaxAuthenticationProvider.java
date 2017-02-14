@@ -3,8 +3,8 @@ package com.vielheit.security.auth.ajax;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
-import com.vielheit.core.service.impl.UserServiceImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -17,7 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private final UserService userService;
     private final Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
 
-    @Inject
+    @Autowired
     public AjaxAuthenticationProvider(final UserService userService, final BCryptPasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
