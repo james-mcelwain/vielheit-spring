@@ -48,7 +48,7 @@ public class PostgresConfig {
     }
 
     @Primary
-    @Bean(value="coreTransactionManager")
+    @Bean(name="coreTransactionManager")
     public PlatformTransactionManager transactionManager(
             EntityManagerFactory entityManagerFactory
     ) {

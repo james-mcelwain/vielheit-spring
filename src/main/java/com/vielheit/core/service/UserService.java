@@ -5,9 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Transactional
 public interface UserService extends Service {
 
-    @Transactional(value="coreTransactionManager", rollbackFor=Exception.class)
     Optional<User> saveUser(User user);
 
     Optional<User> getByEmailAddress(String email);
