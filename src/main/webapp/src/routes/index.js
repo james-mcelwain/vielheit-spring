@@ -13,6 +13,8 @@ export const createRoutes = (store) => ({
   onEnter: ({location}, replace) => {
     if (!loggedIn(location)) {
       replace('/login')
+    } else if (pubPaths.includes(location.pathname)) {
+      replace('/')
     }
   },
   component: CoreLayout,
