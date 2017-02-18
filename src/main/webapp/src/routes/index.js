@@ -13,7 +13,7 @@ export const createRoutes = (store) => ({
   onEnter: ({location}, replace) => {
     if (!loggedIn(location)) {
       replace('/login')
-    } else if (pubPaths.includes(location.pathname)) {
+    } else if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
       replace('/')
     }
   },
