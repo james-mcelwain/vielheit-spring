@@ -2,26 +2,25 @@ package com.vielheit.security.model;
 
 import java.util.List;
 
-import com.vielheit.core.domain.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.core.GrantedAuthority;
 
 public class UserContext {
-    private User user;
+    private final String emailAddress;
     private final List<GrantedAuthority> authorities;
 
-    private UserContext(User user, List<GrantedAuthority> authorities) {
-        this.user = user;
+    private UserContext(String emailAddress, List<GrantedAuthority> authorities) {
+        this.emailAddress = emailAddress;
         this.authorities = authorities;
     }
     
-    public static UserContext create(User user, List<GrantedAuthority> authorities) {
-        if (user == null) throw new IllegalArgumentException();
-        return new UserContext(user, authorities);
+    public static UserContext create(String emailAddress, List<GrantedAuthority> authorities) {
+        if (StringUtils.isBlank(emailAddress)) throw new IllegalArgumentException("EmailAddress is blank: " + emailAddress);
+        return new UserContext(emailAddress, authorities);
     }
 
-    public User getUser() {
-        return user;
+    public String getEmailAddress() {
+        return emailAddress;
     }
 
     public List<GrantedAuthority> getAuthorities() {
