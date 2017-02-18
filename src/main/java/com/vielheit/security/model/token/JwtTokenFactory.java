@@ -31,13 +31,13 @@ public class JwtTokenFactory {
     }
 
     public AccessJwtToken createAccessJwtToken(UserContext userContext) {
-        if (StringUtils.isBlank(userContext.getEmailAddress()))
+        if (StringUtils.isBlank(userContext.getUser().getEmailAddress()))
             throw new IllegalArgumentException("Cannot create JWT Token without username");
 
         if (userContext.getAuthorities() == null || userContext.getAuthorities().isEmpty()) 
             throw new IllegalArgumentException("User doesn't have any privileges");
 
-        Claims claims = Jwts.claims().setSubject(userContext.getEmailAddress());
+        Claims claims = Jwts.claims().setSubject(userContext.getUser().getEmailAddress());
         claims.put("scopes", userContext.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
 
         String token = Jwts.builder()
@@ -52,14 +52,14 @@ public class JwtTokenFactory {
     }
 
     public JwtToken createRefreshToken(UserContext userContext) {
-        if (StringUtils.isBlank(userContext.getEmailAddress())) {
+        if (StringUtils.isBlank(userContext.getUser().getEmailAddress())) {
             throw new IllegalArgumentException("Cannot create JWT Token without username");
         }
 
         Date currentTime = Date.from(ZonedDateTime.now().toInstant());
         Date expirationTime = Date.from(ZonedDateTime.now().plusMinutes(settings.getRefreshTokenExpTime()).toInstant());
 
-        Claims claims = Jwts.claims().setSubject(userContext.getEmailAddress());
+        Claims claims = Jwts.claims().setSubject(userContext.getUser().getEmailAddress());
         claims.put("scopes", Collections.singletonList(Scopes.REFRESH_TOKEN.authority()));
         
         String token = Jwts.builder()

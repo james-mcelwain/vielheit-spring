@@ -61,7 +61,7 @@ public class TokenController {
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
 
-        UserContext userContext = UserContext.create(user.getEmailAddress(), authorities);
+        UserContext userContext = UserContext.create(user, authorities);
 
         return tokenFactory.createAccessJwtToken(userContext);
     }
