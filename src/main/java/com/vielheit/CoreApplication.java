@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.neo4j.transaction.Neo4jTransactionManager;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.data.transaction.ChainedTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 

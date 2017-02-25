@@ -33,10 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getById(Long id) {
-        getLogger().info(id);
-        Optional<User> user = one(() -> userRepository.findOne(id));
-        getLogger().info(user);
-        return user;
+        return one(() -> userRepository.findOne(id));
     }
 
     @Override
