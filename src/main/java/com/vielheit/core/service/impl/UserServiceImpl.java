@@ -8,6 +8,7 @@ import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.repository.UserRoleRepository;
 import com.vielheit.core.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.Collections;
 import java.util.Optional;
 
 @Component
+@Cacheable("users")
 public class UserServiceImpl implements UserService {
    private UserRepository userRepository;
    private UserRoleRepository userRoleRepository;
@@ -31,7 +33,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getById(Long id) {
-        return one(() -> userRepository.findOne(id));
+        getLogger().info(id);
+        Optional<User> user = one(() -> userRepository.findOne(id));
+        getLogger().info(user);
+        return user;
     }
 
     @Override

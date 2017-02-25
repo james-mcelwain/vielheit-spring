@@ -3,8 +3,6 @@ package com.vielheit.app.controller;
 import com.vielheit.app.domain.Entry;
 import com.vielheit.app.repository.EntryRepository;
 import com.vielheit.core.controller.ControllerContext;
-import com.vielheit.security.auth.JwtAuthenticationToken;
-import com.vielheit.security.model.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

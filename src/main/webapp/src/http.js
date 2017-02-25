@@ -3,7 +3,7 @@ import { browserHistory } from 'react-router'
 
 const http = axios.create({
   baseURL: 'http://localhost:8080/api/',
-  timeout: 1000,
+  timeout: 10000,
 })
 
 http.interceptors.request.use((config) => {
@@ -23,7 +23,7 @@ http.interceptors.response.use((response) => {
   return response
 }, (error) => {
 
-  if (error.response.status === 401) {
+  if (error.response && error.response.status === 401) {
     localStorage.clear()
     sessionStorage.clear()
     browserHistory.push('/login')

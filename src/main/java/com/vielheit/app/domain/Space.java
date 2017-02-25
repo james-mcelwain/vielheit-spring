@@ -1,6 +1,5 @@
 package com.vielheit.app.domain;
 
-
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;

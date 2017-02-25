@@ -1,5 +1,6 @@
 package com.vielheit.core.controller;
 
+import com.vielheit.core.service.Loggable;
 import com.vielheit.core.service.UserService;
 import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import javax.ws.rs.core.Response;
 @Path("/api/users")
 public class UserController implements OptionalResponse {
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GET
     @Path("{id}")
