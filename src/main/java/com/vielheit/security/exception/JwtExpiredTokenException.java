@@ -1,4 +1,4 @@
-package com.vielheit.security.exceptions;
+package com.vielheit.security.exception;
 
 import com.vielheit.security.model.token.JwtToken;
 import org.springframework.security.core.AuthenticationException;

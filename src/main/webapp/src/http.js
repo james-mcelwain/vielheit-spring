@@ -1,7 +1,7 @@
-import axios from 'axios'
+import { create } from 'axios'
 import { browserHistory } from 'react-router'
 
-const http = axios.create({
+const http = create({
   baseURL: 'http://localhost:8080/api/',
   timeout: 10000,
 })

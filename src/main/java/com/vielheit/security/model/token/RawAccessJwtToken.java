@@ -1,6 +1,6 @@
 package com.vielheit.security.model.token;
 
-import com.vielheit.security.exceptions.JwtExpiredTokenException;
+import com.vielheit.security.exception.JwtExpiredTokenException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;

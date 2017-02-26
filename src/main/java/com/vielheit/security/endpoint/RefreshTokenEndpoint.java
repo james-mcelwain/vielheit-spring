@@ -5,7 +5,7 @@ import com.vielheit.core.service.UserService;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import com.vielheit.security.auth.jwt.verifier.TokenVerifier;
 import com.vielheit.security.config.WebSecurityConfig;
-import com.vielheit.security.exceptions.InvalidJwtToken;
+import com.vielheit.security.exception.InvalidJwtToken;
 import com.vielheit.security.model.UserContext;
 import com.vielheit.security.model.token.JwtToken;
 import com.vielheit.security.model.token.JwtTokenFactory;

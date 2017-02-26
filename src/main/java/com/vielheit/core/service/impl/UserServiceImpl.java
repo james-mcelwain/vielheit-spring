@@ -12,6 +12,9 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.ws.rs.BadRequestException;
+import javax.ws.rs.core.Response;
+import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;
@@ -37,7 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> saveUser(User user) {
+    public Optional<User> saveUser(User user) throws BadRequestException {
+        if (!userRepository.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
+            throw new BadRequestException();
+        }
+
         user.setPassword(encoder.encode(user.getPassword()));
         user.setActive(true);
         userRepository.save(user);

@@ -1,4 +1,4 @@
-package com.vielheit.security.exceptions;
+package com.vielheit.security.exception;
 
 import org.springframework.security.authentication.AuthenticationServiceException;
 

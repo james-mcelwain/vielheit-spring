@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.vielheit.core.ErrorCode;
 import com.vielheit.core.ErrorResponse;
-import com.vielheit.security.exceptions.AuthMethodNotSupportedException;
-import com.vielheit.security.exceptions.JwtExpiredTokenException;
+import com.vielheit.security.exception.AuthMethodNotSupportedException;
+import com.vielheit.security.exception.JwtExpiredTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
