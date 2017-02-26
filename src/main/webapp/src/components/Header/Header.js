@@ -2,7 +2,7 @@ import React from 'react'
 import './Header.scss'
 
 function buildHeader() {
-  return new Array(Math.round(window.innerWidth / 8.3)).fill('/').join()
+  return new Array(Math.round(window.innerWidth / 8.3)).fill('/').join('.')
 }
 
 
