@@ -135,6 +135,7 @@ webpackConfig.module.loaders = [{
 // css-loader not to duplicate minimization.
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
 
+
 webpackConfig.module.loaders.push({
   test    : /\.scss$/,
   exclude : null,
@@ -158,6 +159,16 @@ webpackConfig.module.loaders.push({
 webpackConfig.sassLoader = {
   includePaths : project.paths.client('styles')
 }
+
+webpackConfig.module.loaders.push({
+  test    : /\.less$/,
+  exclude: null,
+  loaders : [
+    'style',
+    BASE_CSS_LOADER,
+    'less'
+  ]
+})
 
 webpackConfig.postcss = [
   cssnano({

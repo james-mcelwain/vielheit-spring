@@ -6,6 +6,14 @@ const webpackConfig = require('../config/webpack.config')
 const project = require('../config/project.config')
 const compress = require('compression')
 
+process.on('uncaughtException', (e) => {
+  console.log(1, e)
+})
+
+process.on('unhandledRejection', (e) => {
+  console.log(2, e)
+})
+
 const app = express()
 
 // Apply gzip compression
@@ -27,9 +35,8 @@ if (project.env === 'development') {
     lazy        : false,
     stats       : project.compiler_stats
   }))
-  app.use(require('webpack-hot-middleware')(compiler, {
-    path: '/__webpack_hmr'
-  }))
+
+
 
   // Serve static assets from ~/public since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside

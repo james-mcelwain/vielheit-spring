@@ -29,23 +29,23 @@ const LoginForm = Form.create()(React.createClass({
         <span>{error && <Alert message="Invalid email or password" type="error"/>}</span>
         <FormItem>
           {getFieldDecorator('emailAddress', {
-            rules: [{ required: true, message: 'Please input your email!' }],
+            rules: [{ required: true, message: 'required' }],
           })(
             <Input addonBefore={<Icon type="user" />} placeholder="Email" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password!' }],
+            rules: [{ required: true, message: 'required' }],
           })(
             <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
           )}
         </FormItem>
         <FormItem>
-          <Button style={{ background: 'black', border: 'black' }} disabled={loggingIn} type="primary" htmlType="submit" className="login-form-button">
+          <Button disabled={loggingIn} type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          <Link style={{ color: 'black' }} to="/register"><i>register</i></Link>
+          <Link to="/register"><i>register</i></Link>
         </FormItem>
       </Form>
     )
