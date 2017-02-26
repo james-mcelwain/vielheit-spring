@@ -42,11 +42,10 @@ const LoginForm = Form.create()(React.createClass({
           )}
         </FormItem>
         <FormItem>
-          <a className="login-form-forgot">Forgot password</a>
-          <Button disabled={loggingIn} type="primary" htmlType="submit" className="login-form-button">
+          <Button style={{ background: 'black', border: 'black' }} disabled={loggingIn} type="primary" htmlType="submit" className="login-form-button">
             Log in
           </Button>
-          Or <Link to="/register">register now!</Link>
+          <Link style={{ color: 'black' }} to="/register"><i>register</i></Link>
         </FormItem>
       </Form>
     )
