@@ -1,9 +1,14 @@
 .home-container {
   display: flex;
+  @media screen and (max-width: 600px) {
+    flex-direction: column;
+  }
 }
 
 .home-menu {
-
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 }
 
 .home-title {
@@ -14,5 +19,4 @@
   float: right;
   border-bottom: 1px dashed black;
 }
-
 

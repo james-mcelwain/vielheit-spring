@@ -2,13 +2,22 @@ import React from 'react'
 import './Header.scss'
 
 function buildHeader() {
-  return new Array(160).fill('/').join()
+  console.log('fire')
+  return new Array(Math.round(window.innerWidth / 8.3)).fill('/').join()
 }
 
+
 const Header = React.createClass({
+  componentDidMount() {
+    this.setState({title: buildHeader()})
+    window.addEventListener("resize", () => {
+      this.setState({title: buildHeader()})
+    })
+  },
   render() {
+    console.log(this)
     return (
-      <div className="header-menu">{buildHeader()}</div>
+      <div className="header-menu">{this.state && this.state.title}</div>
     )
   },
 })
