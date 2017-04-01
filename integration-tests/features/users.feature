@@ -21,7 +21,7 @@ Feature: Users IT
       "firstName": "admin",
       "lastName": "admin",
       "emailAddress": "admin@vielhe.it",
-      "roles": [ { "role": "ADMIN" } ] }
+      "roles": [ { "role": "ADMIN" }, { "role": "REFRESH_TOKEN" } ] }
     """
 
   Scenario: Register A User

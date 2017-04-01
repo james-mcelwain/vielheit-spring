@@ -45,7 +45,6 @@ defineSupportCode(({setWorldConstructor, When, Then, Before}) => {
 
 
   Then('the response is {status:int}', function (status) {
-    console.log(ERR)
     expect(ERR && ERR.status, 'ERR STATUS').not.to.exist
     expect(RES.status).to.equal(status)
   })
