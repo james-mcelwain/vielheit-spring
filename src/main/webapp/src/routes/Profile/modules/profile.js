@@ -19,7 +19,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
 }
-export default function registerReducer(state = initialState, action) {
+export default function profileReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

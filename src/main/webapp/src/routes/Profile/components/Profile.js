@@ -1,13 +1,13 @@
 import React from 'react'
 import './Profile.scss'
 
-export const Register = (props) => (
-  <div className="register-container">
-    <h1>hello</h1>
+export const Profile = (props) => (
+  <div className="profile-container">
+    <div>Name { user.firstName + user.lastName }</div>
   </div>
 )
 
-Register.propTypes = {
+Profile.propTypes = {
 }
 
-export default Register
+export default Profile

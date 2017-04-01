@@ -1,6 +1,7 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
-import { browserHistory } from 'react-router'
+import { browserHistory, Link } from 'react-router'
+
 const SubMenu = Menu.SubMenu;
 
 export default class Sider extends React.Component {
@@ -17,7 +18,7 @@ export default class Sider extends React.Component {
       case "Profile":
         break
       default:
-        throw new Error("Something went wrong")
+        throw new Error("INVARIANT")
     }
 
     this.setState({ current: e.key });
@@ -53,7 +54,7 @@ export default class Sider extends React.Component {
         onClick={this.handleClick}
       >
         <SubMenu key="sub1" title={<span><Icon type="mail" /><span>---//</span></span>}>
-          <Menu.Item key="Profile">Profile</Menu.Item>
+          <Menu.Item key="Profile"><Link to="/profile">Profile</Link></Menu.Item>
           <Menu.Item key="Logout">Logout</Menu.Item>
         </SubMenu>
       </Menu>
