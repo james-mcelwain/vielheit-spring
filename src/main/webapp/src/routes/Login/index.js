@@ -10,7 +10,6 @@ export default (store) => ({
       injectReducer(store, { key: 'login', reducer })
 
       cb(null, Login)
-
     }, 'login')
   }
 })

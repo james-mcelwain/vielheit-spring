@@ -2,12 +2,11 @@ import {
   combineReducers
 } from 'redux'
 import locationReducer from './location'
-import {LOGIN_SUCCESS} from "../routes/Login/modules/login"
+import userReducer from './user'
 
 export const makeRootReducer = (asyncReducers) => {
   return combineReducers({
-    // TODO: cleanup
-    user: (state = {}, action) => action.type === LOGIN_SUCCESS ? action.payload : state,
+    user: userReducer,
     location: locationReducer,
     ...asyncReducers
   })

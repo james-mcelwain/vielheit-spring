@@ -1,6 +1,8 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
 import { browserHistory, Link } from 'react-router'
+import { LOGOUT } from '../../store/user'
+import { store } from '../../main'
 
 const SubMenu = Menu.SubMenu;
 
@@ -10,8 +12,11 @@ export default class Sider extends React.Component {
     openKeys: [],
   }
   handleClick = (e) => {
-    switch(e.key) {
+    switch (e.key) {
       case "Logout":
+        store.dispatch({
+          type: LOGOUT
+        })
         sessionStorage.clear()
         browserHistory.go('/login')
         break
@@ -43,6 +48,7 @@ export default class Sider extends React.Component {
     };
     return map[key] || [];
   }
+
   render() {
     return (
       <Menu
@@ -53,7 +59,7 @@ export default class Sider extends React.Component {
         onOpenChange={this.onOpenChange}
         onClick={this.handleClick}
       >
-        <SubMenu key="sub1" title={<span><Icon type="mail" /><span>---//</span></span>}>
+        <SubMenu key="sub1" title={<span><Icon type="mail"/><span>---//</span></span>}>
           <Menu.Item key="Profile"><Link to="/profile">Profile</Link></Menu.Item>
           <Menu.Item key="Logout">Logout</Menu.Item>
         </SubMenu>
