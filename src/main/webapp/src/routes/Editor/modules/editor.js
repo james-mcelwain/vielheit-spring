@@ -19,6 +19,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
 }
+
 export default function registerReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

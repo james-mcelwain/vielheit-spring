@@ -60,6 +60,7 @@ export default class Sider extends React.Component {
         onClick={this.handleClick}
       >
         <SubMenu key="sub1" title={<span><Icon type="mail"/><span>---//</span></span>}>
+          <Menu.Item key="Editor"><Link to="/editor">Editor</Link></Menu.Item>
           <Menu.Item key="Profile"><Link to="/profile">Profile</Link></Menu.Item>
           <Menu.Item key="Logout">Logout</Menu.Item>
         </SubMenu>
