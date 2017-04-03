@@ -1,9 +1,9 @@
 import React from 'react'
 import './Profile.scss'
 
-export const Profile = (props) => (
+export const Profile = (props) => console.log(props) || (
   <div className="profile-container">
-    <div>Name { user.firstName + user.lastName }</div>
+    <div>Name { props.user.fullName }</div>
   </div>
 )
 

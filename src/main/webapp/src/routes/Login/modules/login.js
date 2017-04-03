@@ -23,6 +23,7 @@ export const login = ({emailAddress, password}) => {
         .then(({ data: { token, refreshToken, user }}) => {
             sessionStorage.setItem('token', token)
             sessionStorage.setItem('refreshToken', refreshToken)
+            sessionStorage.setItem('user', JSON.stringify(user))
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: new User(user)

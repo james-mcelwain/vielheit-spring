@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 import './theme.less'
-import { RESPONSE_ERROR } from './store/application'
+import User from './domain/User'
 
 // ========================================================
 // Store Instantiation
 // ========================================================
 const initialState = window.___INITIAL_STATE__
-export const store = createStore(initialState)
+export const store = createStore({
+  user: sessionStorage.getItem('user') ? new User(JSON.parse(sessionStorage.getItem('user'))) : {}
+})
 
 // ========================================================
 // Render Setup
@@ -25,7 +27,6 @@ let render = () => {
   )
 }
 
-// This code is excluded from production bundle
 if (__DEV__) {
   global['http'] = require('./http').default
   global['store'] = store
