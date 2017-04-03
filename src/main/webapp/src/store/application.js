@@ -1,7 +1,14 @@
-export default function (state = { errors: [] }, action) {
+import { LOGIN_SUCCESS } from '../routes/Login/modules/login'
+import { LOGOUT } from './user'
+
+export default function (state = { errors: [], loggedIn: false }, action) {
   if (action.type === RESPONSE_ERROR) {
     state.errors.push(action.payload)
   }
+
+  if (action.type === LOGIN_SUCCESS) return Object.assign(state, { loggedIn: true })
+  if (action.type === LOGOUT) return Object.assign(state, { loggedIn: false })
+
   return state
 }
 

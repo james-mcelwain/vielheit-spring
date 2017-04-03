@@ -4,17 +4,27 @@ import LoginRoute from './Login'
 import RegisterRoute from './Register'
 import EditorRoute from './Editor'
 import ProfileRoute from './Profile'
+import { LOGIN_SUCCESS } from './Login/modules/login'
+import User from '../domain/User'
 
 const pubPaths = ['/login', '/register']
-const loggedIn = (location) => (pubPaths.includes(location.pathname) || sessionStorage.getItem('token'))
+const loggedIn = (location) => sessionStorage.getItem('token')
 
 export const createRoutes = (store) => ({
   path: '/',
-  onEnter: ({location}, replace) => {
+  onEnter: ({ location }, replace) => {
     if (!loggedIn(location)) {
-      replace('/login')
-    } else if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
-      replace('/')
+      if(!pubPaths.includes(location.pathname)) {
+        replace('/login')
+      }
+    } else {
+      store.dispatch({
+        type: LOGIN_SUCCESS,
+        payload: new User(JSON.parse(sessionStorage.getItem('user')))
+      })
+      if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
+        replace('/')
+      }
     }
   },
   component: CoreLayout,

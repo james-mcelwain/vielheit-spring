@@ -13,7 +13,7 @@ public class Time {
     @GraphId
     Long id;
 
-    @Relationship(type="OWNS", direction=Relationship.INCOMING)
+    @Relationship(type = "OWNS", direction = Relationship.INCOMING)
     Long userId;
 
     String name;

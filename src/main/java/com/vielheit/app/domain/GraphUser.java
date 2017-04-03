@@ -14,16 +14,16 @@ public class GraphUser {
 
     private Long userId;
 
-    @Relationship(type="OWNS", direction=Relationship.OUTGOING)
+    @Relationship(type = "OWNS", direction = Relationship.OUTGOING)
     private List<Entry> entries;
 
-    @Relationship(type="OWNS", direction=Relationship.OUTGOING)
+    @Relationship(type = "OWNS", direction = Relationship.OUTGOING)
     private List<Space> spaces;
 
-    @Relationship(type="OWNS", direction=Relationship.OUTGOING)
+    @Relationship(type = "OWNS", direction = Relationship.OUTGOING)
     private List<Time> times;
 
-    @Relationship(type="OWNS", direction=Relationship.OUTGOING)
+    @Relationship(type = "OWNS", direction = Relationship.OUTGOING)
     private List<Concept> concepts;
 
     public Long getId() {

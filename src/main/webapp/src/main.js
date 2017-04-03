@@ -9,9 +9,7 @@ import User from './domain/User'
 // Store Instantiation
 // ========================================================
 const initialState = window.___INITIAL_STATE__
-export const store = createStore({
-  user: sessionStorage.getItem('user') ? new User(JSON.parse(sessionStorage.getItem('user'))) : {}
-})
+export const store = createStore(initialState)
 
 // ========================================================
 // Render Setup

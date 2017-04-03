@@ -7,9 +7,9 @@ import org.neo4j.ogm.annotation.Relationship;
 @NodeEntity
 public class Space {
     @GraphId
-    private  Long id;
+    private Long id;
 
-    @Relationship(type="OWNS", direction=Relationship.INCOMING)
+    @Relationship(type = "OWNS", direction = Relationship.INCOMING)
     private Long userId;
 
     private String name;
