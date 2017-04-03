@@ -1,5 +1,5 @@
-const {defineSupportCode} = require('cucumber')
-const {create} = require('axios')
+const { defineSupportCode } = require('cucumber')
+const { create } = require('axios')
 
 const sessionStorage = {
   getItem(key) {
@@ -10,7 +10,7 @@ const sessionStorage = {
   }
 }
 
-defineSupportCode(({setWorldConstructor, When, Then, Before}) => {
+defineSupportCode(({ setWorldConstructor, When, Then, Before }) => {
   setWorldConstructor(function CustomWord() {
     global['expect'] = require('chai').expect
     global['http'] = create({
@@ -40,7 +40,7 @@ defineSupportCode(({setWorldConstructor, When, Then, Before}) => {
   When('I {method:stringInDoubleQuotes} the path {path:stringInDoubleQuotes}', function (method, path) {
     return http[method.toLowerCase()](path)
       .then((response) => Reflect.set(global, 'RES', response))
-      .catch(({response}) => Reflect.set(global, 'ERR', response))
+      .catch(({ response }) => Reflect.set(global, 'ERR', response))
   })
 
 
@@ -74,7 +74,20 @@ defineSupportCode(({setWorldConstructor, When, Then, Before}) => {
     return http.post('auth/login', {
       emailAddress: 'admin@vielhe.it',
       password: 'test1234'
-    }).then(({data}) => {
+    }).then(({ data }) => {
+      expect(data.token).to.exist
+      sessionStorage.setItem('token', data.token)
+    })
+      .catch((err) => {
+        throw new Error(err)
+      })
+  })
+
+  When('I log in with the credentials {emailAddress:stringInDoubleQuotes} / {password:stringInDoubleQuotes}', (emailAddress, password) => {
+    return http.post('auth/login', {
+      emailAddress,
+      password
+    }).then(({ data }) => {
       expect(data.token).to.exist
       sessionStorage.setItem('token', data.token)
     })
@@ -86,7 +99,7 @@ defineSupportCode(({setWorldConstructor, When, Then, Before}) => {
   When('I {method:stringInDoubleQuotes} to {url:stringInDoubleQuotes} with', function (method, url, string) {
     return http[method.toLowerCase()](url, JSON.parse(string))
       .then((response) => Reflect.set(global, 'RES', response))
-      .catch(({response}) => Reflect.set(global, 'ERR', response))
+      .catch(({ response }) => Reflect.set(global, 'ERR', response))
   })
 })
 

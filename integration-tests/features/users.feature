@@ -59,5 +59,6 @@ Feature: Users IT
 
 
   Scenario: Get user incorrectly
-    When I "GET" the path "users/3"
+    When I log in with the credentials "test1@vielhe.it" / "cucumber_testing"
+    And I "GET" the path "users/3"
     Then the error response is 401
