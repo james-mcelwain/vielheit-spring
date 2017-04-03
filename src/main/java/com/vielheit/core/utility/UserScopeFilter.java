@@ -1,6 +1,7 @@
 package com.vielheit.core.utility;
 
 import com.vielheit.core.UserScope;
+import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class UserScopeFilter implements ContainerRequestFilter
                 Long id = Long.valueOf(_id.get());
                 Long ctxId = ((JwtAuthenticationToken) requestContext.getSecurityContext().getUserPrincipal()).getUserContext().getUserId();
 
-                if (!ctxId.equals(id)) {
+                if (!isAdmin(requestContext) || !ctxId.equals(id)) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
                             .entity("Authentication failed")
@@ -37,5 +38,13 @@ public class UserScopeFilter implements ContainerRequestFilter
                 }
             }
         }
+    }
+
+    private boolean isAdmin(ContainerRequestContext requestContext) {
+        return ((JwtAuthenticationToken) requestContext.getSecurityContext().getUserPrincipal())
+                .getUserContext()
+                .getAuthorities()
+                .stream()
+                .anyMatch(a -> a.getAuthority().equals(Role.ADMIN.authority()));
     }
 }

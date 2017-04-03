@@ -19,8 +19,8 @@ public class UserController implements OptionalResponse {
     private UserService userService;
 
     @GET
-    @UserScope
     @Path("{id}")
+    @UserScope
     public Response getUserById(@PathParam("id") Long id) {
         return okIfPresent(userService.getById(id));
     }
@@ -28,6 +28,7 @@ public class UserController implements OptionalResponse {
 
     @GET
     @Path("email/{email}")
+    @UserScope
     public Response getUserByEmail(@PathParam("email") String email) {
         return okIfPresent(userService.getByEmailAddress(email));
     }
@@ -35,6 +36,7 @@ public class UserController implements OptionalResponse {
     @PUT
     @Path("{id}")
     @Consumes(MediaType.APPLICATION_JSON)
+    @UserScope
     public Response updateUserById(@PathParam("id") Long id, User user) {
         return okIfPresent(userService.updateUser(id, user));
     }

@@ -24,10 +24,6 @@ Feature: Users IT
       "roles": [ { "role": "ADMIN" }, { "role": "REFRESH_TOKEN" } ] }
     """
 
-  Scenario: Get user incorrectly
-    When I "GET" the path "users/2"
-    Then the error response is 401
-
   Scenario: Register A User
     When I "POST" to "auth/register" with
     """
@@ -60,3 +56,8 @@ Feature: Users IT
     }
     """
     Then the response is 200
+
+
+  Scenario: Get user incorrectly
+    When I "GET" the path "users/3"
+    Then the error response is 401
