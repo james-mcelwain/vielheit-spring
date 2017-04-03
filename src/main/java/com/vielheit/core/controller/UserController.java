@@ -18,25 +18,17 @@ public class UserController implements OptionalResponse {
     private UserService userService;
 
     @GET
-    @Path("{id}")
+    @Path("{user-id}")
     @UserResource
-    public Response getUserById(@PathParam("id") Long id) {
+    public Response getUserById(@PathParam("user-id") Long id) {
         return okIfPresent(userService.getById(id));
     }
 
-
-    @GET
-    @Path("email/{email}")
-    @UserResource
-    public Response getUserByEmail(@PathParam("email") String email) {
-        return okIfPresent(userService.getByEmailAddress(email));
-    }
-
     @PUT
-    @Path("{id}")
+    @Path("{user-id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UserResource
-    public Response updateUserById(@PathParam("id") Long id, User user) {
+    public Response updateUserById(@PathParam("user-id") Long id, User user) {
         return okIfPresent(userService.updateUser(id, user));
     }
 }

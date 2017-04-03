@@ -20,12 +20,9 @@ export const login = ({emailAddress, password}) => {
             {emailAddress, password},
             {headers: {'Content-Type': 'application/json'}}
         )
-        .then((response) => {
-            sessionStorage.setItem('token', response.data.token)
-            sessionStorage.setItem('refreshToken', response.data.refreshToken)
-        })
-        .then(() => http.get(`users/email/${emailAddress}`))
-        .then(({data: user}) => {
+        .then(({ data: { token, refreshToken, user }}) => {
+            sessionStorage.setItem('token', token)
+            sessionStorage.setItem('refreshToken', refreshToken)
             dispatch({
                 type: LOGIN_SUCCESS,
                 payload: new User(user)

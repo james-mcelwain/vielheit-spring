@@ -23,11 +23,11 @@ public class UserResourceFilter implements ContainerRequestFilter
 
         MultivaluedMap<String, String> pathParams = requestContext.getUriInfo().getPathParameters();
 
-        if (!isAdmin(requestContext) && pathParams.containsKey("id")) {
-            Optional<String> _id = pathParams.getOrDefault("id", Collections.emptyList()).stream().findFirst();
+        if (!isAdmin(requestContext) && pathParams.containsKey("user-id")) {
+            Optional<String> idPathParam = pathParams.getOrDefault("user-id", Collections.emptyList()).stream().findFirst();
 
-            if (_id.isPresent()) {
-                Long id = Long.valueOf(_id.get());
+            if (idPathParam.isPresent()) {
+                Long id = Long.valueOf(idPathParam.get());
                 Long ctxId = ((JwtAuthenticationToken) requestContext.getSecurityContext().getUserPrincipal()).getUserContext().getUserId();
 
                 if (!ctxId.equals(id)) {
