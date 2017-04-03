@@ -4,6 +4,8 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
+import java.util.List;
+
 @NodeEntity
 public class Entry {
     @GraphId
@@ -11,6 +13,18 @@ public class Entry {
 
     @Relationship(type = "OWNS", direction = Relationship.INCOMING)
     private Long userId;
+
+    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    private List<Entry> entries;
+
+    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    private List<Space> spaces;
+
+    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    private List<Time> times;
+
+    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    private List<Concept> concepts;
 
     private String title;
 

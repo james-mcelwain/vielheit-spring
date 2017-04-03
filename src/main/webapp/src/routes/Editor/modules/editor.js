@@ -18,6 +18,7 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
+  submitting: false
 }
 
 export default function registerReducer(state = initialState, action) {
