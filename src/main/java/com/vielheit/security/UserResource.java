@@ -1,4 +1,4 @@
-package com.vielheit.core;
+package com.vielheit.security;
 
 
 import javax.ws.rs.NameBinding;
@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
 @NameBinding
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface UserScope {
+public @interface UserResource {
 }
 

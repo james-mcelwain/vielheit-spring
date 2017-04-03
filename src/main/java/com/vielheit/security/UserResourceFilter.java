@@ -1,6 +1,5 @@
-package com.vielheit.core.utility;
+package com.vielheit.security;
 
-import com.vielheit.core.UserScope;
 import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import org.slf4j.Logger;
@@ -14,10 +13,10 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
-@UserScope
-public class UserScopeFilter implements ContainerRequestFilter
+@UserResource
+public class UserResourceFilter implements ContainerRequestFilter
 {
-    private final static Logger logger = LoggerFactory.getLogger(UserScopeFilter.class);
+    private final static Logger logger = LoggerFactory.getLogger(UserResourceFilter.class);
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {

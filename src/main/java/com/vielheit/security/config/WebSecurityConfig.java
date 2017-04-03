@@ -1,8 +1,6 @@
 package com.vielheit.security.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vielheit.core.UserScope;
-import com.vielheit.core.utility.UserScopeFilter;
 import com.vielheit.security.RestAuthenticationEntryPoint;
 import com.vielheit.security.auth.ajax.AjaxAuthenticationProvider;
 import com.vielheit.security.auth.ajax.AjaxLoginProcessingFilter;

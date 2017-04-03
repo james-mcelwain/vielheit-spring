@@ -4,7 +4,7 @@ package com.vielheit.core.config;
 import com.vielheit.app.controller.EntryController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
-import com.vielheit.core.utility.UserScopeFilter;
+import com.vielheit.security.UserResourceFilter;
 import com.vielheit.security.controller.TokenController;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
@@ -17,7 +17,7 @@ public class JerseyConfig extends ResourceConfig {
     }
 
     private void registerEndpoints() {
-        register(UserScopeFilter.class);
+        register(UserResourceFilter.class);
 
         register(TokenController.class);
         register(UserController.class);
