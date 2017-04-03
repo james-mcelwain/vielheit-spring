@@ -11,7 +11,7 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
     private static final long serialVersionUID = 2877954820905567501L;
 
     private transient RawAccessJwtToken rawAccessToken;
-    private transient  UserContext userContext;
+    private transient UserContext userContext;
 
     public JwtAuthenticationToken(RawAccessJwtToken unsafeToken) {
         super(null);
@@ -73,5 +73,9 @@ public class JwtAuthenticationToken extends AbstractAuthenticationToken {
         result = 31 * result + (rawAccessToken != null ? rawAccessToken.hashCode() : 0);
         result = 31 * result + (userContext != null ? userContext.hashCode() : 0);
         return result;
+    }
+
+    public UserContext getUserContext() {
+        return userContext;
     }
 }

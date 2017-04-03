@@ -13,4 +13,6 @@ public interface UserService extends Service {
     Optional<User> getByEmailAddress(String email);
 
     Optional<User> getById(Long id);
+
+    Optional<User> updateUser(Long id, User user);
 }

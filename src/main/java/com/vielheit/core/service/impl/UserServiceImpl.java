@@ -40,6 +40,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> updateUser(Long id, User user) {
+        if (!id.equals(user.getId())) {
+            throw new BadRequestException();
+        }
+
+        Optional<User> foundUser = getById(id);
+        if (!foundUser.isPresent()) {
+            throw new BadRequestException();
+        }
+
+        User u = foundUser.get();
+
+        u.setEmailAddress(user.getEmailAddress());
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+
+        return one(() -> userRepository.save(u));
+    }
+
+    @Override
     public Optional<User> saveUser(User user) throws BadRequestException {
         if (!userRepository.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
             throw new BadRequestException();

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.ws.rs.core.SecurityContext;
+
 public class UserContext {
     private final Long userId;
     private final List<GrantedAuthority> authorities;
