@@ -23,17 +23,17 @@ public class UserScopeFilter implements ContainerRequestFilter
     public void filter(ContainerRequestContext requestContext) throws IOException {
 
         MultivaluedMap<String, String> pathParams = requestContext.getUriInfo().getPathParameters();
-        if (pathParams.containsKey("id")) {
 
+        if (!isAdmin(requestContext) && pathParams.containsKey("id")) {
             Optional<String> _id = pathParams.getOrDefault("id", Collections.emptyList()).stream().findFirst();
+
             if (_id.isPresent()) {
                 Long id = Long.valueOf(_id.get());
                 Long ctxId = ((JwtAuthenticationToken) requestContext.getSecurityContext().getUserPrincipal()).getUserContext().getUserId();
 
-                if (!isAdmin(requestContext) || !ctxId.equals(id)) {
+                if (!ctxId.equals(id)) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
-                            .entity("Authentication failed")
                             .build());
                 }
             }
