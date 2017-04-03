@@ -7,11 +7,11 @@ const project = require('../config/project.config')
 const compress = require('compression')
 
 process.on('uncaughtException', (e) => {
-  console.log(1, e)
+  console.log('uncaughtException', e)
 })
 
 process.on('unhandledRejection', (e) => {
-  console.log(2, e)
+  console.log('unhandledRejection', e)
 })
 
 const app = express()

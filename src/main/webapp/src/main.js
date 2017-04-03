@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 import './theme.less'
+import { RESPONSE_ERROR } from './store/application'
 
 // ========================================================
 // Store Instantiation
@@ -19,15 +20,28 @@ let render = () => {
   const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
-    <AppContainer store={store} routes={routes} />,
+    <AppContainer store={store} routes={routes}/>,
     MOUNT_NODE
   )
 }
 
 // This code is excluded from production bundle
 if (__DEV__) {
-  global.http = require('./http').default
-  global.store = store
+  global['http'] = require('./http').default
+  global['store'] = store
+
+  store.subscribe((function () {
+    let errorCount = 0
+
+    return function () {
+      const { application: { errors } } = store.getState()
+
+      if (errors.length > errorCount) {
+        errors.slice(errorCount, errors.length).forEach((err) => console.log('ERROR: ', err))
+        errorCount++
+      }
+    }
+  })())
 
   if (module.hot) {
     // Development render functions
@@ -35,7 +49,7 @@ if (__DEV__) {
     const renderError = (error) => {
       const RedBox = require('redbox-react').default
 
-      ReactDOM.render(<RedBox error={error} />, MOUNT_NODE)
+      ReactDOM.render(<RedBox error={error}/>, MOUNT_NODE)
     }
 
     // Wrap render in try/catch

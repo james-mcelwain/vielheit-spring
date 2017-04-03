@@ -1,9 +1,12 @@
 package com.vielheit.security;
 
+import com.vielheit.core.ErrorCode;
+import com.vielheit.core.ErrorResponse;
 import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -33,6 +36,7 @@ public class UserResourceFilter implements ContainerRequestFilter
                 if (!ctxId.equals(id)) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
+                            .entity(ErrorResponse.of("Unauthorized", ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED))
                             .build());
                 }
             }
