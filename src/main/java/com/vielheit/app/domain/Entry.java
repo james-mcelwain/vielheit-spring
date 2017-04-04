@@ -11,19 +11,19 @@ public class Entry {
     @GraphId
     private Long id;
 
-    @Relationship(type = "OWNS", direction = Relationship.INCOMING)
+    @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private GraphUser user;
 
-    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
     private Set<Entry> entries;
 
-    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
     private Set<Space> spaces;
 
-    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
     private Set<Time> times;
 
-    @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
     private Set<Concept> concepts;
 
     private String title;

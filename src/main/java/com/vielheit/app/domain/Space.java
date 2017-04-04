@@ -9,7 +9,7 @@ public class Space {
     @GraphId
     private Long id;
 
-    @Relationship(type = "OWNS", direction = Relationship.INCOMING)
+    @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private Long userId;
 
     private String name;
