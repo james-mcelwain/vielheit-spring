@@ -1,5 +1,5 @@
-const {defineSupportCode} = require('cucumber')
+const { defineSupportCode } = require('cucumber')
 
-defineSupportCode(function ({When, Then}) {
+defineSupportCode(function ({ When, Then }) {
 
 })
