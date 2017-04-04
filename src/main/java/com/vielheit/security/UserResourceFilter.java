@@ -4,16 +4,21 @@ import com.vielheit.core.ErrorCode;
 import com.vielheit.core.ErrorResponse;
 import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
+import org.glassfish.jersey.server.ContainerRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
 @UserResource
@@ -36,7 +41,7 @@ public class UserResourceFilter implements ContainerRequestFilter
                 if (!ctxId.equals(id)) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
-                            .entity(ErrorResponse.of("Unauthorized", ErrorCode.AUTHENTICATION, HttpStatus.UNAUTHORIZED))
+                            .entity(ErrorResponse.of("Unauthorized", ErrorCode.AUTHENTICATION, Response.Status.UNAUTHORIZED))
                             .build());
                 }
             }

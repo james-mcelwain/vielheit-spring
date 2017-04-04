@@ -2,6 +2,7 @@ package com.vielheit.core;
 
 import org.springframework.http.HttpStatus;
 
+import javax.ws.rs.core.Response;
 import java.util.Date;
 
 public class ErrorResponse {
@@ -22,6 +23,10 @@ public class ErrorResponse {
 
     public static ErrorResponse of(final String message, final ErrorCode errorCode, HttpStatus status) {
         return new ErrorResponse(message, errorCode, status);
+    }
+
+    public static ErrorResponse of(final String message, final ErrorCode errorCode, Response.Status status) {
+        return new ErrorResponse(message, errorCode, HttpStatus.valueOf(status.getStatusCode()));
     }
 
     public Integer getStatus() {
