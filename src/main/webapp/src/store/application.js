@@ -6,8 +6,8 @@ export default function (state = { errors: [], loggedIn: false }, action) {
     state.errors.push(action.payload)
   }
 
-  if (action.type === LOGIN_SUCCESS) return Object.assign(state, { loggedIn: true })
-  if (action.type === LOGOUT) return Object.assign(state, { loggedIn: false })
+  if (action.type === LOGIN_SUCCESS) return { ...state, loggedIn: true }
+  if (action.type === LOGOUT) return { ...state, loggedIn: false }
 
   return state
 }

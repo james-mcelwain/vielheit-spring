@@ -1,5 +1,5 @@
 import http from '../../../http'
-import {browserHistory} from 'react-router'
+import { browserHistory } from 'react-router'
 import User from '../../../domain/User'
 
 // ------------------------------------
@@ -12,56 +12,56 @@ export const LOGIN_FAIL = 'LOGIN_FAIL'
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const login = ({emailAddress, password}) => {
-    return (dispatch, getState) =>
-        dispatch({type: LOGIN_START}) &&
-        http.post(
-            'auth/login',
-            {emailAddress, password},
-            {headers: {'Content-Type': 'application/json'}}
-        )
-        .then(({ data: { token, refreshToken, user }}) => {
-            sessionStorage.setItem('token', token)
-            sessionStorage.setItem('refreshToken', refreshToken)
-            sessionStorage.setItem('user', JSON.stringify(user))
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: new User(user)
-            })
-            browserHistory.push('/')
-        })
-        .catch((err) => {
-            sessionStorage.clear()
-            dispatch({
-                type: LOGIN_FAIL,
-                payload: err
-            })
-        })
+export const login = ({ emailAddress, password }) => {
+  return (dispatch, getState) =>
+  dispatch({ type: LOGIN_START }) &&
+  http.post(
+    'auth/login',
+    { emailAddress, password },
+    { headers: { 'Content-Type': 'application/json' } }
+    )
+    .then(({ data: { token, refreshToken, user } }) => {
+      sessionStorage.setItem('token', token)
+      sessionStorage.setItem('refreshToken', refreshToken)
+      sessionStorage.setItem('user', JSON.stringify(user))
+      dispatch({
+        type: LOGIN_SUCCESS,
+        payload: new User(user)
+      })
+      browserHistory.push('/')
+    })
+    .catch((err) => {
+      sessionStorage.clear()
+      dispatch({
+        type: LOGIN_FAIL,
+        payload: err
+      })
+    })
 }
 
 export const actions = {
-    login
+  login
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-    [LOGIN_START]: (state, action) => ({...state, error: null, loggingIn: true}),
-    [LOGIN_FAIL]: (state, action) => ({...state, loggingIn: false, error: action.payload}),
-    [LOGIN_SUCCESS]: (state, action) => ({...state, loggingIn: false, loggedIn: true})
+  [LOGIN_START]: (state, action) => ({ ...state, error: null, loggingIn: true }),
+  [LOGIN_FAIL]: (state, action) => ({ ...state, loggingIn: false, error: action.payload }),
+  [LOGIN_SUCCESS]: (state, action) => ({ ...state, loggingIn: false, loggedIn: true })
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
 const initialState = {
-    loggedIn: false,
-    loggingIn: false,
-    error: null,
+  loggedIn: false,
+  loggingIn: false,
+  error: null,
 }
 export default function loginReducer(state = initialState, action) {
-    const handler = ACTION_HANDLERS[action.type]
+  const handler = ACTION_HANDLERS[action.type]
 
-    return handler ? handler(state, action) : state
+  return handler ? handler(state, action) : state
 }

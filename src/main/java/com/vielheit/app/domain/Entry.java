@@ -4,7 +4,7 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.List;
+import java.util.Set;
 
 @NodeEntity
 public class Entry {
@@ -12,19 +12,19 @@ public class Entry {
     private Long id;
 
     @Relationship(type = "OWNS", direction = Relationship.INCOMING)
-    private Long userId;
+    private GraphUser user;
 
     @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
-    private List<Entry> entries;
+    private Set<Entry> entries;
 
     @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
-    private List<Space> spaces;
+    private Set<Space> spaces;
 
     @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
-    private List<Time> times;
+    private Set<Time> times;
 
     @Relationship(type = "RELATES_TO", direction = Relationship.OUTGOING)
-    private List<Concept> concepts;
+    private Set<Concept> concepts;
 
     private String title;
 
@@ -36,6 +36,46 @@ public class Entry {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public GraphUser getUser() {
+        return user;
+    }
+
+    public void setUser(GraphUser user) {
+        this.user = user;
+    }
+
+    public Set<Entry> getEntries() {
+        return entries;
+    }
+
+    public void setEntries(Set<Entry> entries) {
+        this.entries = entries;
+    }
+
+    public Set<Space> getSpaces() {
+        return spaces;
+    }
+
+    public void setSpaces(Set<Space> spaces) {
+        this.spaces = spaces;
+    }
+
+    public Set<Time> getTimes() {
+        return times;
+    }
+
+    public void setTimes(Set<Time> times) {
+        this.times = times;
+    }
+
+    public Set<Concept> getConcepts() {
+        return concepts;
+    }
+
+    public void setConcepts(Set<Concept> concepts) {
+        this.concepts = concepts;
     }
 
     public String getTitle() {

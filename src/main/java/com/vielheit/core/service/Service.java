@@ -41,4 +41,9 @@ public interface Service extends Loggable {
         JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         return jwt.getUserContext().getUserId().equals(id);
     }
+
+    default long userId() {
+        JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        return jwt.getUserContext().getUserId();
+    }
 }

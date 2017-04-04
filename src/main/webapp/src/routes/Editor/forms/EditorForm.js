@@ -1,7 +1,9 @@
 import React, { Componen } from 'react'
 import { Alert, Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import { Link } from 'react-router'
+import { store } from '../../../main'
 import './EditorForm.scss'
+
 
 const FormItem = Form.Item
 const Option = Select.Option;
@@ -19,9 +21,10 @@ function handleChange(value) {
 const EditorForm = Form.create()(React.createClass({
   handleSubmit(e) {
     e.preventDefault()
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields((err, entry) => {
       if (!err) {
-        // go...
+        entry.user = { userId: store.getState().user.id }
+        this.props.submit(entry)
       }
     })
   },

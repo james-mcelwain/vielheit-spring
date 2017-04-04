@@ -1,11 +1,12 @@
 import { connect } from 'react-redux'
-import { editor } from '../modules/editor'
+import { submit } from '../modules/editor'
 
 import Editor from '../components/Editor'
 
 const mapDispatchToProps = {
-  editor
+  submit
 }
+
 
 const mapStateToProps = (state) => ({
   editorState: state.editor

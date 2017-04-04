@@ -2,6 +2,7 @@ import { create } from 'axios'
 import { browserHistory } from 'react-router'
 import { store } from './main'
 import { RESPONSE_ERROR } from './store/application'
+import { LOGOUT } from './store/user'
 
 const http = create({
   baseURL: 'http://localhost:8080/api/',
@@ -36,8 +37,10 @@ http.interceptors.response.use((response) => {
   if (error.response && error.response.status === 401) {
     localStorage.clear()
     sessionStorage.clear()
+    store.dispatch({ type: LOGOUT })
     browserHistory.push('/login')
   }
+
   return Promise.reject(error)
 })
 
