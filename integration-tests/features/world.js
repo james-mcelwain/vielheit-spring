@@ -1,7 +1,8 @@
 const { defineSupportCode } = require('cucumber')
 const { create } = require('axios')
 
-const sessionStorage = {
+let sessionStorage
+const makeSessionStorage = () => sessionStorage = {
   getItem(key) {
     return this[key]
   },
@@ -10,7 +11,9 @@ const sessionStorage = {
   }
 }
 
-defineSupportCode(({ setWorldConstructor, When, Then, Before }) => {
+makeSessionStorage()
+
+defineSupportCode(({ setWorldConstructor, When, Then, Before, After }) => {
   setWorldConstructor(function CustomWord() {
     global['expect'] = require('chai').expect
     global['http'] = create({
@@ -30,6 +33,10 @@ defineSupportCode(({ setWorldConstructor, When, Then, Before }) => {
 
       return config
     })
+  })
+
+  After({ tags: "@logout" }, function () {
+    makeSessionStorage()
   })
 
   Before(function () {
