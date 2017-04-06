@@ -56,6 +56,7 @@ webpackConfig.externals['react/addons'] = true
 // Plugins
 // ------------------------------------
 webpackConfig.plugins = [
+
   new webpack.DefinePlugin(project.globals),
   new HtmlWebpackPlugin({
     template: project.paths.client('index.html'),
