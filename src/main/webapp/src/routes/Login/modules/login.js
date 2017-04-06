@@ -60,6 +60,7 @@ const initialState = {
   loggingIn: false,
   error: null,
 }
+
 export default function loginReducer(state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

@@ -5,11 +5,11 @@ export default (store) => ({
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const Editor = require('./containers/EditorContainer').default
-      const editor = require('./modules/editor').default
+      const reducer = require('./modules/editor').default
 
-      injectReducer(store, { key: 'editor',  editor })
+      injectReducer(store, { key: 'editor',  reducer })
 
-      cb(null,Editor)
+      cb(null, Editor)
     }, 'editor')
   }
 })
