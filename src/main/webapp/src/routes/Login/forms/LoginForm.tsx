@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import * as React from 'react'
 import { Alert, Form, Icon, Input, Button, Checkbox } from 'antd'
 import { Link } from 'react-router'
 import './LoginForm.scss'

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import LoginForm from '../forms/LoginForm'
 import './Login.scss'
 import {LoginState} from "../modules/login"

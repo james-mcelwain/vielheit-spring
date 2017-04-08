@@ -7,6 +7,7 @@ import './theme.less'
 declare const global: any
 declare const module: any
 declare const require: any
+declare const __DEV__: boolean
 
 // ========================================================
 // Store Instantiation
@@ -28,7 +29,7 @@ let render = () => {
   )
 }
 
-if (global.__DEV__) {
+if (__DEV__) {
   global['http'] = require('./http').default
   global['store'] = store
 

@@ -1,4 +1,5 @@
-import React, {Component, ComponentLifecycle} from 'react'
+import * as React from 'react'
+import {Component, ComponentLifecycle} from 'react'
 import {browserHistory, PlainRoute, Router} from 'react-router'
 import { Provider } from 'react-redux'
 import {AppStore} from "../store/store"

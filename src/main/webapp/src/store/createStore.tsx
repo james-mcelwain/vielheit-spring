@@ -8,6 +8,7 @@ import {AppState} from "./appState"
 
 declare const global: any
 declare const module: any
+declare const __DEV__: any
 
 export default (initialState: AppState) => {
   // ======================================================
@@ -22,7 +23,7 @@ export default (initialState: AppState) => {
 
   let composeEnhancers: (...enhancers: StoreEnhancer<any>[]) => StoreEnhancer<any> = compose
 
-  if (global.__DEV__) {
+  if (__DEV__) {
     const composeWithDevToolsExtension = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     if (typeof composeWithDevToolsExtension === 'function') {
       composeEnhancers = composeWithDevToolsExtension
