@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "outDir": "./dist/",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "module": "commonjs",
+        "target": "ES5",
+        "lib": ["es7", "dom"],
+        "experimentalDecorators": true,
+        "jsx": "react",
+        "strictNullChecks": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+      "src"
+    ],
+    "exclude": [
+        "node_modules",
+        "typings"
+    ]
+}

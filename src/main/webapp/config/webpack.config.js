@@ -26,7 +26,7 @@ const webpackConfig = {
 // ------------------------------------
 // Entry Points
 // ------------------------------------
-const APP_ENTRY = project.paths.client('main.js')
+const APP_ENTRY = project.paths.client('main.tsx')
 
 webpackConfig.entry = {
   app: __DEV__
@@ -129,6 +129,9 @@ webpackConfig.module.loaders = [{
 }, {
   test: /\.json$/,
   loader: 'json'
+}, {
+  test: /\.jsx?$/,
+  loader: 'awesome-typescript'
 }]
 
 // ------------------------------------
@@ -137,7 +140,6 @@ webpackConfig.module.loaders = [{
 // We use cssnano with the postcss loader, so we tell
 // css-loader not to duplicate minimization.
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
-
 
 webpackConfig.module.loaders.push({
   test: /\.scss$/,
