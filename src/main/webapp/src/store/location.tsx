@@ -4,7 +4,6 @@
 import {State} from "./appState"
 import {AppAction} from "./appAction"
 import {AppStore} from "./store"
-import {Location} from 'history'
 import makeConstant from "./makeConstant"
 
 export const LOCATION_CHANGE = makeConstant('LOCATION_CHANGE')
@@ -23,7 +22,9 @@ export function locationChange (location =  {}) : AppAction<LocationState> {
 // Specialized Action Creator
 // ------------------------------------
 export const updateLocation = ({ dispatch }: AppStore) => {
-  return (nextLocation: Location) => dispatch(locationChange(nextLocation))
+  return (nextLocation: any) => {
+    dispatch(locationChange(nextLocation))
+  }
 }
 
 // ------------------------------------

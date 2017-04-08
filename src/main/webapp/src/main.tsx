@@ -3,8 +3,9 @@ import ReactDOM from "react-dom"
 import createStore from "./store/createStore"
 import AppContainer from "./containers/AppContainer"
 import "./theme.less"
+import {PlainRoute} from "react-router"
 
-declare const global: any
+export declare const global: any
 
 // ========================================================
 // Store Instantiation
@@ -15,10 +16,10 @@ export const store = createStore(initialState)
 // ========================================================
 // Render Setup
 // ========================================================
-const MOUNT_NODE = document.getElementById('root')
+const MOUNT_NODE = document.getElementById('root') as HTMLElement
 
 let render = () => {
-  const routes = global.require('./routes/index').default(store)
+  const routes: PlainRoute = global.require('./routes/index').default(store)
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes}/>,
@@ -30,23 +31,11 @@ if (global.__DEV__) {
   global['http'] = global.require('./http').default
   global['store'] = store
 
-  store.subscribe((function () {
-    let errorCount = 0
-
-    return function () {
-      const { application: { errors } } = store.getState()
-
-      if (errors.length > errorCount) {
-        errors.slice(errorCount, errors.length).forEach((err) => console.log('ERROR: ', err))
-        errorCount++
-      }
-    }
-  })())
 
   if (global.module.hot) {
     // Development render functions
     const renderApp = render
-    const renderError = (error) => {
+    const renderError = (error: any) => {
       const RedBox = global.require('redbox-react').default
 
       ReactDOM.render(<RedBox error={error}/>, MOUNT_NODE)

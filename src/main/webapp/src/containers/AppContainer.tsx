@@ -1,8 +1,9 @@
 import React, {Component, ComponentLifecycle} from 'react'
-import { browserHistory, Router } from 'react-router'
+import {browserHistory, PlainRoute, Router} from 'react-router'
 import { Provider } from 'react-redux'
+import {AppStore} from "../store/store"
 
-class AppContainer extends Component<{ Store, Routes }, {}> implements ComponentLifecycle {
+class AppContainer extends Component<{ store: AppStore, routes: PlainRoute }, {}> implements ComponentLifecycle<any, any> {
   shouldComponentUpdate () {
     return false
   }

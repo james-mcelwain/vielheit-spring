@@ -47,7 +47,7 @@ export default (initialState: AppState) => {
 
   if (global.module.hot) {
     global.module.hot.accept('./reducers', () => {
-      const reducers = require('./reducers').default
+      const reducers = global.require('./reducers').default
       store.replaceReducer(reducers(store.asyncReducers))
     })
   }
