@@ -4,12 +4,12 @@ import {AppStore} from "../../store/store"
 import {Reducer} from "redux"
 import {ProfileState} from "./modules/profile";
 
-declare const global: any
+declare const require: any
 
 export default (store: AppStore) => ({
   path: 'profile',
   getComponent (nextState, cb) {
-    global.require.ensure([], (require: any) => {
+    require.ensure([], (require: any) => {
       const Profile = require('./containers/ProfileContainer').default
       const reducer: Reducer<ProfileState> = require('./modules/profile').default
 

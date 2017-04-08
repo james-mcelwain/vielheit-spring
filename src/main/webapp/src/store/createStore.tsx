@@ -6,9 +6,10 @@ import { updateLocation } from './location'
 import AppStore from "./store"
 import {AppState} from "./appState"
 
-declare const global: any
 declare const module: any
 declare const __DEV__: any
+declare const require: any
+declare const __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: any
 
 export default (initialState: AppState) => {
   // ======================================================
@@ -24,7 +25,7 @@ export default (initialState: AppState) => {
   let composeEnhancers: (...enhancers: StoreEnhancer<any>[]) => StoreEnhancer<any> = compose
 
   if (__DEV__) {
-    const composeWithDevToolsExtension = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    const composeWithDevToolsExtension = __REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     if (typeof composeWithDevToolsExtension === 'function') {
       composeEnhancers = composeWithDevToolsExtension
     }
@@ -49,7 +50,7 @@ export default (initialState: AppState) => {
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
-      const reducers = global.require('./reducers').default
+      const reducers = require('./reducers').default
       store.replaceReducer(reducers(store.asyncReducers))
     })
   }

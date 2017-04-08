@@ -9,5 +9,7 @@ export interface ActionConstant {
 export default function makeConstant(constantString: ActionType): ActionConstant {
   return Object.assign(() => {
     return constantString
-  }, { compare(a: Action) { return a.type  === constantString } })
+  }, {
+    compare(a: Action) { return a.type  === constantString }
+  })
 }
