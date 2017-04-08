@@ -7,6 +7,7 @@ import AppStore from "./store"
 import {AppState} from "./appState"
 
 declare const global: any
+declare const module: any
 
 export default (initialState: AppState) => {
   // ======================================================
@@ -45,8 +46,8 @@ export default (initialState: AppState) => {
   // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
   store.unsubscribeHistory = browserHistory.listen(updateLocation(store))
 
-  if (global.module.hot) {
-    global.module.hot.accept('./reducers', () => {
+  if (module.hot) {
+    module.hot.accept('./reducers', () => {
       const reducers = global.require('./reducers').default
       store.replaceReducer(reducers(store.asyncReducers))
     })

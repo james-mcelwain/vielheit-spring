@@ -1,11 +1,12 @@
-import React from "react"
-import ReactDOM from "react-dom"
-import createStore from "./store/createStore"
-import AppContainer from "./containers/AppContainer"
-import "./theme.less"
-import {PlainRoute} from "react-router"
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import createStore from './store/createStore'
+import AppContainer from './containers/AppContainer'
+import './theme.less'
 
-export declare const global: any
+declare const global: any
+declare const module: any
+declare const require: any
 
 // ========================================================
 // Store Instantiation
@@ -19,7 +20,7 @@ export const store = createStore(initialState)
 const MOUNT_NODE = document.getElementById('root') as HTMLElement
 
 let render = () => {
-  const routes: PlainRoute = global.require('./routes/index').default(store)
+  const routes = require('./routes/index').default(store)
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes}/>,
@@ -28,15 +29,14 @@ let render = () => {
 }
 
 if (global.__DEV__) {
-  global['http'] = global.require('./http').default
+  global['http'] = require('./http').default
   global['store'] = store
 
-
-  if (global.module.hot) {
+  if (module.hot) {
     // Development render functions
     const renderApp = render
     const renderError = (error: any) => {
-      const RedBox = global.require('redbox-react').default
+      const RedBox = require('redbox-react').default
 
       ReactDOM.render(<RedBox error={error}/>, MOUNT_NODE)
     }
@@ -52,7 +52,7 @@ if (global.__DEV__) {
     }
 
     // Setup hot module replacement
-    global.module.hot.accept('./routes/index', () =>
+    module.hot.accept('./routes/index', () =>
       setImmediate(() => {
         ReactDOM.unmountComponentAtNode(MOUNT_NODE)
         render()

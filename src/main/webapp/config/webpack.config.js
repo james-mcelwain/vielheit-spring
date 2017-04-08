@@ -17,7 +17,7 @@ const webpackConfig = {
   devtool: project.compiler_devtool,
   resolve: {
     root: project.paths.client(),
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['', '.js', '.jsx', '.json', '.tsx']
   },
   module: {}
 }
@@ -129,10 +129,13 @@ webpackConfig.module.loaders = [{
 }, {
   test: /\.json$/,
   loader: 'json'
-}, {
-  test: /\.jsx?$/,
-  loader: 'awesome-typescript'
 }]
+
+webpackConfig.module.loaders.push({
+  test: /.tsx?$/,
+  exclude: /node_modules/,
+  loader: 'awesome-typescript-loader'
+})
 
 // ------------------------------------
 // Style Loaders
@@ -140,6 +143,7 @@ webpackConfig.module.loaders = [{
 // We use cssnano with the postcss loader, so we tell
 // css-loader not to duplicate minimization.
 const BASE_CSS_LOADER = 'css?sourceMap&-minimize'
+
 
 webpackConfig.module.loaders.push({
   test: /\.scss$/,

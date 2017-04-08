@@ -5,7 +5,7 @@ import '../../styles/core.scss'
 import SideMenu from '../../components/Menu/Menu'
 import { store } from '../../main'
 
-export const CoreLayout = ({ children }) => (
+export const CoreLayout = ({ children }: { children: JSX.Element[] }) => (
   <div className='container text-center'>
     <Header />
     <div className="app-container">
@@ -16,9 +16,5 @@ export const CoreLayout = ({ children }) => (
     </div>
   </div>
 )
-
-CoreLayout.propTypes = {
-  children: React.PropTypes.element.isRequired
-}
 
 export default CoreLayout

@@ -3,7 +3,8 @@ import {PlainRoute} from "react-router"
 import {AppStore} from "../../store/store"
 import {Reducer} from "redux"
 import {ProfileState} from "./modules/profile";
-import {global} from "../../main"
+
+declare const global: any
 
 export default (store: AppStore) => ({
   path: 'profile',

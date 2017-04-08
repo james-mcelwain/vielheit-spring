@@ -1,24 +1,27 @@
-import React from 'react'
+import React, {SyntheticEvent, Component } from 'react'
 import { Menu, Icon } from 'antd';
-import { browserHistory, Link } from 'react-router'
+import { Link } from 'react-router'
 import { LOGOUT } from '../../store/user'
 import { store } from '../../main'
 
 const SubMenu = Menu.SubMenu;
 
-export default class Sider extends React.Component {
-  state = {
+export default class Sider extends Component<{}, { openKeys: string[], current: string }> {
+  state: {
+    current: string,
+    openKeys: string[]
+  } = {
     current: '1',
     openKeys: [],
   }
-  handleClick = (e) => {
+  handleClick = (e: any) => {
     switch (e.key) {
       case "Logout":
         store.dispatch({
           type: LOGOUT
         })
         sessionStorage.clear()
-        browserHistory.go('/login')
+        // browserHistory.go('/login')
         break
       case "Profile":
         break
@@ -28,12 +31,12 @@ export default class Sider extends React.Component {
 
     this.setState({ current: e.key });
   }
-  onOpenChange = (openKeys) => {
+  onOpenChange = (openKeys: string[]) => {
     const state = this.state;
-    const latestOpenKey = openKeys.find(key => !(state.openKeys.indexOf(key) > -1));
-    const latestCloseKey = state.openKeys.find(key => !(openKeys.indexOf(key) > -1));
+    const latestOpenKey = openKeys.find((key: string) => !state.openKeys.includes(key));
+    const latestCloseKey = state.openKeys.find(key => !(openKeys.includes(key)));
 
-    let nextOpenKeys = [];
+    let nextOpenKeys: string[] = [];
     if (latestOpenKey) {
       nextOpenKeys = this.getAncestorKeys(latestOpenKey).concat(latestOpenKey);
     }
@@ -42,8 +45,8 @@ export default class Sider extends React.Component {
     }
     this.setState({ openKeys: nextOpenKeys });
   }
-  getAncestorKeys = (key) => {
-    const map = {
+  getAncestorKeys = (key: string) => {
+    const map: { [key: string]: string[] } = {
       sub3: ['sub2'],
     };
     return map[key] || [];

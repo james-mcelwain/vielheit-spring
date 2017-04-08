@@ -1,7 +1,8 @@
 import { injectReducer } from '../../store/reducers'
 import {PlainRoute} from "react-router"
 import {AppStore} from "../../store/store"
-import {global} from "../../main"
+
+declare const global: any
 
 export default (store: AppStore) => ({
   path : 'register',

@@ -1,12 +1,11 @@
-import React from 'react'
+import React, { createClass } from 'react'
 import './Header.scss'
 
 function buildHeader() {
   return new Array(Math.round(window.innerWidth / 8.3)).fill('/').join('.')
 }
 
-
-const Header = React.createClass({
+const Header = createClass({
   componentDidMount() {
     this.setState({title: buildHeader()})
     window.addEventListener("resize", () => {
