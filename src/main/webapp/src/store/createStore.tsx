@@ -25,7 +25,7 @@ export default (initialState: AppState) => {
   let composeEnhancers: (...enhancers: StoreEnhancer<any>[]) => StoreEnhancer<any> = compose
 
   if (__DEV__) {
-    const composeWithDevToolsExtension = global.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     if (typeof composeWithDevToolsExtension === 'function') {
       composeEnhancers = composeWithDevToolsExtension
     }

@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import './Profile.scss'
 import {ProfileState} from "../modules/profile"
 import User from "../../../domain/User"

@@ -1,9 +1,10 @@
-import React, {Component, SyntheticEvent} from 'react'
+import * as React from 'react'
 import { Alert, Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import { Link } from 'react-router'
 import { store } from '../../../main'
 import './EditorForm.scss'
 import Entry from "../../../domain/Entry"
+import SyntheticEvent = React.SyntheticEvent
 
 
 const FormItem = Form.Item

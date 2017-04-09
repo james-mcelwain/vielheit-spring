@@ -27,7 +27,7 @@ class LoginForm extends React.Component<{ loginState: LoginState, login: (req: L
     } = this.props.loginState
 
     return (
-      <Form onSubmit={this.handleSubmit} className="login-form">
+      <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
         <span>{error && <Alert message="Invalid email or password" type="error"/>}</span>
         <FormItem>
           {getFieldDecorator('emailAddress', {

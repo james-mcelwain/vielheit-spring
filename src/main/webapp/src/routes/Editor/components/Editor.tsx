@@ -1,4 +1,4 @@
-import React, {StatelessComponent} from 'react'
+import * as React from 'react'
 import './Editor.scss'
 import EditorForm from '../forms/EditorForm'
 import { Radio } from 'antd'
@@ -10,7 +10,7 @@ const a = { b() {} }
 
 class Register extends React.Component<{ changeForm: any, editorState: EditorState },{}> {
   private forms: {
-    [key: string]: StatelessComponent<any>
+    [key: string]: React.StatelessComponent<any>
   } = {
       ['entry']: EditorForm,
       ['space']: () => <div>space</div>,

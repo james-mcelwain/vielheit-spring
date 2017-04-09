@@ -1,6 +1,7 @@
-import React, {SyntheticEvent} from 'react'
+import * as React from 'react'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button } from 'antd'
 import {RegisterUserRequest} from "../modules/register"
+import SyntheticEvent = React.SyntheticEvent
 
 const Option = Select.Option
 

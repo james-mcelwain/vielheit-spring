@@ -23,7 +23,7 @@ export interface LoginUserRequest {
 }
 export const login = ({ emailAddress, password }: LoginUserRequest) => {
   return (dispatch: Dispatch<LoginState>, getState: () => AppState) =>
-  dispatch({ type: LOGIN_START }) &&
+  dispatch({ type: LOGIN_START() }) &&
   http.post(
     'auth/login',
     { emailAddress, password },
@@ -34,7 +34,7 @@ export const login = ({ emailAddress, password }: LoginUserRequest) => {
       sessionStorage.setItem('refreshToken', refreshToken)
       sessionStorage.setItem('user', JSON.stringify(user))
       dispatch({
-        type: LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS(),
         payload: new User(user)
       })
       browserHistory.push('/')
@@ -42,7 +42,7 @@ export const login = ({ emailAddress, password }: LoginUserRequest) => {
     .catch((err) => {
       sessionStorage.clear()
       dispatch({
-        type: LOGIN_FAIL,
+        type: LOGIN_FAIL(),
         payload: err
       })
     })

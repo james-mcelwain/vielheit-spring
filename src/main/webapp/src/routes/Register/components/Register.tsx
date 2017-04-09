@@ -1,7 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 import RegisterForm from '../forms/Register'
 import './Register.scss'
-import {RegisterUserRequest} from "../modules/register"
 
 export const Register = (props: any) => (
   <div className="register-container">
