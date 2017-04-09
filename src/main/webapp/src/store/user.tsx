@@ -23,7 +23,10 @@ const initialState: UserState = Object.assign(() => {
   id() {
     const id = this.currentUser && this.currentUser.id
 
-    if (!id) throw Error('id() called on null user')
+    if (!id)  {
+      store.dispatch(LOGOUT.toAction())
+      throw Error('id() called on null user')
+    }
     return id
   }
 })

@@ -1,21 +1,22 @@
 import * as React from 'react'
 import './Editor.scss'
-import EditorForm from '../forms/EditorForm'
+import EntryForm from '../forms/EntryForm'
+import ConceptForm from '../forms/ConceptForm'
+import TimeForm from '../forms/TimeForm'
+import SpaceForm from '../forms/SpaceForm'
 import { Radio } from 'antd'
 import {EditorState} from "../modules/editor"
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-const a = { b() {} }
-
 class Register extends React.Component<{ changeForm: any, editorState: EditorState },{}> {
   private forms: {
     [key: string]: React.StatelessComponent<any>
   } = {
-      ['entry']: EditorForm,
-      ['space']: () => <div>space</div>,
-      ['time']: () => <div>time</div>,
-      ['concept']: () => <div>concept</div>
+      ['entry']: EntryForm,
+      ['space']: SpaceForm,
+      ['time']: TimeForm,
+      ['concept']: ConceptForm,
     }
 
   onChange({ target: { value } }: { target: { value: string }}) {

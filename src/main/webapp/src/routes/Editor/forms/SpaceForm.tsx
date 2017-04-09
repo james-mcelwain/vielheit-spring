@@ -10,17 +10,7 @@ import SyntheticEvent = React.SyntheticEvent
 const FormItem = Form.Item
 const Option = Select.Option;
 
-const children: any[] = [];
-for (let i = 10; i < 36; i++) {
-  children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-}
-
-function handleChange(value: any) {
-  console.log(`selected ${value}`);
-}
-
-
-class EditorForm extends React.Component<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
+class SpaceForm extends React.Component<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
   handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFields((err: Error, entry: Entry) => {
@@ -40,27 +30,19 @@ class EditorForm extends React.Component<{ form: any, submitting: boolean, submi
     return (
       <Form onSubmit={this.handleSubmit} className="editor-form">
         <FormItem>
-          {getFieldDecorator('title', {
+          {getFieldDecorator('name', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="text" placeholder="Title"/>
+            <Input type="text" placeholder="Space"/>
           )}
         </FormItem>
         <FormItem>
-          {getFieldDecorator('body', {
+          {getFieldDecorator('description', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="textarea" placeholder="Entry"/>
+            <Input type="textarea" placeholder="Description"/>
           )}
         </FormItem>
-        <Select
-          mode="multiple"
-          style={{ width: '100%' }}
-          placeholder="Please select"
-          onChange={handleChange}
-        >
-          {children}
-        </Select>
         <FormItem>
           <Button className="editor-form-button" disabled={submitting} type="primary" htmlType="submit">
             Submit
@@ -71,4 +53,4 @@ class EditorForm extends React.Component<{ form: any, submitting: boolean, submi
   }
 }
 
-export default Form.create()(EditorForm)
+export default Form.create()(SpaceForm)
