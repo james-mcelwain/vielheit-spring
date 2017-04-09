@@ -11,7 +11,7 @@ export const actions = {
 }
 
 export function profile() {
-
+  // pass
 }
 
 // ------------------------------------

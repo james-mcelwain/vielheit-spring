@@ -6,17 +6,17 @@ import SyntheticEvent = React.SyntheticEvent
 const Option = Select.Option
 
 class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
-  getInitialState() {
+  public getInitialState() {
     return {
       passwordDirty: false,
     }
   }
-  isPristine() {
+  public isPristine() {
     const fields = ['firstName', 'lastName', 'emailAddress', 'password', 'confirm']
     const fieldVals = fields.map(this.props.form.getFieldValue)
     return !fieldVals.every((x) => x !== void 0)
   }
-  handleSubmit(e: SyntheticEvent<any>) {
+  public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err: Error, values: RegisterUserRequest) => {
       if (!err) {
@@ -24,11 +24,11 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
       }
     })
   }
-  handlePasswordBlur(e: any) {
+  public handlePasswordBlur(e: any) {
     const value = e.target.value
     this.setState({ passwordDirty: this.state.passwordDirty || !!value })
   }
-  checkPassword(rule: any, value: any, callback: any) {
+  public checkPassword(rule: any, value: any, callback: any) {
     const form = this.props.form
     if (value && value !== form.getFieldValue('password')) {
       callback('Two passwords that you enter is inconsistent!')
@@ -36,14 +36,15 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
       callback()
     }
   }
-  checkConfirm(rule: any, value: any, callback: any) {
+  public checkConfirm(rule: any, value: any, callback: any) {
     const form = this.props.form
     if (value && this.state.passwordDirty) {
       form.validateFields(['confirm'], { force: true })
     }
     callback()
   }
-  render() {
+
+  public render() {
     const { getFieldDecorator } = this.props.form
     const formItemLayout = {
       labelCol: { span: 6 },

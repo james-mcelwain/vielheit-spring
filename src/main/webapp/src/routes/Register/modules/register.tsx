@@ -1,4 +1,4 @@
-import { browserHistory } from 'react-router'
+import {browserHistory} from 'react-router'
 import {Dispatch} from 'redux'
 import http from '../../../http'
 import {AppAction} from '../../../store/appAction'
@@ -22,29 +22,29 @@ export interface RegisterUserRequest {
   password: string
 }
 
-export const register = ({ emailAddress, firstName, lastName, password }: RegisterUserRequest) =>  {
+export const register = ({emailAddress, firstName, lastName, password}: RegisterUserRequest) => {
   return (dispatch: Dispatch<AppState>, getState: () => AppState) =>
-    dispatch({ type: REGISTER_START }) &&
-    http.post(
-      'auth/register',
-      { emailAddress, firstName, lastName, password },
-      { headers: { 'Content-Type': 'application/json' } },
-      )
-      .then((response) => {
-        sessionStorage.setItem('token', response.data.token)
-        localStorage.setItem('refreshToken', response.data.refreshToken)
-        dispatch({
-          type: REGISTER_SUCCESS,
-          payload: response,
-        })
-        browserHistory.push('/')
+  dispatch({type: REGISTER_START}) &&
+  http.post(
+    'auth/register',
+    {emailAddress, firstName, lastName, password},
+    {headers: {'Content-Type': 'application/json'}},
+  )
+    .then((response) => {
+      sessionStorage.setItem('token', response.data.token)
+      localStorage.setItem('refreshToken', response.data.refreshToken)
+      dispatch({
+        payload: response,
+        type: REGISTER_SUCCESS,
       })
-      .catch((err) => {
-        dispatch({
-          type: REGISTER_FAIL,
-          payload: err,
-        })
+      browserHistory.push('/')
+    })
+    .catch((err) => {
+      dispatch({
+        payload: err,
+        type: REGISTER_FAIL,
       })
+    })
 }
 
 export const actions = {
@@ -54,10 +54,10 @@ export const actions = {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: { [k: string]: (state: RegisterState, action: AppAction<RegisterState>) => RegisterState } = {
-  [REGISTER_START()]          : (state, action) => ({ ...state, error: null, loggingIn: true } as RegisterState),
-  [REGISTER_FAIL()]           : (state, action) => ({ ...state, loggingIn: false, error: action.payload } as RegisterState),
-  [REGISTER_SUCCESS()]        : (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as RegisterState),
+const ACTION_HANDLERS: {[k: string]: (state: RegisterState, action: AppAction<RegisterState>) => RegisterState} = {
+  [REGISTER_START()]: (state, action) => ({...state, error: null, loggingIn: true} as RegisterState),
+  [REGISTER_FAIL()]: (state, action) => ({...state, loggingIn: false, error: action.payload} as RegisterState),
+  [REGISTER_SUCCESS()]: (state, action) => ({...state, loggingIn: false, loggedIn: true} as RegisterState),
 }
 
 // ------------------------------------
@@ -69,9 +69,9 @@ export interface RegisterState extends State {
   error: Error | null
 }
 const initialState: RegisterState = {
+  error: null,
   loggedIn: false,
   loggingIn: false,
-  error: null,
 }
 export default function registerReducer(state = initialState, action: AppAction<RegisterState>) {
   const handler = ACTION_HANDLERS[action.type]

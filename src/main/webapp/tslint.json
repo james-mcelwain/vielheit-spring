@@ -1,9 +1,13 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "max-line-length": 140,
     "ban-types": false,
     "quotemark": [true, "single", "avoid-escape"],
     "semicolon": false,
-    "interface-name": false
+    "interface-name": false,
+    "no-empty-interface": false,
+    "no-shadowed-variable": false,
+    "object-literal-sort-keys": false
   }
 }

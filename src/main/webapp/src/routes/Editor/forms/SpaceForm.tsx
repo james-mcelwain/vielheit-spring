@@ -10,7 +10,7 @@ const FormItem = Form.Item
 const Option = Select.Option;
 
 class SpaceForm extends React.Component<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
-  handleSubmit(e: SyntheticEvent<any>) {
+  public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFields((err: Error, entry: Entry) => {
       if (!err) {
@@ -19,7 +19,8 @@ class SpaceForm extends React.Component<{ form: any, submitting: boolean, submit
       }
     })
   }
-  render() {
+
+  public render() {
     const {
       getFieldDecorator,
     } = this.props.form

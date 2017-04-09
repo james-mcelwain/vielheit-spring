@@ -8,7 +8,7 @@ import './LoginForm.scss'
 const FormItem = Form.Item
 
 class LoginForm extends React.Component<{ loginState: LoginState, login: (req: LoginUserRequest) => void, form: any }, {}> {
-  handleSubmit(e: SyntheticEvent<any>) {
+  public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFields((err: Error, values: LoginUserRequest) => {
       if (!err) {
@@ -16,7 +16,8 @@ class LoginForm extends React.Component<{ loginState: LoginState, login: (req: L
       }
     })
   }
-  render() {
+
+  public render() {
     const {
       getFieldDecorator,
     } = this.props.form

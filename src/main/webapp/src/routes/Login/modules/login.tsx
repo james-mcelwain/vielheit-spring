@@ -68,11 +68,11 @@ const initialState = {
 class LoginModule extends AbstractModule<LoginState> {
   public state: LoginState
 
-  protected ACTION_HANDLERS = {
-    [LOGIN_START()]: (state: LoginState) => ({...state, error: null, loggingIn: true}),
-    [LOGIN_FAIL()]: (state: LoginState, action: AppAction<LoginState>) =>
-      ({...state, loggingIn: false, error: action.payload instanceof Error ? action.payload : null }),
-    [LOGIN_SUCCESS()]: (state: LoginState) => ({...state, loggingIn: false, loggedIn: true}),
+  protected ACTION_HANDLERS: {[p: string]: (state: LoginState, action?: AppAction<LoginState>) => LoginState} = {
+    [LOGIN_START()]: (state) => ({...state, error: null, loggingIn: true}),
+    [LOGIN_FAIL()]: (state, action) =>
+      ({...state, loggingIn: false, error: action && action.payload instanceof Error ? action.payload : null }),
+    [LOGIN_SUCCESS()]: (state) => ({...state, loggingIn: false, loggedIn: true}),
   }
 }
 const module = new LoginModule(initialState)

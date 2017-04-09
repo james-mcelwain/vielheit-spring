@@ -7,14 +7,34 @@ import { LOGOUT } from '../../store/user'
 const SubMenu = Menu.SubMenu;
 
 export default class Sider extends React.Component<{}, { openKeys: string[], current: string }> {
-  state: {
+  public state: {
     current: string,
     openKeys: string[],
   } = {
     current: '1',
     openKeys: [],
   }
-  handleClick = (e: any) => {
+
+  public render() {
+    return (
+      <Menu
+        mode="inline"
+        openKeys={this.state.openKeys}
+        selectedKeys={[this.state.current]}
+        style={{ width: 240 }}
+        onOpenChange={this.onOpenChange}
+        onClick={this.handleClick}
+      >
+        <SubMenu key="sub1" title={<span><Icon type="mail"/></span>}>
+          <Menu.Item key="Editor"><Link to="/editor">Editor</Link></Menu.Item>
+          <Menu.Item key="Profile"><Link to="/profile">Profile</Link></Menu.Item>
+          <Menu.Item key="Logout">Logout</Menu.Item>
+        </SubMenu>
+      </Menu>
+    );
+  }
+
+  private handleClick = (e: any) => {
     switch (e.key) {
       case 'Logout':
         store.dispatch({
@@ -33,7 +53,8 @@ export default class Sider extends React.Component<{}, { openKeys: string[], cur
 
     this.setState({ current: e.key });
   }
-  onOpenChange = (openKeys: string[]) => {
+
+  private onOpenChange = (openKeys: string[]) => {
     const state = this.state;
     const latestOpenKey = openKeys.find((key: string) => !state.openKeys.includes(key));
     const latestCloseKey = state.openKeys.find((key) => !(openKeys.includes(key)));
@@ -47,29 +68,11 @@ export default class Sider extends React.Component<{}, { openKeys: string[], cur
     }
     this.setState({ openKeys: nextOpenKeys });
   }
-  getAncestorKeys = (key: string) => {
+
+  private getAncestorKeys = (key: string) => {
     const map: { [key: string]: string[] } = {
       sub3: ['sub2'],
     };
     return map[key] || [];
-  }
-
-  render() {
-    return (
-      <Menu
-        mode="inline"
-        openKeys={this.state.openKeys}
-        selectedKeys={[this.state.current]}
-        style={{ width: 240 }}
-        onOpenChange={this.onOpenChange}
-        onClick={this.handleClick}
-      >
-        <SubMenu key="sub1" title={<span><Icon type="mail"/></span>}>
-          <Menu.Item key="Editor"><Link to="/editor">Editor</Link></Menu.Item>
-          <Menu.Item key="Profile"><Link to="/profile">Profile</Link></Menu.Item>
-          <Menu.Item key="Logout">Logout</Menu.Item>
-        </SubMenu>
-      </Menu>
-    );
   }
 }

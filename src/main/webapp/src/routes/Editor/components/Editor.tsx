@@ -19,15 +19,7 @@ class Register extends React.Component<{changeForm: any, editorState: EditorStat
     ['concept']: ConceptForm,
   }
 
-  onChange({target: {value}}: {target: {value: string}}) {
-    this.props.changeForm(value)
-  }
-
-  get Form() {
-    return this.forms[this.props.editorState.form]
-  }
-
-  render(...props: any[]) {
+  public render(...props: any[]) {
     return (
       <div className="editor-container">
         <RadioGroup onChange={this.onChange.bind(this)} defaultValue="a" size="large">
@@ -39,6 +31,14 @@ class Register extends React.Component<{changeForm: any, editorState: EditorStat
         <this.Form {...props}/>
       </div>
     )
+  }
+
+  private onChange({target: {value}}: {target: {value: string}}) {
+    this.props.changeForm(value)
+  }
+
+  private get Form() {
+    return this.forms[this.props.editorState.form]
   }
 }
 

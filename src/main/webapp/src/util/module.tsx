@@ -1,7 +1,7 @@
+import {Reducer} from 'redux'
 import {AppAction} from '../store/appAction'
 import {State} from '../store/appState'
 import {Callable, ToCallabe, toCallable} from './callable'
-import {Reducer} from 'redux'
 
 export abstract class AbstractModule<S extends State> {
   public static New<T extends State>(m: AbstractModule<T>, fn?: Reducer<T>): AbstractModule<T> & Callable<Reducer<T>> {

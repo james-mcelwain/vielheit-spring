@@ -14,8 +14,12 @@ export default function(state: ApplicationState = { error: null, loggedIn: false
     state.error = action.payload
   }
 
-  if (LOGIN_SUCCESS.compare(action)) return { ...state, loggedIn: true }
-  if (LOGOUT.compare(action)) return { ...state, loggedIn: false }
+  if (LOGIN_SUCCESS.compare(action)) {
+   state.loggedIn = true
+  }
+  if (LOGOUT.compare(action)) {
+    state.loggedIn = false
+  }
 
   return state
 }

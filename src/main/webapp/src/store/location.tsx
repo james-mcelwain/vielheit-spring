@@ -11,17 +11,17 @@ export const LOCATION_CHANGE = makeConstant('LOCATION_CHANGE')
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function locationChange(location =  {}) : AppAction<LocationState> {
+export function locationChange(location = {}): AppAction<LocationState> {
   return {
-    type    : LOCATION_CHANGE(),
-    payload : location,
+    payload: location,
+    type: LOCATION_CHANGE(),
   }
 }
 
 // ------------------------------------
 // Specialized Action Creator
 // ------------------------------------
-export const updateLocation = ({ dispatch }: AppStore) => {
+export const updateLocation = ({dispatch}: AppStore) => {
   return (nextLocation: any) => {
     dispatch(locationChange(nextLocation))
   }
@@ -31,7 +31,9 @@ export const updateLocation = ({ dispatch }: AppStore) => {
 // Reducer
 // ------------------------------------
 
-interface LocationState extends State {}
+interface LocationState extends State {
+  // todo
+}
 const initialState: LocationState = {}
 
 export default function locationReducer(state = initialState, action: AppAction<LocationState>) {
