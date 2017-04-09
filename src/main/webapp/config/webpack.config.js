@@ -10,6 +10,15 @@ const __DEV__ = project.globals.__DEV__
 const __PROD__ = project.globals.__PROD__
 const __TEST__ = project.globals.__TEST__
 
+console.log = (str) => {
+  str.split('\n').filter(x => x).forEach(x => debug(x))
+}
+
+console.error = (str) => {
+  debug(str.split('\n').filter(x => x).forEach(x => debug(x)))
+}
+
+
 debug('Creating configuration.')
 const webpackConfig = {
   name: 'client',
