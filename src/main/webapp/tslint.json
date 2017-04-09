@@ -1,6 +1,7 @@
 {
   "extends": "tslint:recommended",
   "rules": {
+    "ban-types": false,
     "quotemark": [true, "single", "avoid-escape"],
     "semicolon": false,
     "interface-name": false

@@ -1,10 +1,11 @@
 import {browserHistory, PlainRoute} from 'react-router'
-import {Dispatch} from 'redux'
+import {Dispatch, Reducer} from 'redux'
 import User from '../../../domain/User'
 import http from '../../../http'
 import {AppAction} from '../../../store/appAction'
 import {AppState} from '../../../store/appState'
 import makeConstant from '../../../store/makeConstant';
+import {AbstractModule} from '../../../util/module'
 
 // ------------------------------------
 // Constants
@@ -21,29 +22,29 @@ export interface LoginUserRequest {
   emailAddress: string
   password: string
 }
-export const login = ({ emailAddress, password }: LoginUserRequest) => {
+export const login = ({emailAddress, password}: LoginUserRequest) => {
   return (dispatch: Dispatch<LoginState>, getState: () => AppState) =>
-  dispatch({ type: LOGIN_START() }) &&
+  dispatch({type: LOGIN_START()}) &&
   http.post(
     'auth/login',
-    { emailAddress, password },
-    { headers: { 'Content-Type': 'application/json' } },
-    )
-    .then(({ data: { token, refreshToken, user } }) => {
+    {emailAddress, password},
+    {headers: {'Content-Type': 'application/json'}},
+  )
+    .then(({data: {token, refreshToken, user}}) => {
       sessionStorage.setItem('token', token)
       sessionStorage.setItem('refreshToken', refreshToken)
       sessionStorage.setItem('user', JSON.stringify(user))
       dispatch({
-        type: LOGIN_SUCCESS(),
         payload: new User(user),
+        type: LOGIN_SUCCESS(),
       })
       browserHistory.push('/')
     })
     .catch((err) => {
       sessionStorage.clear()
       dispatch({
-        type: LOGIN_FAIL(),
         payload: err,
+        type: LOGIN_FAIL(),
       })
     })
 }
@@ -52,32 +53,28 @@ export const actions = {
   login,
 }
 
-// ------------------------------------
-// Action Handlers
-// ------------------------------------
-const ACTION_HANDLERS: { [key: string]: (state: LoginState, action: AppAction<LoginState>) => LoginState } = {
-  [LOGIN_START()]: (state, action) => ({ ...state, error: null, loggingIn: true } as LoginState),
-  [LOGIN_FAIL()]: (state, action) => ({ ...state, loggingIn: false, error: action.payload } as LoginState),
-  [LOGIN_SUCCESS()]: (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as LoginState),
-}
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
-
 export interface LoginState {
   loggedIn: boolean
   loggingIn: boolean
   error: null | Error
 }
+
 const initialState = {
+  error: null,
   loggedIn: false,
   loggingIn: false,
-  error: null,
 }
 
-export default function loginReducer(state = initialState, action: AppAction<LoginState>) {
-  const handler = ACTION_HANDLERS[action.type]
+class LoginModule extends AbstractModule<LoginState> {
+  public state: LoginState
 
-  return handler ? handler(state, action) : state
+  protected ACTION_HANDLERS = {
+    [LOGIN_START()]: (state: LoginState) => ({...state, error: null, loggingIn: true}),
+    [LOGIN_FAIL()]: (state: LoginState, action: AppAction<LoginState>) =>
+      ({...state, loggingIn: false, error: action.payload instanceof Error ? action.payload : null }),
+    [LOGIN_SUCCESS()]: (state: LoginState) => ({...state, loggingIn: false, loggedIn: true}),
+  }
 }
+const module = new LoginModule(initialState)
+
+export default LoginModule.New<LoginState>(module)

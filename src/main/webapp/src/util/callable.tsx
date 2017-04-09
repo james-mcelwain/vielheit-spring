@@ -1,9 +1,7 @@
-export interface Callable<A, T> {
-  (a?: A): T
-}
+export type Callable<F extends Function> = F
 
-export type ToCallabe<C, A, T> = (klass: C, fn: (a: A) => T) => C & Callable<A, T>
+export type ToCallabe<C, F extends Function> = (klass: C, fn: F) => C & Callable<F>
 
-export function toCallable<C, A, T>(klass: C, fn: (a?: A) => T): C & Callable<A, T> {
-  return Object.assign<Callable<A,T>, C>(fn, klass)
+export function toCallable<C, F extends Function>(klass: C, fn: F): C & Callable<F> {
+  return Object.assign<Callable<F>, C>(fn, klass)
 }
