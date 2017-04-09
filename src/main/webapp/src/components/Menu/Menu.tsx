@@ -25,8 +25,10 @@ export default class Sider extends React.Component<{}, { openKeys: string[], cur
         break
       case "Profile":
         break
+      case "Editor":
+        break
       default:
-        throw new Error("INVARIANT")
+        throw new Error("NO KEY")
     }
 
     this.setState({ current: e.key });

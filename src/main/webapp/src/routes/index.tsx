@@ -21,7 +21,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
       }
     } else {
       store.dispatch({
-        type: LOGIN_SUCCESS,
+        type: LOGIN_SUCCESS(),
         payload: new User(sessionStorage.getItem('user'))
       })
       if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {

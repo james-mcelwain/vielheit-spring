@@ -26,7 +26,7 @@ class Register extends React.Component<{ changeForm: any, editorState: EditorSta
     return this.forms[this.props.editorState.form]
   }
 
-  render() {
+  render(...props: any[]) {
     return (
       <div className="editor-container">
         <RadioGroup onChange={this.onChange.bind(this)} defaultValue="a" size="large">
@@ -35,7 +35,7 @@ class Register extends React.Component<{ changeForm: any, editorState: EditorSta
           <RadioButton value="space">Space</RadioButton>
           <RadioButton value="time">Time</RadioButton>
         </RadioGroup>
-        <this.Form></this.Form>
+        <this.Form {...props}/>
       </div>
     )
   }

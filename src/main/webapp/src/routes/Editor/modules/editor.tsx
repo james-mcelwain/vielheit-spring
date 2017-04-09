@@ -21,11 +21,11 @@ const EDITOR_FORM_CHANGE = makeConstant('EDITOR_FORM_CHANGE')
 export const submit = (entry: Entry) => (dispatch: Dispatch<EditorState>, getState: () => AppState) =>
   dispatch({ type: SUBMIT_ENTRY_START }) &&
   http.post('entry', entry)
-    .then(() => dispatch({ type: SUBMIT_ENTRY_SUCCESS }))
-    .catch(() => dispatch({ type: SUBMIT_ENTRY_FAIL }))
+    .then(() => dispatch({ type: SUBMIT_ENTRY_SUCCESS() }))
+    .catch(() => dispatch({ type: SUBMIT_ENTRY_FAIL() }))
 
 export const changeForm = (formName: string) => (dispatch: Dispatch<EditorState>, getState: () => AppState) =>
-  dispatch({ type: EDITOR_FORM_CHANGE, payload: formName })
+  dispatch({ type: EDITOR_FORM_CHANGE(), payload: formName })
 
 export const actions = {
   submit,
