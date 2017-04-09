@@ -1,7 +1,7 @@
 import * as React from 'react'
+import {UserState} from '../../../store/user'
+import {ProfileState} from '../modules/profile'
 import './Profile.scss'
-import {ProfileState} from "../modules/profile"
-import {UserState} from "../../../store/user"
 
 export const Profile = (props: { user: UserState, profileState: ProfileState }) => (
   <div className="profile-container">

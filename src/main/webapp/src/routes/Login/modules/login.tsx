@@ -1,10 +1,10 @@
-import http from '../../../http'
 import {browserHistory, PlainRoute} from 'react-router'
+import {Dispatch} from 'redux'
 import User from '../../../domain/User'
-import {AppAction} from "../../../store/appAction"
-import {Dispatch} from "redux"
-import {AppState} from "../../../store/appState"
-import makeConstant from "../../../store/makeConstant";
+import http from '../../../http'
+import {AppAction} from '../../../store/appAction'
+import {AppState} from '../../../store/appState'
+import makeConstant from '../../../store/makeConstant';
 
 // ------------------------------------
 // Constants
@@ -27,7 +27,7 @@ export const login = ({ emailAddress, password }: LoginUserRequest) => {
   http.post(
     'auth/login',
     { emailAddress, password },
-    { headers: { 'Content-Type': 'application/json' } }
+    { headers: { 'Content-Type': 'application/json' } },
     )
     .then(({ data: { token, refreshToken, user } }) => {
       sessionStorage.setItem('token', token)
@@ -35,7 +35,7 @@ export const login = ({ emailAddress, password }: LoginUserRequest) => {
       sessionStorage.setItem('user', JSON.stringify(user))
       dispatch({
         type: LOGIN_SUCCESS(),
-        payload: new User(user)
+        payload: new User(user),
       })
       browserHistory.push('/')
     })
@@ -43,13 +43,13 @@ export const login = ({ emailAddress, password }: LoginUserRequest) => {
       sessionStorage.clear()
       dispatch({
         type: LOGIN_FAIL(),
-        payload: err
+        payload: err,
       })
     })
 }
 
 export const actions = {
-  login
+  login,
 }
 
 // ------------------------------------
@@ -58,7 +58,7 @@ export const actions = {
 const ACTION_HANDLERS: { [key: string]: (state: LoginState, action: AppAction<LoginState>) => LoginState } = {
   [LOGIN_START()]: (state, action) => ({ ...state, error: null, loggingIn: true } as LoginState),
   [LOGIN_FAIL()]: (state, action) => ({ ...state, loggingIn: false, error: action.payload } as LoginState),
-  [LOGIN_SUCCESS()]: (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as LoginState)
+  [LOGIN_SUCCESS()]: (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as LoginState),
 }
 
 // ------------------------------------

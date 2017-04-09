@@ -1,16 +1,16 @@
 import { connect } from 'react-redux'
-import { submit, changeForm } from '../modules/editor'
+import { changeForm, submit } from '../modules/editor'
 
+import {AppState} from '../../../store/appState'
 import Editor from '../components/Editor'
-import {AppState} from "../../../store/appState"
 
 const mapDispatchToProps = {
   submit,
-  changeForm
+  changeForm,
 }
 
 const mapStateToProps = (state: AppState) => ({
-  editorState: state.editor
+  editorState: state.editor,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

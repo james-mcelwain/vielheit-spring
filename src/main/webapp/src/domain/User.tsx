@@ -4,7 +4,6 @@ export default class User {
   public emailAddress: string
   public id: number
 
-
   constructor(user: User | string | null) {
     if (user !== null) {
       if (typeof user === 'string') {

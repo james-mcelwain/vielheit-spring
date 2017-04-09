@@ -1,25 +1,25 @@
+import {Radio} from 'antd'
 import * as React from 'react'
-import './Editor.scss'
-import EntryForm from '../forms/EntryForm'
 import ConceptForm from '../forms/ConceptForm'
-import TimeForm from '../forms/TimeForm'
+import EntryForm from '../forms/EntryForm'
 import SpaceForm from '../forms/SpaceForm'
-import { Radio } from 'antd'
-import {EditorState} from "../modules/editor"
+import TimeForm from '../forms/TimeForm'
+import {EditorState} from '../modules/editor'
+import './Editor.scss'
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-class Register extends React.Component<{ changeForm: any, editorState: EditorState },{}> {
+class Register extends React.Component<{changeForm: any, editorState: EditorState}, {}> {
   private forms: {
-    [key: string]: React.StatelessComponent<any>
+    [key: string]: React.StatelessComponent<any>,
   } = {
-      ['entry']: EntryForm,
-      ['space']: SpaceForm,
-      ['time']: TimeForm,
-      ['concept']: ConceptForm,
-    }
+    ['entry']: EntryForm,
+    ['space']: SpaceForm,
+    ['time']: TimeForm,
+    ['concept']: ConceptForm,
+  }
 
-  onChange({ target: { value } }: { target: { value: string }}) {
+  onChange({target: {value}}: {target: {value: string}}) {
     this.props.changeForm(value)
   }
 

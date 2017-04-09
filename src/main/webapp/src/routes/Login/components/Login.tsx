@@ -1,7 +1,7 @@
 import * as React from 'react'
 import LoginForm from '../forms/LoginForm'
+import {LoginState} from '../modules/login'
 import './Login.scss'
-import {LoginState} from "../modules/login"
 
 export const Login = (props: { loginState: LoginState }) => (
   <div className="login-container">

@@ -1,11 +1,10 @@
+import { Alert, Button, Checkbox, Form, Icon, Input, Select } from 'antd'
 import * as React from 'react'
-import { Alert, Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import { Link } from 'react-router'
+import Entry from '../../../domain/Entry'
 import { store } from '../../../main'
 import './EditorForm.scss'
-import Entry from "../../../domain/Entry"
 import SyntheticEvent = React.SyntheticEvent
-
 
 const FormItem = Form.Item
 const Option = Select.Option;
@@ -19,7 +18,6 @@ function handleChange(value: any) {
   console.log(`selected ${value}`);
 }
 
-
 class EntryForm extends React.Component<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
   handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
@@ -32,7 +30,7 @@ class EntryForm extends React.Component<{ form: any, submitting: boolean, submit
   }
   render() {
     const {
-      getFieldDecorator
+      getFieldDecorator,
     } = this.props.form
 
     const { submitting } = this.props
@@ -43,14 +41,14 @@ class EntryForm extends React.Component<{ form: any, submitting: boolean, submit
           {getFieldDecorator('title', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="text" placeholder="Title"/>
+            <Input type="text" placeholder="Title"/>,
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('body', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="textarea" placeholder="Entry"/>
+            <Input type="textarea" placeholder="Entry"/>,
           )}
         </FormItem>
         <Select

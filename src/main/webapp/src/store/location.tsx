@@ -1,20 +1,20 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-import {State} from "./appState"
-import {AppAction} from "./appAction"
-import {AppStore} from "./store"
-import makeConstant from "./makeConstant"
+import {AppAction} from './appAction'
+import {State} from './appState'
+import makeConstant from './makeConstant'
+import {AppStore} from './store'
 
 export const LOCATION_CHANGE = makeConstant('LOCATION_CHANGE')
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function locationChange (location =  {}) : AppAction<LocationState> {
+export function locationChange(location =  {}) : AppAction<LocationState> {
   return {
     type    : LOCATION_CHANGE(),
-    payload : location
+    payload : location,
   }
 }
 
@@ -34,7 +34,7 @@ export const updateLocation = ({ dispatch }: AppStore) => {
 interface LocationState extends State {}
 const initialState: LocationState = {}
 
-export default function locationReducer (state = initialState, action: AppAction<LocationState>) {
+export default function locationReducer(state = initialState, action: AppAction<LocationState>) {
   return LOCATION_CHANGE.compare(action)
     ? action.payload
     : state

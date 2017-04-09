@@ -8,7 +8,7 @@ function buildHeader() {
 const Header = React.createClass({
   componentDidMount() {
     this.setState({title: buildHeader()})
-    window.addEventListener("resize", () => {
+    window.addEventListener('resize', () => {
       this.setState({title: buildHeader()})
     })
   },

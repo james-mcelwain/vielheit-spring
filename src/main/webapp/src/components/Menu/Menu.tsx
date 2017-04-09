@@ -1,34 +1,34 @@
+import { Icon, Menu } from 'antd';
 import * as React from 'react'
-import { Menu, Icon } from 'antd';
 import { Link } from 'react-router'
-import { LOGOUT } from '../../store/user'
 import { store } from '../../main'
+import { LOGOUT } from '../../store/user'
 
 const SubMenu = Menu.SubMenu;
 
 export default class Sider extends React.Component<{}, { openKeys: string[], current: string }> {
   state: {
     current: string,
-    openKeys: string[]
+    openKeys: string[],
   } = {
     current: '1',
     openKeys: [],
   }
   handleClick = (e: any) => {
     switch (e.key) {
-      case "Logout":
+      case 'Logout':
         store.dispatch({
-          type: LOGOUT
+          type: LOGOUT,
         })
         sessionStorage.clear()
         // browserHistory.go('/login')
         break
-      case "Profile":
+      case 'Profile':
         break
-      case "Editor":
+      case 'Editor':
         break
       default:
-        throw new Error("NO KEY")
+        throw new Error('NO KEY')
     }
 
     this.setState({ current: e.key });
@@ -36,7 +36,7 @@ export default class Sider extends React.Component<{}, { openKeys: string[], cur
   onOpenChange = (openKeys: string[]) => {
     const state = this.state;
     const latestOpenKey = openKeys.find((key: string) => !state.openKeys.includes(key));
-    const latestCloseKey = state.openKeys.find(key => !(openKeys.includes(key)));
+    const latestCloseKey = state.openKeys.find((key) => !(openKeys.includes(key)));
 
     let nextOpenKeys: string[] = [];
     if (latestOpenKey) {

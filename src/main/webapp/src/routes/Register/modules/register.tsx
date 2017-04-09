@@ -1,10 +1,9 @@
-import http from '../../../http'
 import { browserHistory } from 'react-router'
-import makeConstant, {ActionType} from "../../../store/makeConstant"
-import {Dispatch} from "redux"
-import {AppState, State} from "../../../store/appState"
-import {AppAction} from "../../../store/appAction"
-
+import {Dispatch} from 'redux'
+import http from '../../../http'
+import {AppAction} from '../../../store/appAction'
+import {AppState, State} from '../../../store/appState'
+import makeConstant, {ActionType} from '../../../store/makeConstant'
 
 // ------------------------------------
 // Constants
@@ -29,27 +28,27 @@ export const register = ({ emailAddress, firstName, lastName, password }: Regist
     http.post(
       'auth/register',
       { emailAddress, firstName, lastName, password },
-      { headers: { 'Content-Type': 'application/json' } }
+      { headers: { 'Content-Type': 'application/json' } },
       )
       .then((response) => {
-        sessionStorage.setItem("token", response.data.token)
-        localStorage.setItem("refreshToken", response.data.refreshToken)
+        sessionStorage.setItem('token', response.data.token)
+        localStorage.setItem('refreshToken', response.data.refreshToken)
         dispatch({
           type: REGISTER_SUCCESS,
-          payload: response
+          payload: response,
         })
         browserHistory.push('/')
       })
       .catch((err) => {
         dispatch({
           type: REGISTER_FAIL,
-          payload: err
+          payload: err,
         })
       })
 }
 
 export const actions = {
-  register
+  register,
 }
 
 // ------------------------------------
@@ -58,7 +57,7 @@ export const actions = {
 const ACTION_HANDLERS: { [k: string]: (state: RegisterState, action: AppAction<RegisterState>) => RegisterState } = {
   [REGISTER_START()]          : (state, action) => ({ ...state, error: null, loggingIn: true } as RegisterState),
   [REGISTER_FAIL()]           : (state, action) => ({ ...state, loggingIn: false, error: action.payload } as RegisterState),
-  [REGISTER_SUCCESS()]        : (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as RegisterState)
+  [REGISTER_SUCCESS()]        : (state, action) => ({ ...state, loggingIn: false, loggedIn: true } as RegisterState),
 }
 
 // ------------------------------------

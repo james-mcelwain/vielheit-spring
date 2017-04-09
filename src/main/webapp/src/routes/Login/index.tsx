@@ -1,12 +1,12 @@
+import {PlainRoute} from 'react-router'
 import { injectReducer } from '../../store/reducers'
-import {PlainRoute} from "react-router"
-import {AppStore} from "../../store/store"
+import {AppStore} from '../../store/store'
 
 declare const require: any
 
 export default (store: AppStore) => ({
   path : 'login',
-  getComponent (nextState, cb) {
+  getComponent(nextState, cb) {
     require.ensure([], (require: any) => {
       const Login = require('./containers/LoginContainer').default
       const reducer = require('./modules/login').default
@@ -15,5 +15,5 @@ export default (store: AppStore) => ({
 
       cb(null, Login)
     }, 'login')
-  }
+  },
 } as PlainRoute)

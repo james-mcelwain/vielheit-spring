@@ -1,9 +1,9 @@
-import {LOGIN_SUCCESS} from "../routes/Login/modules/login"
-import {AppAction} from "./appAction"
-import makeConstant from "./makeConstant"
-import User from "../domain/User"
-import {State} from "./appState";
+import User from '../domain/User'
 import {store} from '../main'
+import {LOGIN_SUCCESS} from '../routes/Login/modules/login'
+import {AppAction} from './appAction'
+import {State} from './appState';
+import makeConstant from './makeConstant'
 
 export interface UserState extends State {
   (): User // panic!
@@ -28,7 +28,7 @@ const initialState: UserState = Object.assign(() => {
       throw Error('id() called on null user')
     }
     return id
-  }
+  },
 })
 export default function UserReducer(state = initialState, action: AppAction<UserState>): UserState {
   if (action.payload instanceof User && LOGIN_SUCCESS.compare(action)) {
@@ -43,4 +43,3 @@ export default function UserReducer(state = initialState, action: AppAction<User
 }
 
 export const LOGOUT = makeConstant<UserState>('LOGOUT')
-

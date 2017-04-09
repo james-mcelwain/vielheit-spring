@@ -5,8 +5,8 @@
 // ------------------------------------
 // Actions
 // ------------------------------------
-import {AppAction} from "../../../store/appAction"
-import {State} from "../../../store/appState"
+import {AppAction} from '../../../store/appAction'
+import {State} from '../../../store/appState'
 export const actions = {
 }
 
@@ -18,7 +18,7 @@ export function profile() {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS: {
-  [key: string]: (state: ProfileState, action: AppAction<ProfileState>) => void
+  [key: string]: (state: ProfileState, action: AppAction<ProfileState>) => void,
 } = {
 }
 

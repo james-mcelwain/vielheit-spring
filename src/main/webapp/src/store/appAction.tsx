@@ -1,6 +1,6 @@
 
-import {ActionType} from "./makeConstant"
-import {Action} from "redux"
+import {Action} from 'redux'
+import {ActionType} from './makeConstant'
 
 export interface AppAction<S> extends Action {
   type: ActionType

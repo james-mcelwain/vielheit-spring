@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { login } from '../modules/login'
 
+import {AppState} from '../../../store/appState'
 import Login from '../components/Login'
-import {AppState} from "../../../store/appState"
 
 const mapDispatchToProps = {
-  login
+  login,
 }
 
 const mapStateToProps = (state: AppState) => ({

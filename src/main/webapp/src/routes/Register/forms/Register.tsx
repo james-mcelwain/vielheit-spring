@@ -1,6 +1,6 @@
+import { Button, Cascader, Checkbox, Col, Form, Icon, Input, Row, Select, Tooltip } from 'antd'
 import * as React from 'react'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button } from 'antd'
-import {RegisterUserRequest} from "../modules/register"
+import {RegisterUserRequest} from '../modules/register'
 import SyntheticEvent = React.SyntheticEvent
 
 const Option = Select.Option
@@ -14,7 +14,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
   isPristine() {
     const fields = ['firstName', 'lastName', 'emailAddress', 'password', 'confirm']
     const fieldVals = fields.map(this.props.form.getFieldValue)
-    return !fieldVals.every(x => x !== void 0)
+    return !fieldVals.every((x) => x !== void 0)
   }
   handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
@@ -55,7 +55,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
     })(
       <Select className="icp-selector">
         <Option value="86">+86</Option>
-      </Select>
+      </Select>,
     )
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -66,7 +66,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
           {getFieldDecorator('firstName', {
             rules: [{ required: true, message: 'Please input your first name!' }],
           })(
-            <Input />
+            <Input />,
           )}
       </Form.Item>
       <Form.Item
@@ -76,7 +76,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
           {getFieldDecorator('lastName', {
             rules: [{ required: true, message: 'Please input your last name!' }],
           })(
-            <Input />
+            <Input />,
           )}
         </Form.Item>
         <Form.Item
@@ -91,7 +91,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               required: true, message: 'Please input your email!',
             }],
           })(
-            <Input />
+            <Input />,
           )}
         </Form.Item>
         <Form.Item
@@ -106,7 +106,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               validator: this.checkConfirm,
             }],
           })(
-            <Input type="password" onBlur={this.handlePasswordBlur} />
+            <Input type="password" onBlur={this.handlePasswordBlur} />,
           )}
         </Form.Item>
         <Form.Item
@@ -121,7 +121,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               validator: this.checkPassword,
             }],
           })(
-            <Input type="password" />
+            <Input type="password" />,
           )}
         </Form.Item>
         <Form.Item>

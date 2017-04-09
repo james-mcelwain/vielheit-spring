@@ -1,10 +1,10 @@
+import { browserHistory } from 'react-router'
 import {applyMiddleware, compose, createStore, GenericStoreEnhancer, Middleware, StoreEnhancer} from 'redux'
 import thunk from 'redux-thunk'
-import { browserHistory } from 'react-router'
-import makeRootReducer from './reducers'
+import {AppState} from './appState'
 import { updateLocation } from './location'
-import AppStore from "./store"
-import {AppState} from "./appState"
+import makeRootReducer from './reducers'
+import AppStore from './store'
 
 declare const module: any
 declare const __DEV__: any
@@ -22,7 +22,7 @@ export default (initialState: AppState) => {
   // ======================================================
   const enhancers: Array<StoreEnhancer<any>> = []
 
-  let composeEnhancers: (...enhancers: StoreEnhancer<any>[]) => StoreEnhancer<any> = compose
+  let composeEnhancers: (...enhancers: Array<StoreEnhancer<any>>) => StoreEnhancer<any> = compose
 
   if (__DEV__) {
     const composeWithDevToolsExtension = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -30,7 +30,6 @@ export default (initialState: AppState) => {
       composeEnhancers = composeWithDevToolsExtension
     }
   }
-
 
   // ======================================================
   // Store Instantiation and HMR Setup
@@ -40,8 +39,8 @@ export default (initialState: AppState) => {
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),
-      ...enhancers
-    )
+      ...enhancers,
+    ),
   ) as AppStore
   store.asyncReducers = {}
 

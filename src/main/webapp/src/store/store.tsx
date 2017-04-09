@@ -1,6 +1,6 @@
-import {Reducer, Store} from "redux"
-import {AppState, State} from "./appState"
-import {UnregisterCallback} from "history"
+import {UnregisterCallback} from 'history'
+import {Reducer, Store} from 'redux'
+import {AppState, State} from './appState'
 
 export interface AsyncReducerMap {
   [key: string]: Reducer<State>

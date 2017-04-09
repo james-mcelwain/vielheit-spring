@@ -2,12 +2,12 @@
 // Constants
 // ------------------------------------
 
-import http from "../../../http"
-import {AppAction} from "../../../store/appAction"
-import makeConstant from "../../../store/makeConstant"
-import {Dispatch} from "redux"
-import {AppState} from "../../../store/appState"
-import Entry from "../../../domain/Entry"
+import {Dispatch} from 'redux'
+import Entry from '../../../domain/Entry'
+import http from '../../../http'
+import {AppAction} from '../../../store/appAction'
+import {AppState} from '../../../store/appState'
+import makeConstant from '../../../store/makeConstant'
 
 const SUBMIT_ENTRY_START =  makeConstant('SUBMIT_ENTRY_START')
 const SUBMIT_ENTRY_SUCCESS = makeConstant('SUBMIT_ENTRY_SUCCESS')
@@ -29,7 +29,7 @@ export const changeForm = (formName: string) => (dispatch: Dispatch<EditorState>
 
 export const actions = {
   submit,
-  changeForm
+  changeForm,
 }
 
 // ------------------------------------
@@ -39,7 +39,7 @@ const ACTION_HANDLERS: { [key: string]: (state: EditorState, action: AppAction<E
   [SUBMIT_ENTRY_START()]: (state, action) => ({ ...state, error: null, submitting: true } as EditorState),
   [SUBMIT_ENTRY_SUCCESS()]: (state, action) => ({ ...state, submitting: false } as EditorState),
   [SUBMIT_ENTRY_FAIL()]: (state, action) => ({ ...state, submitting: false, error: action.payload } as EditorState),
-  [EDITOR_FORM_CHANGE()]: (state, action) => ({ ...state, form: action.payload } as EditorState)
+  [EDITOR_FORM_CHANGE()]: (state, action) => ({ ...state, form: action.payload } as EditorState),
 }
 
 // ------------------------------------
@@ -53,7 +53,7 @@ export interface EditorState {
 const initialState = {
   form: 'entry',
   submitting: false,
-  error: null
+  error: null,
 }
 
 export default function registerReducer(state = initialState, action: AppAction<EditorState>) {

@@ -4,6 +4,7 @@ const cssnano = require('cssnano')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('./project.config')
+const tslint = require('./tslint.config')
 const debug = require('debug')('app:config:webpack')
 
 const __DEV__ = project.globals.__DEV__
@@ -18,6 +19,7 @@ console.error = (str) => {
   debug(str.split('\n').filter(x => x).forEach(x => debug(x)))
 }
 
+process.on('uncaughtException', (...args) => console.log(...args.map(x => x.toString())))
 
 debug('Creating configuration.')
 const webpackConfig = {
@@ -141,9 +143,9 @@ webpackConfig.module.loaders = [{
 }]
 
 webpackConfig.module.loaders.push({
-  test: /.tsx?$/,
+  test: /\.tsx?$/,
   exclude: /node_modules/,
-  loader: 'awesome-typescript-loader'
+  loaders: ['awesome-typescript-loader','tslint-loader']
 })
 
 // ------------------------------------

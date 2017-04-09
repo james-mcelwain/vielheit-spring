@@ -1,4 +1,4 @@
-import {Action} from "redux"
+import {Action} from 'redux'
 import {AppAction} from './appAction'
 export type ActionType =  string
 
@@ -13,6 +13,6 @@ export default function makeConstant<S>(constantString: ActionType): ActionConst
     return constantString
   }, {
     compare(a: Action) { return a.type  === constantString },
-    toAction<S>(payload?: S[keyof S] | S) { return  payload? { type: constantString, payload } : { type: constantString }}
+    toAction<S>(payload?: S[keyof S] | S) { return  payload ? { type: constantString, payload } : { type: constantString }},
   })
 }

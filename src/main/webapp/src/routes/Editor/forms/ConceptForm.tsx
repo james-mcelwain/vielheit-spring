@@ -1,11 +1,10 @@
+import { Alert, Button, Checkbox, Form, Icon, Input, Select } from 'antd'
 import * as React from 'react'
-import { Alert, Form, Icon, Input, Button, Checkbox, Select } from 'antd'
 import { Link } from 'react-router'
+import Entry from '../../../domain/Entry'
 import { store } from '../../../main'
 import './EditorForm.scss'
-import Entry from "../../../domain/Entry"
 import SyntheticEvent = React.SyntheticEvent
-
 
 const FormItem = Form.Item
 const Option = Select.Option;
@@ -22,7 +21,7 @@ class ConceptForm extends React.Component<{ form: any, submitting: boolean, subm
   }
   render() {
     const {
-      getFieldDecorator
+      getFieldDecorator,
     } = this.props.form
 
     const { submitting } = this.props
@@ -33,14 +32,14 @@ class ConceptForm extends React.Component<{ form: any, submitting: boolean, subm
           {getFieldDecorator('name', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="text" placeholder="Concept"/>
+            <Input type="text" placeholder="Concept"/>,
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('description', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input type="textarea" placeholder="Description"/>
+            <Input type="textarea" placeholder="Description"/>,
           )}
         </FormItem>
         <FormItem>

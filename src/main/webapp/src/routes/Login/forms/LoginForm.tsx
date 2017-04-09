@@ -1,9 +1,9 @@
+import {SyntheticEvent} from '@types/react';
+import { Alert, Button, Checkbox, Form, Icon, Input } from 'antd'
 import * as React from 'react'
-import { Alert, Form, Icon, Input, Button, Checkbox } from 'antd'
 import { Link } from 'react-router'
+import {LoginState, LoginUserRequest} from '../modules/login'
 import './LoginForm.scss'
-import {SyntheticEvent} from "@types/react";
-import {LoginState, LoginUserRequest} from "../modules/login"
 
 const FormItem = Form.Item
 
@@ -18,12 +18,12 @@ class LoginForm extends React.Component<{ loginState: LoginState, login: (req: L
   }
   render() {
     const {
-      getFieldDecorator
+      getFieldDecorator,
     } = this.props.form
 
     const {
       error,
-      loggingIn
+      loggingIn,
     } = this.props.loginState
 
     return (
@@ -33,14 +33,14 @@ class LoginForm extends React.Component<{ loginState: LoginState, login: (req: L
           {getFieldDecorator('emailAddress', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input addonBefore={<Icon type="user" />} placeholder="Email" />
+            <Input addonBefore={<Icon type="user" />} placeholder="Email" />,
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
+            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />,
           )}
         </FormItem>
         <FormItem>
