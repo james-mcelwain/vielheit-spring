@@ -15,15 +15,16 @@ const loggedIn = () => sessionStorage.getItem('token')
 export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => ({
   path: '/',
   onEnter: ({ location }, replace) => {
+    const $cover = document.querySelector('#cover')
+    if ($cover) {
+      setTimeout(() => $cover.remove(), 100)
+    }
     if (!loggedIn()) {
       if (!pubPaths.includes(location.pathname)) {
         replace('/login')
       }
     } else {
-      store.dispatch({
-        type: LOGIN_SUCCESS(),
-        payload: new User(sessionStorage.getItem('user')),
-      })
+      store.dispatch(LOGIN_SUCCESS.toAction(new User(sessionStorage.getItem('user'))))
       if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
         replace('/')
       }

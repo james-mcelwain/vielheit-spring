@@ -4,7 +4,6 @@ const cssnano = require('cssnano')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const project = require('./project.config')
-const tslint = require('./tslint.config')
 const debug = require('debug')('app:config:webpack')
 
 const __DEV__ = project.globals.__DEV__
