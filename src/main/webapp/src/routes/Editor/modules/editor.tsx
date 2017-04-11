@@ -8,6 +8,7 @@ import http from '../../../http'
 import {AppAction} from '../../../store/appAction'
 import {AppState} from '../../../store/appState'
 import makeConstant from '../../../store/makeConstant'
+import {AbstractModule} from '../../../core/AbstractModule'
 
 const SUBMIT_ENTRY_START =  makeConstant('SUBMIT_ENTRY_START')
 const SUBMIT_ENTRY_SUCCESS = makeConstant('SUBMIT_ENTRY_SUCCESS')
@@ -35,26 +36,25 @@ export const actions = {
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
-const ACTION_HANDLERS: { [key: string]: (state: EditorState, action: AppAction<EditorState>) => EditorState } = {
-  [SUBMIT_ENTRY_START()]: (state, action) => ({ ...state, error: null, submitting: true } as EditorState),
-  [SUBMIT_ENTRY_SUCCESS()]: (state, action) => ({ ...state, submitting: false } as EditorState),
-  [SUBMIT_ENTRY_FAIL()]: (state, action) => ({ ...state, submitting: false, error: action.payload } as EditorState),
-  [EDITOR_FORM_CHANGE()]: (state, action) => ({ ...state, form: action.payload } as EditorState),
-}
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
 export interface EditorState {
   form: string,
   submitting: boolean,
   error: Error | null
 }
-const initialState = {
+
+class EditorModule extends AbstractModule<EditorModule, EditorState> {
+  public state: EditorState;
+}
+
+const module = new EditorModule({
   form: 'entry',
   submitting: false,
   error: null,
-}
+})
+  .addAction(SUBMIT_ENTRY_START, (state) => ({ ...state, error: null, submitting: true }))
+  .addAction(SUBMIT_ENTRY_SUCCESS, (state) => ({ ...state, submitting: false }))
+  .addAction<Error>(SUBMIT_ENTRY_FAIL, (state, { payload }) => ({ ...state, error: payload instanceof Error ? payload : null, submitting: false }))
+  .addAction(EDITOR_FORM_CHANGE, (state, action) => ({ ...state, form: action.payload }))
 
 export default function registerReducer(state = initialState, action: AppAction<EditorState>) {
   const handler = ACTION_HANDLERS[action.type]

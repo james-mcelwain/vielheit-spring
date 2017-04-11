@@ -5,18 +5,12 @@ import http from '../../../http'
 import {AppAction} from '../../../store/appAction'
 import {AppState} from '../../../store/appState'
 import makeConstant from '../../../store/makeConstant';
-import {AbstractModule} from '../../../util/module'
+import {AbstractModule} from '../../../core/AbstractModule'
 
-// ------------------------------------
-// Constants
-// ------------------------------------
 export const LOGIN_START = makeConstant('LOGIN_START')
 export const LOGIN_SUCCESS = makeConstant('LOGIN_SUCCESS')
 export const LOGIN_FAIL = makeConstant('LOGIN_FAIL')
 
-// ------------------------------------
-// Actions
-// ------------------------------------
 export interface LoginUserRequest {
   emailAddress: string
   password: string
@@ -28,13 +22,7 @@ export interface LoginState {
   error: null | Error
 }
 
-const initialState = {
-  error: null,
-  loggedIn: false,
-  loggingIn: false,
-}
-
-class LoginModule extends AbstractModule<LoginModule, LoginState> {
+class LoginModule extends AbstractModule<LoginState> {
   public state: LoginState
 
   public login({emailAddress, password}: LoginUserRequest) {
@@ -65,7 +53,11 @@ class LoginModule extends AbstractModule<LoginModule, LoginState> {
   }
 }
 
-export default new LoginModule(initialState)
+export default new LoginModule({
+  error: null,
+  loggedIn: false,
+  loggingIn: false,
+})
   .addAction(LOGIN_START, (state) => ({...state, error: null, loggingIn: true}))
   .addAction(LOGIN_FAIL, (state, action) => ({
     ...state,
