@@ -5,7 +5,7 @@ import './Profile.scss'
 
 export const Profile = (props: { user: UserState, profileState: ProfileState }) => (
   <div className="profile-container">
-    <div>Name { props.user().fullName() }</div>
+    <div>Name { props.user.currentUser && props.user.currentUser.fullName() }</div>
   </div>
 )
 

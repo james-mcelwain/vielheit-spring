@@ -10,7 +10,7 @@ export interface UserState extends State {
   currentUser: User | null
   id(): number // panic!
 }
-const initialState: UserState = Object.assign(() => {
+const initialState: UserState = Object.assign(function() {
     const user = this.currentUser
     if (!user) {
       store.dispatch(LOGOUT.toAction())

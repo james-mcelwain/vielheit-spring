@@ -1,25 +1,40 @@
 import {Reducer} from 'redux'
+import {Callable, toCallable} from './callable'
+
 import {AppAction} from '../store/appAction'
 import {State} from '../store/appState'
-import {Callable, ToCallabe, toCallable} from './callable'
+import {ActionConstant, ActionType, default as makeConstant} from '../store/makeConstant'
 
-export abstract class AbstractModule<S extends State> {
-  public static New<T extends State>(m: AbstractModule<T>, fn?: Reducer<T>): AbstractModule<T> & Callable<Reducer<T>> {
-    if (fn) {
-      return toCallable<AbstractModule<T>, Reducer<T>>(m, fn)
-    }
-
-    return toCallable<AbstractModule<T>, Reducer<T>>(m, (state: T = m.state, action: AppAction<T>) => {
-        const handler = m.ACTION_HANDLERS[action.type]
-        return handler ? handler(state, action) : state
-    })
-  }
-
+export abstract class AbstractModule<C extends AbstractModule<C, S>, S extends State> {
   public abstract state: S
-
-  protected abstract ACTION_HANDLERS: { [key: string]: (state: S, action?: AppAction<S>) => S }
+  protected actionHandlers: {[key: string]: (state: S, action?: AppAction<S>) => S} = {}
+  protected actionConstants: {[key: string]: ActionConstant<S>} = {}
 
   public constructor(initialState: S) {
     this.state = initialState
   }
+
+  public toReducer(fn?: Reducer<S>): C & Callable<Reducer<S>> {
+    if (fn) {
+      return toCallable<C, Reducer<S>>(this as any as C, fn)
+    }
+
+    return toCallable<C, Reducer<S>>(this as any as C, (state: S = this.state, action: AppAction<S>) => {
+      const handler = this.actionHandlers[action.type]
+      return handler ? handler(state, action) : state
+    })
+  }
+
+  public addAction(actionConstant: ActionConstant<S> | ActionType, fn: (state: S, action?: AppAction<S>) => S): AbstractModule<C, S> {
+    if (typeof actionConstant === 'string') {
+      this.actionConstants[actionConstant] = makeConstant(actionConstant)
+      this.actionHandlers[actionConstant] = fn
+      return this
+    }
+
+    this.actionConstants[actionConstant()] = actionConstant
+    this.actionHandlers[actionConstant()] = fn
+    return this
+  }
+
 }

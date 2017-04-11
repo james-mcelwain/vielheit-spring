@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 import './theme.less'
+import http from './http'
 
 declare const global: any
 declare const module: any
@@ -25,13 +26,14 @@ let render = () => {
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes}/>,
-    MOUNT_NODE
+    MOUNT_NODE,
   )
 }
 
+
 if (__DEV__) {
-  global['http'] = require('./http').default
-  global['store'] = store
+  global.http = http
+  global.store = store
 
   if (module.hot) {
     // Development render functions
@@ -57,7 +59,7 @@ if (__DEV__) {
       setImmediate(() => {
         ReactDOM.unmountComponentAtNode(MOUNT_NODE)
         render()
-      })
+      }),
     )
   }
 }
