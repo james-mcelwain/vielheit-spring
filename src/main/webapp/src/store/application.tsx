@@ -1,5 +1,5 @@
 import { LOGIN_SUCCESS } from '../routes/Login/modules/login'
-import {AppAction} from './appAction'
+import {AppAction} from './Action'
 import {State} from './appState'
 import makeConstant from './makeConstant'
 import { LOGOUT } from './user'

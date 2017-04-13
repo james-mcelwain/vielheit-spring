@@ -1,7 +1,7 @@
 import {browserHistory} from 'react-router'
 import {Dispatch} from 'redux'
 import http from '../../../http'
-import {AppAction} from '../../../store/appAction'
+import {AppAction} from '../../../store/Action'
 import {AppState, State} from '../../../store/appState'
 import makeConstant, {ActionType} from '../../../store/makeConstant'
 

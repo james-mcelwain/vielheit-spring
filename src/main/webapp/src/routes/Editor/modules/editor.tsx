@@ -5,7 +5,7 @@
 import {Dispatch} from 'redux'
 import Entry from '../../../domain/Entry'
 import http from '../../../http'
-import {AppAction} from '../../../store/appAction'
+import {AppAction} from '../../../store/Action'
 import {AppState} from '../../../store/appState'
 import makeConstant from '../../../store/makeConstant'
 import {AbstractModule} from '../../../core/AbstractModule'
@@ -42,7 +42,7 @@ export interface EditorState {
   error: Error | null
 }
 
-class EditorModule extends AbstractModule<EditorModule, EditorState> {
+class EditorModule extends AbstractModule<EditorState> {
   public state: EditorState;
 }
 
@@ -53,11 +53,7 @@ const module = new EditorModule({
 })
   .addAction(SUBMIT_ENTRY_START, (state) => ({ ...state, error: null, submitting: true }))
   .addAction(SUBMIT_ENTRY_SUCCESS, (state) => ({ ...state, submitting: false }))
-  .addAction<Error>(SUBMIT_ENTRY_FAIL, (state, { payload }) => ({ ...state, error: payload instanceof Error ? payload : null, submitting: false }))
+  .addAction(SUBMIT_ENTRY_FAIL, (state, { payload }) => ({ ...state, error: payload instanceof Error ? payload : null, submitting: false }))
   .addAction(EDITOR_FORM_CHANGE, (state, action) => ({ ...state, form: action.payload }))
 
-export default function registerReducer(state = initialState, action: AppAction<EditorState>) {
-  const handler = ACTION_HANDLERS[action.type]
 
-  return handler ? handler(state, action) : state
-}

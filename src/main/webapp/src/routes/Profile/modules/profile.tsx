@@ -5,7 +5,7 @@
 // ------------------------------------
 // Actions
 // ------------------------------------
-import {AppAction} from '../../../store/appAction'
+import {AppAction} from '../../../store/Action'
 import {State} from '../../../store/appState'
 export const actions = {
 }
