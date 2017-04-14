@@ -6,14 +6,15 @@ import {AppState, State} from './appState'
 import AppStore, {AsyncReducerMap} from './store'
 import userReducer from './user'
 import location from './location'
+import {LOCATION_CHANGE} from './location'
 
 export const makeRootReducer = (asyncReducers?: AsyncReducerMap): Reducer<AppState> => {
-  return combineReducers({
+  return combineReducers<AppState>({
     application,
-    location,
+    location: LOCATION_CHANGE.handle.bind(LOCATION_CHANGE),
     user: userReducer,
     ...asyncReducers,
-  }) as Reducer<AppState>
+  })
 }
 
 export const injectReducer = (store: AppStore, {

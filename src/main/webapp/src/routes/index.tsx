@@ -9,6 +9,7 @@ import { LOGIN_SUCCESS } from './Login/modules/login'
 import ProfileRoute from './Profile'
 import RegisterRoute from './Register'
 
+
 const pubPaths = ['/login', '/register']
 const loggedIn = () => sessionStorage.getItem('token')
 
@@ -33,10 +34,8 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
   component: CoreLayout,
   indexRoute: Home,
   childRoutes: [
-    LoginRoute(store),
-    RegisterRoute(store),
     EditorRoute(store),
-    ProfileRoute(store),
+    LoginRoute(store),
   ],
 })
 

@@ -53,4 +53,3 @@ export default new EditorModule({
   .addAction(SUBMIT_ENTRY_SUCCESS)
   .addAction(SUBMIT_ENTRY_FAIL)
   .addAction(EDITOR_FORM_CHANGE)
-  .toReducer()

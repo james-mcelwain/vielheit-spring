@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import createStore from './store/createStore'
+import createRoutes from './routes'
 import AppContainer from './containers/AppContainer'
 import './theme.less'
 import http from './http'
@@ -10,19 +11,13 @@ declare const module: any
 declare const require: any
 declare const __DEV__: boolean
 
-// ========================================================
-// Store Instantiation
-// ========================================================
 const initialState = global.___INITIAL_STATE__
 export const store = createStore(initialState)
 
-// ========================================================
-// Render Setup
-// ========================================================
 const MOUNT_NODE = document.getElementById('root') as HTMLElement
 
 let render = () => {
-  const routes = require('./routes/index').default(store)
+  const routes = createRoutes(store)
 
   ReactDOM.render(
     <AppContainer store={store} routes={routes}/>,
@@ -60,7 +55,4 @@ if (__DEV__) {
   }
 }
 
-// ========================================================
-// Go!
-// ========================================================
 render()

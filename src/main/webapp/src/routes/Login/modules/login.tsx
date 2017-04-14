@@ -5,6 +5,7 @@ import http from '../../../http'
 import {AppState} from '../../../store/appState'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 import {Action} from '../../../store/Action'
+import construct = Reflect.construct
 
 export interface LoginUserRequest {
   emailAddress: string
@@ -18,6 +19,7 @@ export interface LoginState {
 }
 
 class LoginModule extends AbstractModule<LoginState> {
+
   @AsyncDispatch
   public login({emailAddress, password}: LoginUserRequest) {
     return async (dispatch: Dispatch<LoginState>, getState: () => AppState) => {
@@ -46,7 +48,7 @@ class LoginModule extends AbstractModule<LoginState> {
   }
 }
 
-export const module = new LoginModule({
+export const login = new LoginModule({
   error: null,
   loggedIn: false,
   loggingIn: false,
@@ -60,8 +62,7 @@ export const LOGIN_FAIL = new Action<LoginState>('LOGIN_FAIL', (state, payload) 
   error: payload && payload instanceof Error ? payload : null,
 }))
 
-export default module
+export default login
   .addAction(LOGIN_START)
   .addAction(LOGIN_SUCCESS)
   .addAction(LOGIN_FAIL)
-  .toReducer()

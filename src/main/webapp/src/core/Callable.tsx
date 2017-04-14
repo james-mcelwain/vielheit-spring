@@ -27,9 +27,7 @@ export abstract class Callable extends Function {
     return this.bind(this)
   }
 
-  private __call__() {
-    throw new Error('__call__ must be defined in derived instance!')
-  }
+  private __call__() {}
 }
 
 /**
@@ -37,11 +35,9 @@ export abstract class Callable extends Function {
  * provided to help obscure implementation details.
  */
 export function Call(prototype: any, name: string, descriptor: PropertyDescriptor) {
-  if (prototype.__call__) {
-    throw new Error(`Cannot create callable instance with method ${name}: __call__ already defined!`)
+  prototype.__call__ = function(...args: any[]) {
+    descriptor.value.call(this, ...args)
   }
-
-  prototype.__call__ = prototype[name]
 }
 
 /**

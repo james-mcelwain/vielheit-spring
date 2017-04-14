@@ -4,10 +4,10 @@ import {AppStore} from '../../store/store'
 
 declare const require: any
 
-export default (store: AppStore) => ({
+export default (store: AppStore): PlainRoute => ({
   path : 'editor',
   getComponent(nextState, cb) {
-    require.ensure([], (require: any) => {
+    require.ensure([], function(require: any) {
       const Editor = require('./containers/EditorContainer').default
       const reducer = require('./modules/editor').default
 
@@ -16,4 +16,4 @@ export default (store: AppStore) => ({
       cb(null, Editor)
     }, 'editor')
   },
-} as PlainRoute)
+})

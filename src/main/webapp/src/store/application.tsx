@@ -25,4 +25,4 @@ export default function(state: ApplicationState = { error: null, loggedIn: false
   return state
 }
 
-export const RESPONSE_ERROR = new Action('RESPONSE_ERROR', () => { /*pass*/ })
+export const RESPONSE_ERROR = new Action('RESPONSE_ERROR')

@@ -2,16 +2,16 @@ import {Action as ReduxAction} from 'redux'
 import {DispatchedAction} from './DispatchedAction'
 import {ActionType} from '../core/ActionType'
 import {Callable, Call} from '../core/Callable'
-import {AppState} from './appState'
+import {AppState, State} from './appState'
 
 export type ActionHandler<S> = (s: S, p: S[keyof S] | S) => S
 
-export class Action<S> extends Callable implements ReduxAction {
+export class Action<S extends State> extends Callable implements ReduxAction {
   public type: ActionType;
 
   private _handle: Function
 
-  public constructor(type: ActionType, fn: ActionHandler<S>) {
+  public constructor(type: ActionType, fn: ActionHandler<State> = (s = {}) => s) {
     super()
     this.type = type
     this._handle = fn

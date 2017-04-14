@@ -53,4 +53,3 @@ export default new RegisterModule({
   .addAction(REGISTER_START)
   .addAction(REGISTER_SUCCESS)
   .addAction(REGISTER_FAIL)
-  .toReducer()

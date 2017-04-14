@@ -2,10 +2,7 @@ import User from '../domain/User'
 import {store} from '../main'
 import {LOGIN_SUCCESS} from '../routes/Login/modules/login'
 import {DispatchedAction} from './DispatchedAction'
-import {State} from './appState';
-import makeConstant from './Action'
 import {Action} from './Action'
-
 
 export type UserState = User
 
@@ -30,7 +27,7 @@ const initialState: UserState | null = Object.assign(function() {
   },
 })
 
-export default function UserReducer(state = initialState, action: DispatchedAction<UserState>): UserState {
+export default function UserReducer(state = initialState, action: DispatchedAction<UserState>): UserState | null {
   if (action.payload instanceof User && LOGIN_SUCCESS.compare(action)) {
     state =  action.payload
   }
@@ -42,4 +39,4 @@ export default function UserReducer(state = initialState, action: DispatchedActi
   return state
 }
 
-export const LOGOUT = new Action('LOGOUT', () => { /*pass*/ })
+export const LOGOUT = new Action('LOGOUT')

@@ -10,7 +10,7 @@ const http = Axios.create({
 })
 
 http.interceptors.request.use((config) => {
-  const token = sessionStorage.getItem("token")
+  const token = sessionStorage.getItem('token')
 
   if (token) {
     config.headers = Object.assign({
@@ -30,7 +30,7 @@ http.interceptors.response.use((response) => {
   if (applicationErr) {
     store.dispatch({
       type: RESPONSE_ERROR,
-      payload: applicationErr
+      payload: applicationErr,
     })
   }
 

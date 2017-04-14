@@ -12,14 +12,8 @@ declare const require: any
 declare const window: any
 
 export default (initialState: AppState) => {
-  // ======================================================
-  // Middleware Configuration
-  // ======================================================
   const middleware: Middleware[] = [thunk]
 
-  // ======================================================
-  // Store Enhancers
-  // ======================================================
   const enhancers: Array<StoreEnhancer<any>> = []
 
   let composeEnhancers: (...enhancers: Array<StoreEnhancer<any>>) => StoreEnhancer<any> = compose
@@ -31,9 +25,6 @@ export default (initialState: AppState) => {
     }
   }
 
-  // ======================================================
-  // Store Instantiation and HMR Setup
-  // ======================================================
   const store: AppStore = createStore<AppState>(
     makeRootReducer(),
     initialState,
@@ -44,8 +35,7 @@ export default (initialState: AppState) => {
   ) as AppStore
   store.asyncReducers = {}
 
-  // To unsubscribe, invoke `store.unsubscribeHistory()` anytime
-  store.unsubscribeHistory = browserHistory.listen(location.updateLocation(store))
+  store.unsubscribeHistory = browserHistory.listen(location(store))
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
