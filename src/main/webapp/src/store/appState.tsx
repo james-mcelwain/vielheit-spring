@@ -3,10 +3,10 @@ import {ApplicationState} from './application'
 import {UserState} from './user'
 
 export interface AppState {
-  [key: string]: State
+  [key: string]: State | null
   register: RegisterState
   application: ApplicationState
-  user: UserState
+  user: UserState | null
 }
 
 export interface State {

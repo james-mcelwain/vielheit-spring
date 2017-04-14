@@ -1,20 +1,14 @@
 import {browserHistory} from 'react-router'
 import {Dispatch} from 'redux'
 import http from '../../../http'
-import {AppAction} from '../../../store/Action'
 import {AppState, State} from '../../../store/appState'
-import makeConstant, {ActionType} from '../../../store/makeConstant'
+import {Action} from '../../../store/Action'
+import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 
-// ------------------------------------
-// Constants
-// ------------------------------------
-export const REGISTER_START = makeConstant('REGISTER_START')
-export const REGISTER_SUCCESS = makeConstant('REGISTER_SUCCESS')
-export const REGISTER_FAIL = makeConstant('REGISTER_FAIL')
+export const REGISTER_START = new Action('REGISTER_START', (state, action) => ({...state, error: null, loggingIn: true}))
+export const REGISTER_SUCCESS = new Action('REGISTER_SUCCESS', (state, action) => ({...state, loggingIn: false, error: action.payload}))
+export const REGISTER_FAIL = new Action('REGISTER_FAIL', (state, action) => ({...state, loggingIn: false, loggedIn: true}))
 
-// ------------------------------------
-// Actions
-// ------------------------------------
 export interface RegisterUserRequest {
   emailAddress: string
   firstName: string
@@ -22,59 +16,41 @@ export interface RegisterUserRequest {
   password: string
 }
 
-export const register = ({emailAddress, firstName, lastName, password}: RegisterUserRequest) => {
-  return (dispatch: Dispatch<AppState>, getState: () => AppState) =>
-  dispatch({type: REGISTER_START}) &&
-  http.post(
-    'auth/register',
-    {emailAddress, firstName, lastName, password},
-    {headers: {'Content-Type': 'application/json'}},
-  )
-    .then((response) => {
-      sessionStorage.setItem('token', response.data.token)
-      localStorage.setItem('refreshToken', response.data.refreshToken)
-      dispatch({
-        payload: response,
-        type: REGISTER_SUCCESS,
-      })
-      browserHistory.push('/')
-    })
-    .catch((err) => {
-      dispatch({
-        payload: err,
-        type: REGISTER_FAIL,
-      })
-    })
-}
-
-export const actions = {
-  register,
-}
-
-// ------------------------------------
-// Action Handlers
-// ------------------------------------
-const ACTION_HANDLERS: {[k: string]: (state: RegisterState, action: AppAction<RegisterState>) => RegisterState} = {
-  [REGISTER_START()]: (state, action) => ({...state, error: null, loggingIn: true} as RegisterState),
-  [REGISTER_FAIL()]: (state, action) => ({...state, loggingIn: false, error: action.payload} as RegisterState),
-  [REGISTER_SUCCESS()]: (state, action) => ({...state, loggingIn: false, loggedIn: true} as RegisterState),
-}
-
-// ------------------------------------
-// Reducer
-// ------------------------------------
 export interface RegisterState extends State {
   loggedIn: boolean,
   loggingIn: boolean,
   error: Error | null
 }
-const initialState: RegisterState = {
+
+class RegisterModule extends AbstractModule<RegisterState> {
+
+  @AsyncDispatch
+  public register({emailAddress, firstName, lastName, password}: RegisterUserRequest) {
+    return async (dispatch: Dispatch<AppState>, getState: () => AppState) => {
+      dispatch(REGISTER_START.dispatch())
+      try {
+        const response = await http.post(
+          'auth/register',
+          {emailAddress, firstName, lastName, password},
+          {headers: {'Content-Type': 'application/json'}},
+        )
+        sessionStorage.setItem('token', response.data.token)
+        localStorage.setItem('refreshToken', response.data.refreshToken)
+        dispatch(REGISTER_SUCCESS.dispatch(response))
+        browserHistory.push('/')
+      } catch (err) {
+        dispatch(REGISTER_FAIL.dispatch(err))
+      }
+    }
+  }
+}
+
+export default new RegisterModule({
   error: null,
   loggedIn: false,
   loggingIn: false,
-}
-export default function registerReducer(state = initialState, action: AppAction<RegisterState>) {
-  const handler = ACTION_HANDLERS[action.type]
-
-  return handler ? handler(state, action) : state
-}
+})
+  .addAction(REGISTER_START)
+  .addAction(REGISTER_SUCCESS)
+  .addAction(REGISTER_FAIL)
+  .toReducer()

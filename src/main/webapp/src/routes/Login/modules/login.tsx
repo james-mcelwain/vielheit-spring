@@ -2,13 +2,9 @@ import {browserHistory, PlainRoute} from 'react-router'
 import {Dispatch, Reducer} from 'redux'
 import User from '../../../domain/User'
 import http from '../../../http'
-import {AppAction} from '../../../store/Action'
 import {AppState} from '../../../store/appState'
-import makeConstant from '../../../store/makeConstant';
-import {AbstractModule} from '../../../core/AbstractModule'
-import {ActionConstant} from '../../../store/makeConstant'
-
-
+import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
+import {Action} from '../../../store/Action'
 
 export interface LoginUserRequest {
   emailAddress: string
@@ -18,13 +14,14 @@ export interface LoginUserRequest {
 export interface LoginState {
   loggedIn: boolean
   loggingIn: boolean
-  error: null | Error
+  error: null | Error,
 }
 
 class LoginModule extends AbstractModule<LoginState> {
+  @AsyncDispatch
   public login({emailAddress, password}: LoginUserRequest) {
-    return this.asyncAction(async (dispatch: Dispatch<LoginState>, getState: () => AppState) => {
-      dispatch({type: LOGIN_START()})
+    return async (dispatch: Dispatch<LoginState>, getState: () => AppState) => {
+      dispatch(LOGIN_START.dispatch())
       try {
         const {data: {token, refreshToken, user}} = await http.post(
           'auth/login',
@@ -35,10 +32,8 @@ class LoginModule extends AbstractModule<LoginState> {
         sessionStorage.setItem('token', token)
         sessionStorage.setItem('refreshToken', refreshToken)
         sessionStorage.setItem('user', JSON.stringify(user))
-        dispatch({
-          payload: new User(user),
-          type: LOGIN_SUCCESS(),
-        })
+        dispatch(LOGIN_SUCCESS.dispatch(new User(user)))
+
         browserHistory.push('/')
       } catch (err) {
         sessionStorage.clear()
@@ -47,7 +42,7 @@ class LoginModule extends AbstractModule<LoginState> {
           type: LOGIN_FAIL(),
         })
       }
-    })
+    }
   }
 }
 
@@ -57,9 +52,9 @@ export const module = new LoginModule({
   loggingIn: false,
 })
 
-export const LOGIN_START = makeConstant<LoginState>('LOGIN_START', (state) => ({...state, error: null, loggingIn: true}))
-export const LOGIN_SUCCESS = makeConstant<LoginState>('LOGIN_SUCCESS', (state) => ({...state, loggingIn: false, loggedIn: true}))
-export const LOGIN_FAIL = makeConstant<LoginState>('LOGIN_FAIL', (state, payload) => ({
+export const LOGIN_START = new Action<LoginState>('LOGIN_START', (state) => ({...state, error: null, loggingIn: true}))
+export const LOGIN_SUCCESS = new Action<LoginState>('LOGIN_SUCCESS', (state) => ({...state, loggingIn: false, loggedIn: true}))
+export const LOGIN_FAIL = new Action<LoginState>('LOGIN_FAIL', (state, payload) => ({
   ...state,
   loggingIn: false,
   error: payload && payload instanceof Error ? payload : null,

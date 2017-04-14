@@ -1,15 +1,16 @@
 import { LOGIN_SUCCESS } from '../routes/Login/modules/login'
-import {AppAction} from './Action'
+import {DispatchedAction} from './DispatchedAction'
 import {State} from './appState'
-import makeConstant from './makeConstant'
+import makeConstant from './Action'
 import { LOGOUT } from './user'
+import {Action} from './Action'
 
 export interface ApplicationState extends State {
   error: Error | null,
   loggedIn: boolean
 }
 
-export default function(state: ApplicationState = { error: null, loggedIn: false }, action: AppAction<ApplicationState> ) {
+export default function(state: ApplicationState = { error: null, loggedIn: false }, action: DispatchedAction<ApplicationState> ) {
   if (action.payload instanceof Error && RESPONSE_ERROR.compare(action)) {
     state.error = action.payload
   }
@@ -24,4 +25,4 @@ export default function(state: ApplicationState = { error: null, loggedIn: false
   return state
 }
 
-export const RESPONSE_ERROR = makeConstant('RESPONSE_ERROR')
+export const RESPONSE_ERROR = new Action('RESPONSE_ERROR', () => { /*pass*/ })

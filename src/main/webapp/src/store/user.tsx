@@ -1,19 +1,18 @@
 import User from '../domain/User'
 import {store} from '../main'
 import {LOGIN_SUCCESS} from '../routes/Login/modules/login'
-import {AppAction} from './Action'
+import {DispatchedAction} from './DispatchedAction'
 import {State} from './appState';
-import makeConstant from './makeConstant'
+import makeConstant from './Action'
+import {Action} from './Action'
 
-export interface UserState extends State {
-  (): User // panic!
-  currentUser: User | null
-  id(): number // panic!
-}
-const initialState: UserState = Object.assign(function() {
+
+export type UserState = User
+
+const initialState: UserState | null = Object.assign(function() {
     const user = this.currentUser
     if (!user) {
-      store.dispatch(LOGOUT.toAction())
+      store.dispatch(LOGOUT.dispatch())
       throw Error('user() called on null user')
     }
 
@@ -24,22 +23,23 @@ const initialState: UserState = Object.assign(function() {
     const id = this.currentUser && this.currentUser.id
 
     if (!id)  {
-      store.dispatch(LOGOUT.toAction())
+      store.dispatch(LOGOUT.dispatch())
       throw Error('id() called on null user')
     }
     return id
   },
 })
-export default function UserReducer(state = initialState, action: AppAction<UserState>): UserState {
+
+export default function UserReducer(state = initialState, action: DispatchedAction<UserState>): UserState {
   if (action.payload instanceof User && LOGIN_SUCCESS.compare(action)) {
-    state.currentUser =  action.payload
+    state =  action.payload
   }
 
   if (LOGOUT.compare(action)) {
-    state.currentUser = null
+    state = null
   }
 
   return state
 }
 
-export const LOGOUT = makeConstant<UserState>('LOGOUT')
+export const LOGOUT = new Action('LOGOUT', () => { /*pass*/ })

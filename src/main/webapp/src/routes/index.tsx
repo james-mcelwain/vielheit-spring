@@ -24,7 +24,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
         replace('/login')
       }
     } else {
-      store.dispatch(LOGIN_SUCCESS.toAction(new User(sessionStorage.getItem('user'))))
+      store.dispatch(LOGIN_SUCCESS.dispatch(new User(sessionStorage.getItem('user'))))
       if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
         replace('/')
       }

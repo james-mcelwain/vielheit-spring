@@ -1,3 +1,5 @@
+import {State} from '../store/appState'
+
 export default class User {
   public firstName: string
   public lastName: string

@@ -9,7 +9,7 @@ import './Editor.scss'
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
-class Register extends React.Component<{changeForm: any, editorState: EditorState}, {}> {
+class Register extends React.Component<{changeForm: any, editor: EditorState}, {}> {
   private forms: {
     [key: string]: React.StatelessComponent<any>,
   } = {
@@ -38,7 +38,7 @@ class Register extends React.Component<{changeForm: any, editorState: EditorStat
   }
 
   private get Form() {
-    return this.forms[this.props.editorState.form]
+    return this.forms[this.props.editor.form]
   }
 }
 

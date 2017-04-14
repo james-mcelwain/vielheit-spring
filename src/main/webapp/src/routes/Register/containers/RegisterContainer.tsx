@@ -1,16 +1,13 @@
 import { connect } from 'react-redux'
-import {register, RegisterState} from '../modules/register'
+import register from '../modules/register'
 
-import {ApplicationState} from '../../../store/application'
 import {AppState} from '../../../store/appState'
 import Register from '../components/Register'
 
-const mapDispatchToProps = {
-  register,
-}
+const mapDispatchToProps = register.getAsyncActions()
 
 const mapStateToProps = (state: AppState) => ({
-  registerState: state.register,
+   register: state.register,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)

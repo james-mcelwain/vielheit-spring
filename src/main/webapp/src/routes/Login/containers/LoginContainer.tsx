@@ -4,9 +4,7 @@ import loginModule from '../modules/login'
 import {AppState} from '../../../store/appState'
 import Login from '../components/Login'
 
-const mapDispatchToProps = {
-  login: loginModule.login,
-}
+const mapDispatchToProps = loginModule.getAsyncActions()
 
 const mapStateToProps = (state: AppState) => ({
   loginState: state.login,

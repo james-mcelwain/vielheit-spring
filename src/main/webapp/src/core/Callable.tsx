@@ -27,7 +27,9 @@ export abstract class Callable extends Function {
     return this.bind(this)
   }
 
-  protected __call__() { /* pass */ }
+  private __call__() {
+    throw new Error('__call__ must be defined in derived instance!')
+  }
 }
 
 /**
@@ -44,8 +46,8 @@ export function Call(prototype: any, name: string, descriptor: PropertyDescripto
 
 /**
  * A less sketchy way to provide a callable object, by mapping and binding properties
- * of a pre-existing class instance. *However*, it is important to note that this is
- * not preserve the class instance's nominal type -- i.e. `instanceof` is not prserved.
+ * of a pre-existing class instance. *However*, it is important to note that this does
+ * not preserve the class instance's nominal type -- i.e. `instanceof` is not preserved.
  *
  * F represent a function of any type that will be grafted on to our callable class.
  * As such the "this" context of the function cannot be guaranteed. We attempt to bind below

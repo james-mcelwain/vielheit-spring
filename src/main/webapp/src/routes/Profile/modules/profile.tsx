@@ -5,7 +5,7 @@
 // ------------------------------------
 // Actions
 // ------------------------------------
-import {AppAction} from '../../../store/Action'
+import {DispatchedAction} from '../../../store/DispatchedAction'
 import {State} from '../../../store/appState'
 export const actions = {
 }
@@ -18,7 +18,7 @@ export function profile() {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS: {
-  [key: string]: (state: ProfileState, action: AppAction<ProfileState>) => void,
+  [key: string]: (state: ProfileState, action: DispatchedAction<ProfileState>) => void,
 } = {
 }
 
@@ -29,7 +29,7 @@ const ACTION_HANDLERS: {
 export interface ProfileState extends State {}
 const initialState: ProfileState = {}
 
-export default function profileReducer(state = initialState, action: AppAction<ProfileState>) {
+export default function profileReducer(state = initialState, action: DispatchedAction<ProfileState>) {
   const handler = ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state

@@ -5,21 +5,12 @@ import Entry from '../../../domain/Entry'
 import { store } from '../../../main'
 import './EditorForm.scss'
 import SyntheticEvent = React.SyntheticEvent
+import EditorForm from './EditorForm'
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
-class SpaceForm extends React.Component<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
-  public handleSubmit(e: SyntheticEvent<any>) {
-    e.preventDefault()
-    this.props.form.validateFields((err: Error, entry: Entry) => {
-      if (!err) {
-        entry.user = { userId: store.getState().user.id() }
-        this.props.submit(entry)
-      }
-    })
-  }
-
+class SpaceForm extends EditorForm<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
   public render() {
     const {
       getFieldDecorator,

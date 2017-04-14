@@ -1,16 +1,16 @@
 import {
   combineReducers, Reducer,
 } from 'redux'
-import applicationReducer from './application'
+import application from './application'
 import {AppState, State} from './appState'
-import locationReducer from './location'
 import AppStore, {AsyncReducerMap} from './store'
 import userReducer from './user'
+import location from './location'
 
 export const makeRootReducer = (asyncReducers?: AsyncReducerMap): Reducer<AppState> => {
   return combineReducers({
-    application: applicationReducer,
-    location: locationReducer,
+    application,
+    location,
     user: userReducer,
     ...asyncReducers,
   }) as Reducer<AppState>
