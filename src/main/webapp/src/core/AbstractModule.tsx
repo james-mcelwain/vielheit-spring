@@ -1,4 +1,3 @@
-import {Reducer} from 'redux'
 import {DispatchedAction} from '../store/DispatchedAction'
 import {State, AppState} from '../store/appState'
 import {Dispatch} from 'react-redux'
@@ -7,10 +6,10 @@ import {ActionType} from './ActionType'
 
 export function AsyncDispatch(prototype: any, name: string, descriptor: PropertyDescriptor) {
   if (!prototype.asyncActions) {
-    prototype.asyncActions = {}
+    prototype.asyncActions = new Map()
   }
 
-  prototype.asyncActions[name] = prototype[name]
+  prototype.asyncActions.set(name, prototype[name])
 }
 
 export abstract class AbstractModule<S extends State> {
@@ -29,7 +28,18 @@ export abstract class AbstractModule<S extends State> {
   }
 
   public getAsyncActions() {
-    return this.asyncActions
+    const actions: { [key: string]: AsyncAction<S>} = {}
+
+    for (const [key, value] of this.asyncActions.entries()) {
+      actions[key] = value.bind(this)
+    }
+
+    return actions
+  }
+
+  public getReducer() {
+    // return bound instance for injection
+    return this.reducer.bind(this)
   }
 
   public reducer(s: S, action: DispatchedAction<S>): S {
@@ -43,5 +53,6 @@ export abstract class AbstractModule<S extends State> {
   }
 }
 
-export interface AsyncActionMap<S> { [key: string]: (...args: any[]) => (dispatch: Dispatch<S>, getState: () => AppState) => any }
-AbstractModule.prototype.asyncActions = {}
+type AsyncAction<S> = (...args: any[]) => (dispatch: Dispatch<S>, getState: () => AppState) => any
+export type AsyncActionMap<S> = Map<string, AsyncAction<S>>
+AbstractModule.prototype.asyncActions = new Map()

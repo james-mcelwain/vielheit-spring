@@ -10,10 +10,9 @@ export default function(store: AppStore): PlainRoute {
     getComponent(nextState, cb) {
       require.ensure([], function(require: any) {
         const Login = require('./containers/LoginContainer').default
-        const reducer = require('./modules/login').default
+        const module = require('./modules/login').default
 
-        injectReducer(store, {key: 'login', reducer })
-
+        injectReducer(store, {key: 'login', reducer: module.getReducer() })
         cb(null, Login)
       }, 'login')
     },
