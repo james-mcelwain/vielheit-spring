@@ -2,25 +2,43 @@ package com.vielheit.core.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "EntityType", schema = "vielheit")
-public class EntityType {
+public class EntityType implements Serializable {
     @Embeddable
     public static class Id implements Serializable {
         private Id() {}
 
         @Column(name = "userId")
-        protected Long userId;
+
+        private Long userId;
 
         @Column(name = "type")
-        protected String type;
+        private String type;
 
         public Id(Long userId, String type) {
             this.userId = userId;
+            this.type = type;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
             this.type = type;
         }
 
@@ -44,11 +62,10 @@ public class EntityType {
     }
 
     @EmbeddedId
-    @JsonIgnore
     Id id = new Id();
 
     @MapsId("userId")
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id")
     private User user;
 
@@ -77,5 +94,25 @@ public class EntityType {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        EntityType that = (EntityType) o;
+
+        if (!id.equals(that.id)) return false;
+        if (!user.equals(that.user)) return false;
+        return description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + user.hashCode();
+        result = 31 * result + description.hashCode();
+        return result;
     }
 }

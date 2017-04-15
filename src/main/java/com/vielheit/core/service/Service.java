@@ -1,6 +1,8 @@
 package com.vielheit.core.service;
 
+import com.vielheit.core.service.impl.UserServiceImpl;
 import com.vielheit.security.auth.JwtAuthenticationToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
