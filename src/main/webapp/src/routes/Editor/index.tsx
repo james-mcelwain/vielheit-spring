@@ -10,7 +10,7 @@ export default (store: AppStore): PlainRoute => ({
   getComponent(nextState, cb) {
     require.ensure([], function(require: any) {
       const Editor = require('./containers/EditorContainer').default
-      const reducer = (require('./modules/editor').default as LoginModule).reducer
+      const reducer = (require('./modules/editor').default as LoginModule).getReducer()
 
       injectReducer<LoginState>(store, { key: 'editor',  reducer })
 

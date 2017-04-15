@@ -43,7 +43,7 @@ export abstract class AbstractModule<S extends State> {
   }
 
   public reducer(s: S, action: DispatchedAction<S>): S {
-    if (this.state !== null && !s) {
+    if (!s && this.state !== null) {
       s = this.state
     }
 

@@ -3,6 +3,7 @@ import Entry from '../../../domain/Entry'
 import http from '../../../http'
 import {AppState} from '../../../store/appState'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
+import {EntityType} from '../../../domain/EntityType'
 
 
 export interface EditorState {
@@ -24,6 +25,19 @@ class EditorModule extends AbstractModule<EditorState> {
   @AsyncDispatch
   public changeForm(formName: string) {
     return (dispatch: Dispatch<EditorState>, getState: () => AppState) => dispatch(this.EDITOR_FORM_CHANGE.dispatch(formName))
+  }
+
+  @AsyncDispatch
+  public submitEntityType(entityType: EntityType) {
+    return async (dispatch: Dispatch<EditorState>, getState: () => AppState) => {
+      try {
+        dispatch(this.SUBMIT_ENTRY_START.dispatch())
+        await http.post('entity/type', entityType)
+        dispatch(this.SUBMIT_ENTRY_SUCCESS.dispatch())
+      } catch (err) {
+        dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
+      }
+    }
   }
 
   @AsyncDispatch

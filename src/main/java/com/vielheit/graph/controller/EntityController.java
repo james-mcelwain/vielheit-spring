@@ -15,6 +15,8 @@ public class EntityController implements OptionalResponse, ControllerContext {
 
     @POST
     public Response creatEntity(Entity entity) {
+        if (!isResourceOwner(entity.getUserId())) return unauthorized();
+
         return Response.status(200).build();
     }
 }

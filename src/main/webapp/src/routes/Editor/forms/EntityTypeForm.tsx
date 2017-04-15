@@ -6,11 +6,32 @@ import { store } from '../../../main'
 import './EditorForm.scss'
 import SyntheticEvent = React.SyntheticEvent
 import EditorForm from './EditorForm'
+import {EntityType} from '../../../domain/EntityType'
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
-class TimeForm extends EditorForm<{ form: any, submitting: boolean, submit: (entry: Entry) => void }, {}> {
+class EntityTypeForm extends React.Component<{ form: any, submitting: boolean, submitEntityType: (e: EntityType) => any }, {}> {
+  public handleSubmit(e: SyntheticEvent<any>) {
+    e.preventDefault()
+    this.props.form.validateFields((err: Error, resource: { description: string, type: string }) => {
+      if (!err) {
+        const user = store.getState().application.user
+        if (user) {
+          const entityType = {
+            description: resource.description,
+            id : {
+              userId: user.id,
+              type: resource.type,
+            },
+          }
+
+          this.props.submitEntityType(entityType)
+        }
+      }
+    })
+  }
+
   public render() {
     const {
       getFieldDecorator,
@@ -19,7 +40,7 @@ class TimeForm extends EditorForm<{ form: any, submitting: boolean, submit: (ent
     const { submitting } = this.props
 
     return (
-      <Form onSubmit={this.handleSubmit} className="editor-form">
+      <Form onSubmit={this.handleSubmit.bind(this)} className="editor-form">
         <FormItem>
           {getFieldDecorator('type', {
             rules: [{ required: true, message: 'required' }],
@@ -44,4 +65,4 @@ class TimeForm extends EditorForm<{ form: any, submitting: boolean, submit: (ent
   }
 }
 
-export default Form.create()(TimeForm)
+export default Form.create()(EntityTypeForm)

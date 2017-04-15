@@ -13,13 +13,15 @@ import java.util.Optional;
 
 @Controller
 @Path("api/entity")
-public class EntityTypeController implements OptionalResponse{
+public class EntityTypeController implements OptionalResponse, ControllerContext {
     @Autowired
     EntityTypeService entityTypeService;
 
     @Path("type")
     @POST
     public Response postEntityType(EntityType entityType) {
+        if (!isResourceOwner(entityType.getId().getUserId())) return unauthorized();
+
         return okIfPresent(entityTypeService.saveEntityType(entityType));
     }
 }
