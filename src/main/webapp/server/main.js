@@ -1,5 +1,5 @@
 const express = require('express')
-const debug = require('debug')('app:server')
+const debug = require('debug')('graph:server')
 const path = require('path')
 const webpack = require('webpack')
 const webpackConfig = require('../config/webpack.config')
@@ -71,7 +71,7 @@ if (project.env === 'development') {
   )
 
   // Serving ~/dist by default. Ideally these files should be served by
-  // the web server and not the app server, but this helps to demo the
+  // the web server and not the graph server, but this helps to demo the
   // server in production.
   app.use(express.static(project.paths.dist()))
 }
