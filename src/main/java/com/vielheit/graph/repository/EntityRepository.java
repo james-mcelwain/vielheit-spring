@@ -1,4 +1,4 @@
-package com.vielheit.app.repository;
+package com.vielheit.graph.repository;
 
 public interface EntityRepository {
 }

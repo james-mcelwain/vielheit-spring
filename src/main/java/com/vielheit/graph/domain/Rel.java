@@ -1,4 +1,4 @@
-package com.vielheit.app.domain;
+package com.vielheit.graph.domain;
 
 public interface Rel {
     String OWNS = "OWNS";

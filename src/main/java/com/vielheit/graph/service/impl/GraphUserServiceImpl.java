@@ -1,8 +1,8 @@
-package com.vielheit.app.service.impl;
+package com.vielheit.graph.service.impl;
 
-import com.vielheit.app.domain.GraphUser;
-import com.vielheit.app.repository.GraphUserRepository;
-import com.vielheit.app.service.GraphUserService;
+import com.vielheit.graph.domain.GraphUser;
+import com.vielheit.graph.repository.GraphUserRepository;
+import com.vielheit.graph.service.GraphUserService;
 import com.vielheit.core.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

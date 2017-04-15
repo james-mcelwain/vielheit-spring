@@ -1,6 +1,6 @@
 package com.vielheit.core.service.impl;
 
-import com.vielheit.app.service.GraphUserService;
+import com.vielheit.graph.service.GraphUserService;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.domain.UserRole;
@@ -13,8 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
-import javax.ws.rs.core.Response;
-import javax.xml.bind.ValidationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Optional;

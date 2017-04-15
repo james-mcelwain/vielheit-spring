@@ -1,7 +1,7 @@
-package com.vielheit.app.controller;
+package com.vielheit.graph.controller;
 
-import com.vielheit.app.domain.Entry;
-import com.vielheit.app.service.EntryService;
+import com.vielheit.graph.domain.Entry;
+import com.vielheit.graph.service.EntryService;
 import com.vielheit.core.controller.ControllerContext;
 import com.vielheit.core.utility.OptionalResponse;
 import com.vielheit.security.UserResource;

@@ -4,17 +4,13 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
-import java.util.List;
-
 @NodeEntity
-public class GraphUser {
+public class Entity {
     @GraphId
     private Long id;
 
+    @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private Long userId;
-
-    @Relationship(type = Rel.OWNS, direction = Relationship.OUTGOING)
-    private List<Entry> entries;
 
     public Long getId() {
         return id;
@@ -30,13 +26,5 @@ public class GraphUser {
 
     public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public List<Entry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(List<Entry> entries) {
-        this.entries = entries;
     }
 }

@@ -1,6 +1,6 @@
-package com.vielheit.app.repository;
+package com.vielheit.graph.repository;
 
-import com.vielheit.app.domain.GraphUser;
+import com.vielheit.graph.domain.GraphUser;
 import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.vielheit.app.service;
+package com.vielheit.graph.service;
 
-import com.vielheit.app.domain.Entry;
+import com.vielheit.graph.domain.Entry;
 import com.vielheit.core.service.Service;
 
 import javax.transaction.Transactional;

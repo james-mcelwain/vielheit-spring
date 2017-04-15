@@ -1,6 +1,6 @@
-package com.vielheit.app.service;
+package com.vielheit.graph.service;
 
-import com.vielheit.app.domain.GraphUser;
+import com.vielheit.graph.domain.GraphUser;
 import com.vielheit.core.domain.User;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,4 +1,4 @@
-package com.vielheit.app.config;
+package com.vielheit.graph.config;
 
 import org.neo4j.ogm.session.SessionFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
@@ -14,12 +14,12 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@EnableNeo4jRepositories(basePackages = "com.vielheit.app.repository")
-@ComponentScan({"com.vielheit.app"})
+@EnableNeo4jRepositories(basePackages = "com.vielheit.graph.repository")
+@ComponentScan({"com.vielheit.graph"})
 public class Neo4jConfig {
     @Bean
     public SessionFactory getSessionFactory() {
-        return new SessionFactory("com.vielheit.app.domain");
+        return new SessionFactory("com.vielheit.graph.domain");
     }
 
     @Bean(name="graphTransactionManager")
