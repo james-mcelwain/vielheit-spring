@@ -1,26 +1,23 @@
 import {
   combineReducers, Reducer,
 } from 'redux'
-import application from './application'
+import Application from 'core/Application'
 import {AppState, State} from './appState'
 import AppStore, {AsyncReducerMap} from './store'
-import userReducer from './user'
-import location from './location'
-import {LOCATION_CHANGE} from './location'
+import Location from 'core/Location'
 
 export const makeRootReducer = (asyncReducers?: AsyncReducerMap): Reducer<AppState> => {
   return combineReducers<AppState>({
-    application,
-    location: LOCATION_CHANGE.handle.bind(LOCATION_CHANGE),
-    user: userReducer,
+    application: Application.reducer.bind(Application),
+    location: Location.reducer.bind(Location),
     ...asyncReducers,
   })
 }
 
-export const injectReducer = (store: AppStore, {
+export const injectReducer = <S extends State>(store: AppStore, {
   key,
   reducer,
-}: { key: string, reducer: Reducer<State> }) => {
+}: { key: string, reducer: Reducer<S> }) => {
   if (Object.hasOwnProperty.call(store.asyncReducers, key)) {
     return
   }

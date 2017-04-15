@@ -6,6 +6,7 @@ import Editor from '../components/Editor'
 
 const mapDispatchToProps = editor.getAsyncActions()
 
+
 const mapStateToProps = (state: AppState) => ({
   editor: state.editor,
 })

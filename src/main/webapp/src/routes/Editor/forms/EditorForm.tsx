@@ -7,7 +7,7 @@ export default class EditorForm<P, S> extends React.Component<any, any> {
     e.preventDefault()
     this.props.form.validateFields((err: Error, resource: T) => {
       if (!err) {
-        const user = store.getState().user
+        const user = store.getState().application.user
         if (user) {
           resource.user = { userId: user.id }
           this.props.submit(resource)

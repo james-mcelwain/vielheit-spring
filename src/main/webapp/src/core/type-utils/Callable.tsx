@@ -27,7 +27,7 @@ export abstract class Callable extends Function {
     return this.bind(this)
   }
 
-  private __call__() {}
+  protected __call__() { /* */ }
 }
 
 /**

@@ -4,7 +4,7 @@ import User from '../../../domain/User'
 import http from '../../../http'
 import {AppState} from '../../../store/appState'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
-import {Action} from '../../../store/Action'
+import {ActionCreator} from '../../../core/ActionCreator'
 import construct = Reflect.construct
 
 export interface LoginUserRequest {
@@ -18,12 +18,23 @@ export interface LoginState {
   error: null | Error,
 }
 
-class LoginModule extends AbstractModule<LoginState> {
+export class LoginModule extends AbstractModule<LoginState> {
+  public LOGIN_START = this.Action('LOGIN_START', (state) => ({...state, error: null, loggingIn: true}))
+  public LOGIN_SUCCESS = this.Action('LOGIN_SUCCESS', (state) => ({
+    ...state,
+    loggingIn: false,
+    loggedIn: true,
+  }))
+  public LOGIN_FAIL = this.Action<Error>('LOGIN_FAIL', (state, payload) => ({
+    ...state,
+    loggingIn: false,
+    error: payload,
+  }))
 
   @AsyncDispatch
   public login({emailAddress, password}: LoginUserRequest) {
     return async (dispatch: Dispatch<LoginState>, getState: () => AppState) => {
-      dispatch(LOGIN_START.dispatch())
+      dispatch(this.LOGIN_START.dispatch())
       try {
         const {data: {token, refreshToken, user}} = await http.post(
           'auth/login',
@@ -34,35 +45,19 @@ class LoginModule extends AbstractModule<LoginState> {
         sessionStorage.setItem('token', token)
         sessionStorage.setItem('refreshToken', refreshToken)
         sessionStorage.setItem('user', JSON.stringify(user))
-        dispatch(LOGIN_SUCCESS.dispatch(new User(user)))
+        dispatch(this.LOGIN_SUCCESS.dispatch(new User(user)))
 
         browserHistory.push('/')
       } catch (err) {
         sessionStorage.clear()
-        dispatch({
-          payload: err,
-          type: LOGIN_FAIL(),
-        })
+        dispatch(this.LOGIN_FAIL.dispatch(err))
       }
     }
   }
 }
 
-export const login = new LoginModule({
+export default new LoginModule({
   error: null,
   loggedIn: false,
   loggingIn: false,
 })
-
-export const LOGIN_START = new Action<LoginState>('LOGIN_START', (state) => ({...state, error: null, loggingIn: true}))
-export const LOGIN_SUCCESS = new Action<LoginState>('LOGIN_SUCCESS', (state) => ({...state, loggingIn: false, loggedIn: true}))
-export const LOGIN_FAIL = new Action<LoginState>('LOGIN_FAIL', (state, payload) => ({
-  ...state,
-  loggingIn: false,
-  error: payload && payload instanceof Error ? payload : null,
-}))
-
-export default login
-  .addAction(LOGIN_START)
-  .addAction(LOGIN_SUCCESS)
-  .addAction(LOGIN_FAIL)

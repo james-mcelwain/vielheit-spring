@@ -2,12 +2,16 @@ import {SyntheticEvent} from '@types/react';
 import { Alert, Button, Checkbox, Form, Icon, Input } from 'antd'
 import * as React from 'react'
 import { Link } from 'react-router'
-import {LoginState, LoginUserRequest} from '../modules/login'
+import {LoginState, LoginUserRequest, LoginModule} from '../modules/login'
 import './LoginForm.scss'
+import {AsyncReducerMap} from '../../../store/store'
+import {WrappedFormUtils} from 'antd/lib/form/Form'
+import {FormComponentProps} from 'antd/lib/form/Form'
+import {LoginProps} from '../containers/LoginContainer'
 
 const FormItem = Form.Item
 
-class LoginForm extends React.Component<{ loginState: LoginState, login: (req: LoginUserRequest) => void, form: any }, {}> {
+class LoginForm extends React.Component<LoginProps & FormComponentProps, {}> {
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFields((err: Error, values: LoginUserRequest) => {

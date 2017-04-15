@@ -1,9 +1,9 @@
 import {Reducer} from 'redux'
-import {Callable, toCallable, Call} from './Callable'
 import {DispatchedAction} from '../store/DispatchedAction'
 import {State, AppState} from '../store/appState'
 import {Dispatch} from 'react-redux'
-import {Action} from '../store/Action'
+import {ActionCreator, ActionHandler} from './ActionCreator'
+import {ActionType} from './ActionType'
 
 export function AsyncDispatch(prototype: any, name: string, descriptor: PropertyDescriptor) {
   if (!prototype.asyncActions) {
@@ -13,34 +13,35 @@ export function AsyncDispatch(prototype: any, name: string, descriptor: Property
   prototype.asyncActions[name] = prototype[name]
 }
 
-export abstract class AbstractModule<S extends State> extends Callable {
+export abstract class AbstractModule<S extends State> {
   public asyncActions: AsyncActionMap<S>
-  protected actions: Array<Action<S>> = []
-  private state: S;
+  protected actions: Array<ActionCreator<S, any>> = []
+  private state: S | null;
 
   public constructor(initialState: S) {
-    super()
     this.state = initialState
-    this.bind(this)
   }
 
-  public addAction(actionConstant: Action<S>): this {
-    this.actions.push(actionConstant)
-    return this
+  public Action<P>(actionType: ActionType, fn: ActionHandler<S, P> = (s) => s): ActionCreator<S, P> {
+    const action = new ActionCreator<S, P>(actionType, fn)
+    this.actions.push(action)
+    return action
   }
 
   public getAsyncActions() {
     return this.asyncActions
   }
 
-  @Call
-  public reducer(s: S = this.state, action: DispatchedAction<S>): S {
+  public reducer(s: S, action: DispatchedAction<S>): S {
+    if (this.state !== null && !s) {
+      s = this.state
+    }
+
     const handler = this.actions.find((a) => a.compare(action))
 
-    return handler ? handler(s, action.payload) : s
+    return handler ? handler.handler(s, action.payload) : s
   }
 }
 
-interface AsyncActionMap<S> { [key: string]: (...args: any[]) => (dispatch: Dispatch<S>, getState: () => AppState) => any }
+export interface AsyncActionMap<S> { [key: string]: (...args: any[]) => (dispatch: Dispatch<S>, getState: () => AppState) => any }
 AbstractModule.prototype.asyncActions = {}
-

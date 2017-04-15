@@ -3,12 +3,9 @@ import User from '../domain/User'
 import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
 import EditorRoute from './Editor'
-import Home from './Home'
-import LoginRoute from './Login'
-import { LOGIN_SUCCESS } from './Login/modules/login'
-import ProfileRoute from './Profile'
-import RegisterRoute from './Register'
-
+import Home from 'routes/Home'
+import LoginRoute from 'routes/Login'
+import Application from 'core/Application'
 
 const pubPaths = ['/login', '/register']
 const loggedIn = () => sessionStorage.getItem('token')
@@ -25,7 +22,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
         replace('/login')
       }
     } else {
-      store.dispatch(LOGIN_SUCCESS.dispatch(new User(sessionStorage.getItem('user'))))
+      store.dispatch(Application.LOGIN.dispatch(new User(sessionStorage.getItem('user'))))
       if (sessionStorage.getItem('token') && pubPaths.includes(location.pathname)) {
         replace('/')
       }

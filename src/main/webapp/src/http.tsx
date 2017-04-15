@@ -1,8 +1,7 @@
 import Axios from 'axios'
 import { browserHistory } from 'react-router'
 import { store } from './main'
-import { RESPONSE_ERROR } from './store/application'
-import { LOGOUT } from './store/user'
+import Application from 'core/Application'
 
 const http = Axios.create({
   baseURL: 'http://localhost:8080/api/',
@@ -28,16 +27,13 @@ http.interceptors.response.use((response) => {
 
   const applicationErr = error.response.data
   if (applicationErr) {
-    store.dispatch({
-      type: RESPONSE_ERROR,
-      payload: applicationErr,
-    })
+    store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
   }
 
   if (error.response && error.response.status === 401) {
     localStorage.clear()
     sessionStorage.clear()
-    store.dispatch({ type: LOGOUT })
+    store.dispatch(Application.LOGOUT.dispatch())
     browserHistory.push('/login')
   }
 

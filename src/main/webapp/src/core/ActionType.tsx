@@ -1,5 +1,6 @@
-export type ActionType =
-      'LOGOUT'
+export type ActionType
+    = 'LOGOUT'
+    | 'LOGIN'
     | 'LOCATION_CHANGE'
     | 'RESPONSE_ERROR'
     | 'LOGIN_START'

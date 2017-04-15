@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 import {AppState} from './appState'
 import makeRootReducer from './reducers'
 import AppStore from './store'
-import location from './location'
+import Location from '../core/Location'
 
 declare const module: any
 declare const __DEV__: any
@@ -35,7 +35,7 @@ export default (initialState: AppState) => {
   ) as AppStore
   store.asyncReducers = {}
 
-  store.unsubscribeHistory = browserHistory.listen(location(store))
+  store.unsubscribeHistory = browserHistory.listen(Location.updateLocation(store))
 
   if (module.hot) {
     module.hot.accept('./reducers', () => {
