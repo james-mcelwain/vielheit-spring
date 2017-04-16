@@ -16,6 +16,9 @@ public class GraphUser {
     @Relationship(type = Rel.OWNS, direction = Relationship.OUTGOING)
     private List<Entry> entries;
 
+    @Relationship(type = Rel.OWNS, direction = Relationship.OUTGOING)
+    private List<GraphAbstractionType> graphAbstractionTypes;
+
     public Long getId() {
         return id;
     }
@@ -38,5 +41,13 @@ public class GraphUser {
 
     public void setEntries(List<Entry> entries) {
         this.entries = entries;
+    }
+
+    public List<GraphAbstractionType> getGraphAbstractionTypes() {
+        return graphAbstractionTypes;
+    }
+
+    public void setGraphAbstractionTypes(List<GraphAbstractionType> graphAbstractionTypes) {
+        this.graphAbstractionTypes = graphAbstractionTypes;
     }
 }

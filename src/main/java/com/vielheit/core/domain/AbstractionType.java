@@ -1,21 +1,18 @@
 package com.vielheit.core.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "EntityType", schema = "vielheit")
-public class EntityType implements Serializable {
+@Table(name = "AbstractionType", schema = "vielheit")
+public class AbstractionType implements Serializable {
     @Embeddable
     public static class Id implements Serializable {
-        private Id() {}
+        private Id() {
+        }
 
         @Column(name = "userId")
-
         private Long userId;
 
         @Column(name = "type")
@@ -45,28 +42,10 @@ public class EntityType implements Serializable {
         public void setType(String type) {
             this.type = type;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Id id = (Id) o;
-
-            if (!userId.equals(id.userId)) return false;
-            return type.equals(id.type);
-        }
-
-        @Override
-        public int hashCode() {
-            int result = userId.hashCode();
-            result = 31 * result + type.hashCode();
-            return result;
-        }
     }
 
     @EmbeddedId
-    Id id = new Id();
+    private Id id;
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -98,25 +77,5 @@ public class EntityType implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        EntityType that = (EntityType) o;
-
-        if (!id.equals(that.id)) return false;
-        if (!user.equals(that.user)) return false;
-        return description.equals(that.description);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + user.hashCode();
-        result = 31 * result + description.hashCode();
-        return result;
     }
 }

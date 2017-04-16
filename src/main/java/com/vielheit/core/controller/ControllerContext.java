@@ -16,6 +16,11 @@ public interface ControllerContext {
         return jwt.getUserContext().getUserId().equals(id);
     }
 
+    default Long userId() {
+        JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
+        return jwt.getUserContext().getUserId();
+    }
+
     default Response unauthorized() {
         return Response.status(Response.Status.UNAUTHORIZED)
                 .entity(ErrorResponse.of("Unauthorized", ErrorCode.UNAUTHORIZED, Response.Status.UNAUTHORIZED))
