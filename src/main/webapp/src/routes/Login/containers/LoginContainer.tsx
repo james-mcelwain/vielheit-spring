@@ -13,7 +13,7 @@ const mapStateToProps = (state: AppState) => ({
 
 export interface LoginProps {
   loginState: LoginState,
-  login: (...args: any[]) => (dispatch: Dispatch<LoginState>, getState: () => AppState) => any
+  login: (...args: any[]) => (dispatch: Dispatch<LoginState>) => any
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

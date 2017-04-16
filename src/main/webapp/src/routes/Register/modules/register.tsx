@@ -23,7 +23,7 @@ class Register extends AbstractModule<RegisterState> {
 
   @AsyncDispatch
   public register({emailAddress, firstName, lastName, password}: RegisterUserRequest) {
-    return async(dispatch: Dispatch<AppState>, getState: () => AppState) => {
+    return async(dispatch: Dispatch<AppState>) => {
       dispatch(this.REGISTER_START.dispatch())
       try {
         const response = await http.post(

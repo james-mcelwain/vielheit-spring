@@ -47,12 +47,13 @@ export abstract class AbstractModule<S extends State> {
       s = this.state
     }
 
+
     const handler = this.actions.find((a) => a.compare(action))
 
     return handler ? handler.handler(s, action.payload) : s
   }
 }
 
-type AsyncAction<S> = (...args: any[]) => (dispatch: Dispatch<S>, getState: () => AppState) => any
+type AsyncAction<S> = (...args: any[]) => (dispatch: Dispatch<S>) => any
 export type AsyncActionMap<S> = Map<string, AsyncAction<S>>
 AbstractModule.prototype.asyncActions = new Map()

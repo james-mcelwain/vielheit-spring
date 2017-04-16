@@ -29,7 +29,7 @@ export class EditorModule extends AbstractModule<EditorState> {
 
   @AsyncDispatch
   public getEntityTypes() {
-    return async (dispatch: Dispatch<EditorState>, getState: () => AppState) => {
+    return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.FETCH_ENTITY_TYPES_START.dispatch())
       const { data } = await http.get('entity/type')
       await dispatch(this.FETCH_ENTITY_TYPES_SUCCESS.dispatch(data))
@@ -38,12 +38,12 @@ export class EditorModule extends AbstractModule<EditorState> {
 
   @AsyncDispatch
   public changeForm(formName: string) {
-    return (dispatch: Dispatch<EditorState>, getState: () => AppState) => dispatch(this.EDITOR_FORM_CHANGE.dispatch(formName))
+    return (dispatch: Dispatch<EditorState>) => dispatch(this.EDITOR_FORM_CHANGE.dispatch(formName))
   }
 
   @AsyncDispatch
   public submitEntityType(entityType: EntityType) {
-    return async (dispatch: Dispatch<EditorState>, getState: () => AppState) => {
+    return async (dispatch: Dispatch<EditorState>) => {
       try {
         dispatch(this.SUBMIT_ENTRY_START.dispatch())
         await http.post('entity/type', entityType)
@@ -56,7 +56,7 @@ export class EditorModule extends AbstractModule<EditorState> {
 
   @AsyncDispatch
   public submitEntry(entry: Entry) {
-    return async (dispatch: Dispatch<EditorState>, getState: () => AppState) => {
+    return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.SUBMIT_ENTRY_START.dispatch())
       try {
         await http.post('entry', entry)

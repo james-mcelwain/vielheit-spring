@@ -17,6 +17,10 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
     return null
   }
 
+  public getOptions() {
+    return (this.props.editor && this.props.editor.entityTypes || []).map((t: any) => <Option value={t.id.type}>{t.id.type}</Option>)
+  }
+
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFields((err: Error, resource: { description: string, type: string }) => {
@@ -60,7 +64,7 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
               onChange={this.handleSelectChange}
               filterOption={(input, option: any) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
-              {(this.props.editor && this.props.editor.entityTypes || []).map((t: any) => <Option value={t.id.type}>{t.id.type}</Option>)}
+              {this.getOptions()}
             </Select>,
           )}
         </FormItem>
@@ -82,3 +86,4 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
 }
 
 export default Form.create()(EntityForm)
+

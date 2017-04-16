@@ -33,7 +33,7 @@ export class LoginModule extends AbstractModule<LoginState> {
 
   @AsyncDispatch
   public login({emailAddress, password}: LoginUserRequest) {
-    return async (dispatch: Dispatch<LoginState>, getState: () => AppState) => {
+    return async (dispatch: Dispatch<LoginState>) => {
       dispatch(this.LOGIN_START.dispatch())
       try {
         const {data: {token, refreshToken, user}} = await http.post(
