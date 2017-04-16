@@ -47,7 +47,6 @@ export abstract class AbstractModule<S extends State> {
       s = this.state
     }
 
-
     const handler = this.actions.find((a) => a.compare(action))
 
     return handler ? handler.handler(s, action.payload) : s

@@ -1,12 +1,9 @@
-import { Alert, Button, Checkbox, Form, Icon, Input, Select } from 'antd'
+import {Button, Form, Input, Select} from 'antd'
 import * as React from 'react'
-import { Link } from 'react-router'
-import Entry from '../../../domain/Entry'
-import { store } from '../../../main'
+import {store} from '../../../main'
 import './EditorForm.scss'
-import SyntheticEvent = React.SyntheticEvent
-import EditorForm from './EditorForm'
 import {EntityType} from '../../../domain/EntityType'
+import SyntheticEvent = React.SyntheticEvent
 
 const FormItem = Form.Item
 const Option = Select.Option;

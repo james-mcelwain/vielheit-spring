@@ -1,7 +1,6 @@
 import {Dispatch} from 'redux'
 import Entry from '../../../domain/Entry'
 import http from '../../../http'
-import {AppState} from '../../../store/appState'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 import {EntityType} from '../../../domain/EntityType'
 
@@ -48,6 +47,7 @@ export class EditorModule extends AbstractModule<EditorState> {
         dispatch(this.SUBMIT_ENTRY_START.dispatch())
         await http.post('entity/type', entityType)
         dispatch(this.SUBMIT_ENTRY_SUCCESS.dispatch())
+        this.getEntityTypes()(dispatch)
       } catch (err) {
         dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
       }

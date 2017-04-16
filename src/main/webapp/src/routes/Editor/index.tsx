@@ -15,7 +15,7 @@ export default (store: AppStore): PlainRoute => ({
       injectReducer<LoginState>(store, { key: 'editor',  reducer: editor.getReducer() })
 
       const fetchFn = editor.getEntityTypes()
-      await fetchFn(store.dispatch.bind(store), store.getState.bind(store))
+      await fetchFn(store.dispatch.bind(store))
 
       cb(null, Editor)
     }, 'editor')
