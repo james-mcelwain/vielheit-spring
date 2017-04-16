@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.ws.rs.BadRequestException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 
 @Component
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
         userRole.setRole(Role.USER);
         userRole.setId(new UserRole.Id(user.getId(), Role.USER));
         userRoleRepository.save(userRole);
-        user.setRoles(new ArrayList<>(Collections.singletonList(userRole)));
+        user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         graphUserService.saveUser(user);
         return one(() -> userRepository.save(user));
     }

@@ -5,34 +5,43 @@ import './EditorForm.scss'
 import {AbstractionType} from '../../../domain/AbstractionType'
 import {EditorState} from '../modules/editor'
 import SyntheticEvent = React.SyntheticEvent
+import {Abstraction} from '../../../domain/Abstraction'
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
-class AbstractionForm extends React.Component<{ editor: EditorState, form: any, submitting: boolean, submitAbstractionType: (e: AbstractionType) => any }, {}> {
-  public handleSelectChange() {
-    return null
+class AbstractionForm extends React.Component<{ editor: EditorState, form: any, submitting: boolean, submitAbstraction: (e: Abstraction) => any }, {}> {
+  private currentAbstractionType: AbstractionType;
+
+  public handleSelectChange(type: string) {
+    const abstractionType = this.getAbstractionTypes().find((t: AbstractionType) => t.id.type === type)
+    if (abstractionType) {
+      this.currentAbstractionType = abstractionType
+    }
+  }
+
+  public getAbstractionTypes(): Array<AbstractionType> {
+    return (this.props.editor && this.props.editor.abstractionTypes || [])
   }
 
   public getOptions() {
-    return (this.props.editor && this.props.editor.abstractionTypes || []).map((t: any) => <Option value={t.id.type}>{t.id.type}</Option>)
+    return this.getAbstractionTypes().map((t: any, i: number) => <Option key={i} value={t.id.type}>{t.id.type}</Option>)
   }
+
 
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
-    this.props.form.validateFields((err: Error, resource: { description: string, type: string }) => {
+    this.props.form.validateFields((err: Error, resource: { description: string, name: string }) => {
       if (!err) {
         const user = store.getState().application.user
         if (user) {
           const abstractionType = {
             description: resource.description,
-            id : {
-              userId: user.id,
-              type: resource.type,
-            },
+            name: resource.name,
+            abstractionType: this.currentAbstractionType,
           }
 
-          this.props.submitAbstractionType(abstractionType)
+          this.props.submitAbstraction(abstractionType)
         }
       }
     })
@@ -51,18 +60,26 @@ class AbstractionForm extends React.Component<{ editor: EditorState, form: any, 
         <FormItem>
           {getFieldDecorator('type', {
             rules: [{ required: true, message: 'required' }],
-            onChange: this.handleSelectChange,
+            onChange: this.handleSelectChange.bind(this),
           })(
             <Select
               showSearch
               style={{ width: 200 }}
-              placeholder="Select a person"
+              placeholder="Select a type"
               optionFilterProp="children"
-              onChange={this.handleSelectChange}
+              notFoundContent="No types found!"
+              onChange={this.handleSelectChange.bind(this)}
               filterOption={(input, option: any) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
             >
               {this.getOptions()}
             </Select>,
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('name', {
+            rules: [{ required: true, message: 'required' }],
+          })(
+            <Input type="textarea" placeholder="Name"/>,
           )}
         </FormItem>
         <FormItem>

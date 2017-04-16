@@ -38,7 +38,6 @@ public class AbstractionTypeServiceImpl implements AbstractionTypeService {
     @Override
     @CachePut(value = "abstraction-type", key = "#userId")
     public Optional<List<AbstractionType>> findByUserId(Long userId) {
-        getLogger().info("OK");
         return any(() -> abstractionTypeRepository.findByIdUserId(userId));
     }
 }

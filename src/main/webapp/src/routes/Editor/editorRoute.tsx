@@ -9,7 +9,7 @@ declare const require: any
 export default (store: AppStore): PlainRoute => ({
   path : 'editor',
   getComponent(nextState, cb) {
-    require.ensure([], async (require: any) => {
+    require.ensure([], async function(require: any) {
       const Editor = require('./containers/EditorContainer').default
       const editor: EditorModule = require('./modules/editor').default
       injectReducer<LoginState>(store, { key: 'editor',  reducer: editor.getReducer() })

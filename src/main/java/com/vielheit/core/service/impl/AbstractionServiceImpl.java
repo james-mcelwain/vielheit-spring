@@ -1,7 +1,11 @@
 package com.vielheit.core.service.impl;
 
 import com.vielheit.core.domain.Abstraction;
+import com.vielheit.core.domain.AbstractionType;
+import com.vielheit.core.domain.User;
 import com.vielheit.core.repository.AbstractionRepository;
+import com.vielheit.core.repository.AbstractionTypeRepository;
+import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.service.AbstractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,9 +19,20 @@ import java.util.Optional;
 public class AbstractionServiceImpl implements AbstractionService {
     @Autowired
     AbstractionRepository abstractionRepository;
+    @Autowired
+    AbstractionTypeRepository abstractionTypeRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Override
     public Optional<Abstraction> saveAbstraction(Abstraction abstraction) {
+        User user = userRepository.findOne(userId());
+        AbstractionType abstractionType = abstractionTypeRepository.findOne(abstraction.getAbstractionType().getId());
+
+        abstraction.setAbstractionType(abstractionType);
+        abstraction.setUser(user);
+        abstractionType.getAbstractions().add(abstraction);
+        abstractionTypeRepository.save(abstractionType);
         return one(() -> abstractionRepository.save(abstraction));
     }
 }

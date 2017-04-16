@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Entity()
-@Table(name ="\"User\"", schema = "vielheit")
+@Table(name = "\"User\"", schema = "vielheit")
 public class User implements Serializable {
 
     @Id
@@ -20,26 +20,27 @@ public class User implements Serializable {
     @Column(name = "active", nullable = false)
     private Boolean active;
 
-    @NotNull(message="{firstName.notnull}")
+    @NotNull(message = "{firstName.notnull}")
     @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @NotNull(message="{lastName.notnull}")
+    @NotNull(message = "{lastName.notnull}")
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @NotNull(message="{emailAddress.notnull}")
+    @NotNull(message = "{emailAddress.notnull}")
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
 
-    @JsonProperty(access =  JsonProperty.Access.WRITE_ONLY)
-    @NotNull(message="{password.notnull}")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @NotNull(message = "{password.notnull}")
     @Column(name = "password")
     private String password;
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
-    private List<UserRole> roles;
+    private Set<UserRole> roles;
+
 
     public Long getId() {
         return id;
@@ -89,16 +90,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public List<UserRole> getRoles() {
+    public Set<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(Set<UserRole> roles) {
         this.roles = roles;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + emailAddress + "}";
     }
 }

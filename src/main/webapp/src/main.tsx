@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import createStore from './store/createStore'
-import createRoutes from './routes'
+import createRoutes from './routes/baseRoute'
 import AppContainer from './containers/AppContainer'
 import './theme.less'
 import http from './http'
@@ -46,7 +46,7 @@ if (__DEV__) {
       }
     }
 
-    module.hot.accept('./routes/index', () =>
+    module.hot.accept('./routes/baseRoute', () =>
       setImmediate(() => {
         ReactDOM.unmountComponentAtNode(MOUNT_NODE)
         render()

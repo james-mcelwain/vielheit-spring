@@ -2,7 +2,6 @@ package com.vielheit.core.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * jcm - 4/15/17.
@@ -15,15 +14,9 @@ public class Abstraction implements Serializable {
     private Long id;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "userId", insertable = false, updatable = false),
-            @JoinColumn(name = "type", insertable = false, updatable = false)
-    })
     private AbstractionType abstractionType;
 
-    @MapsId("userId")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId")
+    @ManyToOne
     private User user;
 
     @Column(name = "name")
@@ -31,10 +24,6 @@ public class Abstraction implements Serializable {
 
     @Column(name = "description")
     private String description;
-
-    @OneToMany
-    @JoinColumn(name = "id")
-    private List<Entry> entries;
 
     public Long getId() {
         return id;
@@ -74,14 +63,6 @@ public class Abstraction implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public List<Entry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(List<Entry> entries) {
-        this.entries = entries;
     }
 }
 

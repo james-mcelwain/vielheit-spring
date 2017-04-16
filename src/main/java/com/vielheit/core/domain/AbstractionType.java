@@ -1,8 +1,11 @@
 package com.vielheit.core.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "AbstractionType", schema = "vielheit")
@@ -55,6 +58,10 @@ public class AbstractionType implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "abstractionType")
+    private Set<Abstraction> abstractions;
+
     public Id getId() {
         return id;
     }
@@ -77,5 +84,13 @@ public class AbstractionType implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<Abstraction> getAbstractions() {
+        return abstractions;
+    }
+
+    public void setAbstractions(Set<Abstraction> abstractions) {
+        this.abstractions = abstractions;
     }
 }

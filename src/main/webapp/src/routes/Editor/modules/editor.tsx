@@ -3,6 +3,7 @@ import Entry from '../../../domain/Entry'
 import http from '../../../http'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 import {AbstractionType} from '../../../domain/AbstractionType'
+import {Abstraction} from '../../../domain/Abstraction'
 
 export interface EditorState {
   form: string,
@@ -22,6 +23,14 @@ export class EditorModule extends AbstractModule<EditorState> {
   public FETCH_ABSTRACTION_TYPES_START = this.Action('FETCH_ABSTRACTION_TYPES_START')
   public FETCH_ABSTRACTION_TYPES_SUCCESS = this.Action<Array<AbstractionType>>('FETCH_ABSTRACTION_TYPES_SUCCESS', (state, payload) => ({ ...state, abstractionTypes: payload }))
   public FETCH_ABSTRACTION_TYPES_FAIL = this.Action('FETCH_ABSTRACTION_TYPES_FAIL')
+
+  public SUBMIT_ABSTRACTION_TYPE_START = this.Action('SUBMIT_ABSTRACTION_TYPE_START')
+  public SUBMIT_ABSTRACTION_TYPE_SUCCESS = this.Action('SUBMIT_ABSTRACTION_TYPE_SUCCESS')
+  public SUBMIT_ABSTRACTION_TYPE_FAIL = this.Action('SUBMIT_ABSTRACTION_TYPE_FAIL')
+
+  public SUBMIT_ABSTRACTION_START = this.Action('SUBMIT_ABSTRACTION_START')
+  public SUBMIT_ABSTRACTION_SUCCESS = this.Action('SUBMIT_ABSTRACTION_SUCCESS')
+  public SUBMIT_ABSTRACTION_FAIL = this.Action('SUBMIT_ABSTRACTION_FAIL')
 
   public EDITOR_FORM_CHANGE = this.Action<string>('EDITOR_FORM_CHANGE', (state, payload) => ({...state, form: payload}))
 
@@ -43,12 +52,25 @@ export class EditorModule extends AbstractModule<EditorState> {
   public submitAbstractionType(abstractionType: AbstractionType) {
     return async (dispatch: Dispatch<EditorState>) => {
       try {
-        dispatch(this.SUBMIT_ENTRY_START.dispatch())
+        dispatch(this.SUBMIT_ABSTRACTION_TYPE_START.dispatch())
         await http.post('abstraction/type', abstractionType)
-        dispatch(this.SUBMIT_ENTRY_SUCCESS.dispatch())
+        dispatch(this.SUBMIT_ABSTRACTION_TYPE_SUCCESS.dispatch())
         this.getAbstractionTypes()(dispatch)
       } catch (err) {
-        dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
+        dispatch(this.SUBMIT_ABSTRACTION_TYPE_FAIL.dispatch(err))
+      }
+    }
+  }
+
+  @AsyncDispatch
+  public submitAbstraction(abstraction: Abstraction) {
+    return async (dispatch: Dispatch<EditorState>) => {
+      try {
+        dispatch(this.SUBMIT_ABSTRACTION_START.dispatch())
+        await http.post('abstraction', abstraction)
+        dispatch(this.SUBMIT_ABSTRACTION_SUCCESS.dispatch())
+      } catch (err) {
+        dispatch(this.SUBMIT_ABSTRACTION_FAIL.dispatch(err))
       }
     }
   }
