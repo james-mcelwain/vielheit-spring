@@ -1,6 +1,7 @@
 import {Radio} from 'antd'
 import * as React from 'react'
 import EntryForm from '../forms/EntryForm'
+import EntityForm from '../forms/EntityForm'
 import EntityTypeForm from '../forms/EntityTypeForm'
 import {EditorState} from '../modules/editor'
 import './Editor.scss'
@@ -13,6 +14,7 @@ class Editor extends React.Component<{changeForm: any, editor: EditorState}, {}>
   } = {
     ['entry']: EntryForm,
     ['entity-type']: EntityTypeForm,
+    ['entity']: EntityForm
   }
 
   public render() {
@@ -21,6 +23,7 @@ class Editor extends React.Component<{changeForm: any, editor: EditorState}, {}>
         <RadioGroup onChange={this.onChange.bind(this)} defaultValue="a" size="large">
           <RadioButton value="entry">Entry</RadioButton>
           <RadioButton value="entity-type">Entity Type</RadioButton>
+          <RadioButton value="entity">Entity</RadioButton>
         </RadioGroup>
         <this.Form {...this.props}/>
       </div>

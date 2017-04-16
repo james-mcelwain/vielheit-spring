@@ -26,6 +26,10 @@ public class EntityType implements Serializable {
             this.type = type;
         }
 
+        public Id(Long userId) {
+            this.userId = userId;
+        }
+
         public Long getUserId() {
             return userId;
         }

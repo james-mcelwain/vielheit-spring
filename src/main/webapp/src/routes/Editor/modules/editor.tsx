@@ -8,11 +8,12 @@ import {EntityType} from '../../../domain/EntityType'
 
 export interface EditorState {
   form: string,
+  entityTypes: Array<EntityType> | null,
   submitting: boolean,
   error: Error | null
 }
 
-class EditorModule extends AbstractModule<EditorState> {
+export class EditorModule extends AbstractModule<EditorState> {
   public SUBMIT_ENTRY_START = this.Action('SUBMIT_ENTRY_START', (state) => ({...state, error: null, submitting: true}))
   public SUBMIT_ENTRY_SUCCESS = this.Action('SUBMIT_ENTRY_SUCCESS', (state) => ({...state, submitting: false}))
   public SUBMIT_ENTRY_FAIL = this.Action<Error>('SUBMIT_ENTRY_FAIL', (state, payload) => ({
@@ -20,7 +21,20 @@ class EditorModule extends AbstractModule<EditorState> {
     error: payload,
     submitting: false,
   }))
+  public FETCH_ENTITY_TYPES_START = this.Action('FETCH_ENTITY_TYPES_START')
+  public FETCH_ENTITY_TYPES_SUCCESS = this.Action<Array<EntityType>>('FETCH_ENTITY_TYPES_SUCCESS', (state, payload) => ({ ...state, entityTypes: payload }))
+  public FETCH_ENTITY_TYPES_FAIL = this.Action('FETCH_ENTITY_TYPES_FAIL')
+
   public EDITOR_FORM_CHANGE = this.Action<string>('EDITOR_FORM_CHANGE', (state, payload) => ({...state, form: payload}))
+
+  @AsyncDispatch
+  public getEntityTypes() {
+    return async (dispatch: Dispatch<EditorState>, getState: () => AppState) => {
+      dispatch(this.FETCH_ENTITY_TYPES_START.dispatch())
+      const { data } = await http.get('entity/type')
+      await dispatch(this.FETCH_ENTITY_TYPES_SUCCESS.dispatch(data))
+    }
+  }
 
   @AsyncDispatch
   public changeForm(formName: string) {
@@ -58,4 +72,5 @@ export default new EditorModule({
   form: 'entry',
   submitting: false,
   error: null,
+  entityTypes: null,
 })
