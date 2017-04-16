@@ -2,20 +2,20 @@ import {Button, Form, Input, Select} from 'antd'
 import * as React from 'react'
 import {store} from '../../../main'
 import './EditorForm.scss'
-import {EntityType} from '../../../domain/EntityType'
+import {AbstractionType} from '../../../domain/AbstractionType'
 import {EditorState} from '../modules/editor'
 import SyntheticEvent = React.SyntheticEvent
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
-class EntityForm extends React.Component<{ editor: EditorState, form: any, submitting: boolean, submitEntityType: (e: EntityType) => any }, {}> {
+class AbstractionForm extends React.Component<{ editor: EditorState, form: any, submitting: boolean, submitAbstractionType: (e: AbstractionType) => any }, {}> {
   public handleSelectChange() {
     return null
   }
 
   public getOptions() {
-    return (this.props.editor && this.props.editor.entityTypes || []).map((t: any) => <Option value={t.id.type}>{t.id.type}</Option>)
+    return (this.props.editor && this.props.editor.abstractionTypes || []).map((t: any) => <Option value={t.id.type}>{t.id.type}</Option>)
   }
 
   public handleSubmit(e: SyntheticEvent<any>) {
@@ -24,7 +24,7 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
       if (!err) {
         const user = store.getState().application.user
         if (user) {
-          const entityType = {
+          const abstractionType = {
             description: resource.description,
             id : {
               userId: user.id,
@@ -32,7 +32,7 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
             },
           }
 
-          this.props.submitEntityType(entityType)
+          this.props.submitAbstractionType(abstractionType)
         }
       }
     })
@@ -82,5 +82,4 @@ class EntityForm extends React.Component<{ editor: EditorState, form: any, submi
   }
 }
 
-export default Form.create()(EntityForm)
-
+export default Form.create()(AbstractionForm)

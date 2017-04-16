@@ -1,8 +1,8 @@
 import {Radio} from 'antd'
 import * as React from 'react'
 import EntryForm from '../forms/EntryForm'
-import EntityForm from '../forms/EntityForm'
-import EntityTypeForm from '../forms/EntityTypeForm'
+import EntityForm from '../forms/AbstractionForm'
+import EntityTypeForm from '../forms/AbstractionTypeForm'
 import {EditorState} from '../modules/editor'
 import './Editor.scss'
 const RadioButton = Radio.Button
@@ -14,7 +14,7 @@ class Editor extends React.Component<{changeForm: any, editor: EditorState}, {}>
   } = {
     ['entry']: EntryForm,
     ['entity-type']: EntityTypeForm,
-    ['entity']: EntityForm
+    ['entity']: EntityForm,
   }
 
   public render() {

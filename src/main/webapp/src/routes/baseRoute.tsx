@@ -2,9 +2,9 @@ import {PlainRoute} from 'react-router'
 import User from '../domain/User'
 import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
-import EditorRoute from './Editor'
-import Home from 'routes/Home'
-import LoginRoute from 'routes/Login'
+import EditorRoute from './Editor/editorRoute'
+import Home from 'routes/Home/homeRoute'
+import LoginRoute from 'routes/Login/loginRoute'
 import Application from 'core/Application'
 
 const pubPaths = ['/login', '/register']

@@ -17,6 +17,5 @@ class Application extends AbstractModule<ApplicationState> {
 export default new Application({
   error: null,
   loggedIn: false,
-  user: null
+  user: null,
 })
-

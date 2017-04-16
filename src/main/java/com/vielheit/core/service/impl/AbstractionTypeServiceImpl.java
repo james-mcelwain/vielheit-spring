@@ -19,25 +19,25 @@ import java.util.Optional;
 @Component
 public class AbstractionTypeServiceImpl implements AbstractionTypeService {
     @Autowired
-    AbstractionTypeRepository entityTypeRepository;
+    AbstractionTypeRepository abstractionTypeRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
     GraphAbstractionTypeService graphAbstractionTypeService;
 
     @Override
-    public Optional<AbstractionType> saveAbstractionType(AbstractionType entityType) {
+    public Optional<AbstractionType> saveAbstractionType(AbstractionType abstractionType) {
         User user = userRepository.findOne(userId());
-        entityType.setUser(user);
-        entityType = entityTypeRepository.save(entityType);
-        graphAbstractionTypeService.save(entityType);
-        return Optional.of(entityType);
+        abstractionType.setUser(user);
+        abstractionType = abstractionTypeRepository.save(abstractionType);
+        graphAbstractionTypeService.save(abstractionType);
+        return Optional.of(abstractionType);
     }
 
     @Override
-    @CachePut(value = "entity-type", key = "#userId")
+    @CachePut(value = "abstraction-type", key = "#userId")
     public Optional<List<AbstractionType>> findByUserId(Long userId) {
         getLogger().info("OK");
-        return any(() -> entityTypeRepository.findByIdUserId(userId));
+        return any(() -> abstractionTypeRepository.findByIdUserId(userId));
     }
 }

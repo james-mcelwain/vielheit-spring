@@ -2,36 +2,35 @@ import {Dispatch} from 'redux'
 import Entry from '../../../domain/Entry'
 import http from '../../../http'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
-import {EntityType} from '../../../domain/EntityType'
-
+import {AbstractionType} from '../../../domain/AbstractionType'
 
 export interface EditorState {
   form: string,
-  entityTypes: Array<EntityType> | null,
+  abstractionTypes: Array<AbstractionType> | null,
   submitting: boolean,
   error: Error | null
 }
 
 export class EditorModule extends AbstractModule<EditorState> {
   public SUBMIT_ENTRY_START = this.Action('SUBMIT_ENTRY_START', (state) => ({...state, error: null, submitting: true}))
-  public SUBMIT_ENTRY_SUCCESS = this.Action('SUBMIT_ENTRY_SUCCESS', (state) => ({...state, submitting: false}))
+  public SUBMIT_ENTRY_SUCCESS = this.Action('SUBMIT_ENTRY_SUCCESS', (state) => ({...state, submitting: false }))
   public SUBMIT_ENTRY_FAIL = this.Action<Error>('SUBMIT_ENTRY_FAIL', (state, payload) => ({
     ...state,
     error: payload,
     submitting: false,
   }))
-  public FETCH_ENTITY_TYPES_START = this.Action('FETCH_ENTITY_TYPES_START')
-  public FETCH_ENTITY_TYPES_SUCCESS = this.Action<Array<EntityType>>('FETCH_ENTITY_TYPES_SUCCESS', (state, payload) => ({ ...state, entityTypes: payload }))
-  public FETCH_ENTITY_TYPES_FAIL = this.Action('FETCH_ENTITY_TYPES_FAIL')
+  public FETCH_ABSTRACTION_TYPES_START = this.Action('FETCH_ABSTRACTION_TYPES_START')
+  public FETCH_ABSTRACTION_TYPES_SUCCESS = this.Action<Array<AbstractionType>>('FETCH_ABSTRACTION_TYPES_SUCCESS', (state, payload) => ({ ...state, abstractionTypes: payload }))
+  public FETCH_ABSTRACTION_TYPES_FAIL = this.Action('FETCH_ABSTRACTION_TYPES_FAIL')
 
   public EDITOR_FORM_CHANGE = this.Action<string>('EDITOR_FORM_CHANGE', (state, payload) => ({...state, form: payload}))
 
   @AsyncDispatch
-  public getEntityTypes() {
+  public getAbstractionTypes() {
     return async (dispatch: Dispatch<EditorState>) => {
-      dispatch(this.FETCH_ENTITY_TYPES_START.dispatch())
-      const { data } = await http.get('entity/type')
-      await dispatch(this.FETCH_ENTITY_TYPES_SUCCESS.dispatch(data))
+      dispatch(this.FETCH_ABSTRACTION_TYPES_START.dispatch())
+      const { data } = await http.get('abstraction/type')
+      await dispatch(this.FETCH_ABSTRACTION_TYPES_SUCCESS.dispatch(data))
     }
   }
 
@@ -41,13 +40,13 @@ export class EditorModule extends AbstractModule<EditorState> {
   }
 
   @AsyncDispatch
-  public submitEntityType(entityType: EntityType) {
+  public submitAbstractionType(abstractionType: AbstractionType) {
     return async (dispatch: Dispatch<EditorState>) => {
       try {
         dispatch(this.SUBMIT_ENTRY_START.dispatch())
-        await http.post('entity/type', entityType)
+        await http.post('abstraction/type', abstractionType)
         dispatch(this.SUBMIT_ENTRY_SUCCESS.dispatch())
-        this.getEntityTypes()(dispatch)
+        this.getAbstractionTypes()(dispatch)
       } catch (err) {
         dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
       }
@@ -72,5 +71,5 @@ export default new EditorModule({
   form: 'entry',
   submitting: false,
   error: null,
-  entityTypes: null,
+  abstractionTypes: null,
 })
