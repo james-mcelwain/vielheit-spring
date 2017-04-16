@@ -12,7 +12,7 @@ public class GraphAbstractionType {
     private Long id;
 
     @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
-    private GraphUser user;
+    private GraphUser graphUser;
 
     private String type;
 
@@ -27,11 +27,11 @@ public class GraphAbstractionType {
     }
 
     public GraphUser getUser() {
-        return user;
+        return graphUser;
     }
 
-    public void setUser(GraphUser user) {
-        this.user = user;
+    public void setUser(GraphUser graphUser) {
+        this.graphUser = graphUser;
     }
 
     public String getType() {

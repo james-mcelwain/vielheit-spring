@@ -1,6 +1,8 @@
 package com.vielheit.core.controller;
 
+import com.vielheit.core.domain.Abstraction;
 import com.vielheit.core.domain.AbstractionType;
+import com.vielheit.core.service.AbstractionService;
 import com.vielheit.core.service.AbstractionTypeService;
 import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +16,20 @@ import java.util.Optional;
 
 @Controller
 @Path("api/abstraction")
-public class AbstractionTypeController implements OptionalResponse, ControllerContext {
+public class AbstractionController implements OptionalResponse, ControllerContext {
     @Autowired
     AbstractionTypeService abstractionTypeService;
+    @Autowired
+    AbstractionService abstractionService;
+
+    @POST
+    public Response postAbstraction(Abstraction abstraction) {
+        return okIfPresent(abstractionService.saveAbstraction(abstraction));
+    }
 
     @Path("type")
     @POST
     public Response postAbstractionType(AbstractionType abstractionType) {
-        if (!isResourceOwner(abstractionType.getId().getUserId())) return unauthorized();
-
         return okIfPresent(abstractionTypeService.saveAbstractionType(abstractionType));
     }
 

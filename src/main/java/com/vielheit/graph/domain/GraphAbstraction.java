@@ -18,7 +18,7 @@ public class GraphAbstraction{
     private GraphAbstractionType graphAbstractionType;
 
     @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
-    private List<Entry> entryList;
+    private List<GraphEntry> graphEntryList;
 
     public Long getId() {
         return id;
@@ -44,11 +44,11 @@ public class GraphAbstraction{
         this.graphAbstractionType = graphAbstractionType;
     }
 
-    public List<Entry> getEntryList() {
-        return entryList;
+    public List<GraphEntry> getGraphEntryList() {
+        return graphEntryList;
     }
 
-    public void setEntryList(List<Entry> entryList) {
-        this.entryList = entryList;
+    public void setGraphEntryList(List<GraphEntry> graphEntryList) {
+        this.graphEntryList = graphEntryList;
     }
 }

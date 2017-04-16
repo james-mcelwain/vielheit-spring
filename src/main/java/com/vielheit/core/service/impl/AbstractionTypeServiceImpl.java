@@ -8,6 +8,7 @@ import com.vielheit.core.service.AbstractionTypeService;
 import com.vielheit.graph.service.GraphAbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

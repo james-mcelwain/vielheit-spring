@@ -1,10 +1,9 @@
 package com.vielheit.core.config;
 
 
-import com.vielheit.core.controller.AbstractionTypeController;
+import com.vielheit.core.controller.AbstractionController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
-import com.vielheit.graph.controller.EntryController;
 import com.vielheit.security.UserResourceFilter;
 import com.vielheit.security.controller.TokenController;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -23,9 +22,7 @@ public class JerseyConfig extends ResourceConfig {
         register(TokenController.class);
         register(UserController.class);
         register(RegisterController.class);
-        register(AbstractionTypeController.class);
+        register(AbstractionController.class);
 
-        // APP
-        register(EntryController.class);
     }
 }
