@@ -1,24 +1,18 @@
 package com.vielheit.security;
 
-import com.vielheit.core.ErrorCode;
+import com.vielheit.core.exception.ErrorCode;
 import com.vielheit.core.ErrorResponse;
 import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
-import org.glassfish.jersey.server.ContainerRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
-import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
-import java.awt.*;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 @UserResource

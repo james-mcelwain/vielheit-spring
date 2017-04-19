@@ -11,7 +11,7 @@ const webpackCompiler = (webpackConfig) =>
 
     compiler.run((err, stats) => {
       if (err) {
-        debug('Webpack compiler encountered a fatal error.', err)
+        debug('Webpack compiler encountered a fatal exception.', err)
         return reject(err)
       }
 
@@ -48,7 +48,7 @@ const compile = () => {
       debug('Compilation completed successfully.')
     })
     .catch((err) => {
-      debug('Compiler encountered an error.', err)
+      debug('Compiler encountered an exception.', err)
       process.exit(1)
     })
 }

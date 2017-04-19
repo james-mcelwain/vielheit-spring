@@ -5,19 +5,14 @@ import EntityForm from '../forms/AbstractionForm'
 import EntityTypeForm from '../forms/AbstractionTypeForm'
 import {EditorState} from '../modules/editor'
 import './Editor.scss'
+
 const RadioButton = Radio.Button
 const RadioGroup = Radio.Group
 
 class Editor extends React.Component<{changeForm: any, editor: EditorState}, {}> {
-  private forms: {
-    [key: string]: React.StatelessComponent<any>,
-  } = {
-    ['entry']: EntryForm,
-    ['entity-type']: EntityTypeForm,
-    ['entity']: EntityForm,
-  }
-
   public render() {
+    const { editor: { form }} = this.props
+
     return (
       <div className="editor-container">
         <RadioGroup onChange={this.onChange.bind(this)} defaultValue="a" size="large">
@@ -25,17 +20,15 @@ class Editor extends React.Component<{changeForm: any, editor: EditorState}, {}>
           <RadioButton value="entity-type">Entity Type</RadioButton>
           <RadioButton value="entity">Entity</RadioButton>
         </RadioGroup>
-        <this.Form {...this.props}/>
+        {form === 'entry' && <EntryForm { ...this.props}/>}
+        {form === 'entity-type' && <EntityTypeForm { ...this.props}/>}
+        {form === 'entity' && <EntityForm { ...this.props}/>}
       </div>
     )
   }
 
   private onChange({target: {value}}: {target: {value: string}}) {
     this.props.changeForm(value)
-  }
-
-  private get Form() {
-    return this.forms[this.props.editor.form]
   }
 }
 

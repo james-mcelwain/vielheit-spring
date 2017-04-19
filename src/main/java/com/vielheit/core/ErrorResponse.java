@@ -1,5 +1,6 @@
 package com.vielheit.core;
 
+import com.vielheit.core.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.core.Response;

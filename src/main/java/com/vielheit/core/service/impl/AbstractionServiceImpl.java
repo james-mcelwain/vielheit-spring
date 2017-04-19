@@ -3,6 +3,7 @@ package com.vielheit.core.service.impl;
 import com.vielheit.core.domain.Abstraction;
 import com.vielheit.core.domain.AbstractionType;
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.EntityAlreadyExistsException;
 import com.vielheit.core.repository.AbstractionRepository;
 import com.vielheit.core.repository.AbstractionTypeRepository;
 import com.vielheit.core.repository.UserRepository;
@@ -25,7 +26,11 @@ public class AbstractionServiceImpl implements AbstractionService {
     UserRepository userRepository;
 
     @Override
-    public Optional<Abstraction> saveAbstraction(Abstraction abstraction) {
+    public Optional<Abstraction> saveAbstraction(Abstraction abstraction) throws EntityAlreadyExistsException {
+        if (!abstractionRepository.findByNameAndUserId(abstraction.getName(), userId()).isEmpty()) {
+            throw new EntityAlreadyExistsException("Abstraction " + abstraction.getName() + " already exists!");
+        }
+
         User user = userRepository.findOne(userId());
         AbstractionType abstractionType = abstractionTypeRepository.findOne(abstraction.getAbstractionType().getId());
 

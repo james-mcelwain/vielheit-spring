@@ -1,6 +1,7 @@
 package com.vielheit.core.service;
 
 import com.vielheit.core.domain.Abstraction;
+import com.vielheit.core.exception.EntityAlreadyExistsException;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -10,5 +11,5 @@ import java.util.Optional;
  */
 @Transactional
 public interface AbstractionService extends Service {
-    Optional<Abstraction> saveAbstraction(Abstraction abstraction);
+    Optional<Abstraction> saveAbstraction(Abstraction abstraction) throws EntityAlreadyExistsException;
 }

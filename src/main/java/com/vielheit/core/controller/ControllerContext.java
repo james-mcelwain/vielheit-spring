@@ -1,14 +1,11 @@
 package com.vielheit.core.controller;
 
-import com.vielheit.core.ErrorCode;
+import com.vielheit.core.exception.ErrorCode;
 import com.vielheit.core.ErrorResponse;
-import com.vielheit.core.domain.User;
 import com.vielheit.security.auth.JwtAuthenticationToken;
-import com.vielheit.security.model.UserContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
 
 public interface ControllerContext {
     default boolean isResourceOwner(Long id) {
@@ -19,6 +16,12 @@ public interface ControllerContext {
     default Long userId() {
         JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         return jwt.getUserContext().getUserId();
+    }
+
+    default Response error(ErrorResponse errorResponse) {
+        return Response.status(errorResponse.getStatus())
+                .entity(errorResponse)
+                .build();
     }
 
     default Response unauthorized() {

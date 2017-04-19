@@ -56,7 +56,7 @@ defineSupportCode(({ setWorldConstructor, When, Then, Before, After }) => {
     expect(RES.status).to.equal(status)
   })
 
-  Then('the error response is {response:int}', function (status) {
+  Then('the exception response is {response:int}', function (status) {
     expect(ERR, 'ERR').to.exist
     expect(ERR.status).to.equal(status)
   })
@@ -67,7 +67,7 @@ defineSupportCode(({ setWorldConstructor, When, Then, Before, After }) => {
     expect(RES.data).to.deep.equal(deserialize(string))
   })
 
-  Then('the error body is', function (string) {
+  Then('the exception body is', function (string) {
     expect(ERR, 'ERR').to.exist
     expect(ERR.data.message).to.deep.equal(deserialize(string))
   })

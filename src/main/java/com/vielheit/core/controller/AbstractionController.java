@@ -1,7 +1,10 @@
 package com.vielheit.core.controller;
 
+import com.vielheit.core.exception.ErrorCode;
+import com.vielheit.core.ErrorResponse;
 import com.vielheit.core.domain.Abstraction;
 import com.vielheit.core.domain.AbstractionType;
+import com.vielheit.core.exception.EntityAlreadyExistsException;
 import com.vielheit.core.service.AbstractionService;
 import com.vielheit.core.service.AbstractionTypeService;
 import com.vielheit.core.utility.OptionalResponse;
@@ -24,7 +27,11 @@ public class AbstractionController implements OptionalResponse, ControllerContex
 
     @POST
     public Response postAbstraction(Abstraction abstraction) {
-        return okIfPresent(abstractionService.saveAbstraction(abstraction));
+        try {
+            return okIfPresent(abstractionService.saveAbstraction(abstraction));
+        } catch (EntityAlreadyExistsException eaeex) {
+            return error(ErrorResponse.of(eaeex.getMessage(), ErrorCode.ENTITY_EXISTS, Response.Status.BAD_REQUEST));
+        }
     }
 
     @Path("type")

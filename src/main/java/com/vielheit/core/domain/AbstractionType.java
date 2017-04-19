@@ -45,6 +45,24 @@ public class AbstractionType implements Serializable {
         public void setType(String type) {
             this.type = type;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Id id = (Id) o;
+
+            if (!userId.equals(id.userId)) return false;
+            return type.equals(id.type);
+        }
+
+        @Override
+        public int hashCode() {
+            int result = userId.hashCode();
+            result = 31 * result + type.hashCode();
+            return result;
+        }
     }
 
     @EmbeddedId
