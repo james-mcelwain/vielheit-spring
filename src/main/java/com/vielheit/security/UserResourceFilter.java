@@ -1,7 +1,7 @@
 package com.vielheit.security;
 
 import com.vielheit.core.exception.ErrorCode;
-import com.vielheit.core.ErrorResponse;
+import com.vielheit.core.exception.ErrorResponse;
 import com.vielheit.core.domain.Role;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import org.slf4j.Logger;

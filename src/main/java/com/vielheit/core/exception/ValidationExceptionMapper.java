@@ -1,4 +1,4 @@
-package com.vielheit.core.config;
+package com.vielheit.core.exception;
 
 import org.apache.log4j.Logger;
 

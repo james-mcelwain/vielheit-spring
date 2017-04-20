@@ -2,26 +2,31 @@ package com.vielheit.core.exception;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ErrorCode {
-    GLOBAL(2),
+import javax.ws.rs.core.Response;
 
-    AUTHENTICATION(10), JWT_TOKEN_EXPIRED(11), UNAUTHORIZED(12), ENTITY_EXISTS(13, EntityAlreadyExistsException.class);
+public enum ErrorCode {
+    GLOBAL(2, Response.Status.INTERNAL_SERVER_ERROR),
+
+    AUTHENTICATION(10, Response.Status.UNAUTHORIZED),
+    JWT_TOKEN_EXPIRED(11, Response.Status.UNAUTHORIZED),
+    UNAUTHORIZED(12, Response.Status.UNAUTHORIZED),
+    ENTITY_EXISTS(13, Response.Status.BAD_REQUEST);
 
     private int code;
-    private Class<? extends Exception> exception;
+    private Response.Status status;
 
-    ErrorCode(int code) {
+    ErrorCode(int code, Response.Status status) {
         this.code = code;
-    }
-
-    ErrorCode(int code, Class<? extends Exception> exception) {
-        this.code = code;
-        this.exception = exception;
+        this.status = status;
     }
 
     @JsonValue
     public int getErrorCode() {
         return code;
+    }
+
+    public Response.Status getStatus() {
+        return this.status;
     }
 }
 

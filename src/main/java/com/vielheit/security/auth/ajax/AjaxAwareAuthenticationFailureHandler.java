@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vielheit.core.exception.ErrorCode;
-import com.vielheit.core.ErrorResponse;
+import com.vielheit.core.exception.ErrorResponse;
 import com.vielheit.security.exception.AuthMethodNotSupportedException;
 import com.vielheit.security.exception.JwtExpiredTokenException;
 import org.springframework.beans.factory.annotation.Autowired;

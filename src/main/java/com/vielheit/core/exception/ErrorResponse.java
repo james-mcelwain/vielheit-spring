@@ -1,6 +1,5 @@
-package com.vielheit.core;
+package com.vielheit.core.exception;
 
-import com.vielheit.core.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
 import javax.ws.rs.core.Response;
@@ -22,12 +21,8 @@ public class ErrorResponse {
         this.timestamp = new java.util.Date();
     }
 
-    public static ErrorResponse of(final String message, final ErrorCode errorCode, HttpStatus status) {
-        return new ErrorResponse(message, errorCode, status);
-    }
-
-    public static ErrorResponse of(final String message, final ErrorCode errorCode, Response.Status status) {
-        return new ErrorResponse(message, errorCode, HttpStatus.valueOf(status.getStatusCode()));
+    public static ErrorResponse of(final String message, final ErrorCode errorCode) {
+        return new ErrorResponse(message, errorCode, HttpStatus.valueOf(errorCode.getStatus().getStatusCode()));
     }
 
     public Integer getStatus() {

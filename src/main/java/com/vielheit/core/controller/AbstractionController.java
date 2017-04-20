@@ -1,7 +1,7 @@
 package com.vielheit.core.controller;
 
 import com.vielheit.core.exception.ErrorCode;
-import com.vielheit.core.ErrorResponse;
+import com.vielheit.core.exception.ErrorResponse;
 import com.vielheit.core.domain.Abstraction;
 import com.vielheit.core.domain.AbstractionType;
 import com.vielheit.core.exception.EntityAlreadyExistsException;
