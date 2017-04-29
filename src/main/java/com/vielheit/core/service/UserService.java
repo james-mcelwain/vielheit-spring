@@ -1,6 +1,7 @@
 package com.vielheit.core.service;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.OneEntityException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;

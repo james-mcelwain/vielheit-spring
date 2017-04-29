@@ -10,5 +10,5 @@ import javax.transaction.Transactional;
  */
 @Transactional
 public interface GraphAbstractionTypeService {
-    GraphAbstractionType save(AbstractionType abstractionType);
+    GraphAbstractionType create(AbstractionType abstractionType);
 }

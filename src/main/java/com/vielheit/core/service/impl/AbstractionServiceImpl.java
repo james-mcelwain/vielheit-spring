@@ -9,6 +9,8 @@ import com.vielheit.core.repository.AbstractionRepository;
 import com.vielheit.core.repository.AbstractionTypeRepository;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.service.AbstractionService;
+import com.vielheit.graph.service.GraphAbstractionService;
+import com.vielheit.graph.service.GraphAbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,8 @@ public class AbstractionServiceImpl implements AbstractionService {
     AbstractionTypeRepository abstractionTypeRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    GraphAbstractionService graphAbstractionService;
 
     @Override
     public Optional<Abstraction> saveAbstraction(Abstraction abstraction) throws ApplicationException {
@@ -39,6 +43,7 @@ public class AbstractionServiceImpl implements AbstractionService {
         abstraction.setUser(user);
         abstractionType.getAbstractions().add(abstraction);
         abstractionTypeRepository.save(abstractionType);
+        graphAbstractionService.save(abstraction);
         return one(() -> abstractionRepository.save(abstraction));
     }
 }

@@ -1,5 +1,6 @@
 package com.vielheit.core.service.impl;
 
+import com.vielheit.core.exception.OneEntityException;
 import com.vielheit.graph.service.GraphUserService;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;

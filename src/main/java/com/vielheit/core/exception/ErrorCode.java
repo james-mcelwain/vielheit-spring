@@ -10,7 +10,11 @@ public enum ErrorCode {
     AUTHENTICATION(10, Response.Status.UNAUTHORIZED),
     JWT_TOKEN_EXPIRED(11, Response.Status.UNAUTHORIZED),
     UNAUTHORIZED(12, Response.Status.UNAUTHORIZED),
-    ENTITY_EXISTS(13, Response.Status.BAD_REQUEST);
+    ENTITY_EXISTS(13, Response.Status.BAD_REQUEST),
+
+    MORE_THAN_ONE_ENTITY_FOUND(40, Response.Status.BAD_REQUEST),
+    MORE_THAN_NONE_ENTITY_FOUND(41, Response.Status.BAD_REQUEST),
+    LESS_THAN_TWO_ENTITIES_FOUND(42, Response.Status.BAD_REQUEST);
 
     private int code;
     private Response.Status status;

@@ -1,34 +1,33 @@
 package com.vielheit.core.service;
 
-import com.vielheit.core.service.impl.UserServiceImpl;
+import com.vielheit.core.exception.NoneEntityException;
+import com.vielheit.core.exception.OneEntityException;
 import com.vielheit.security.auth.JwtAuthenticationToken;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface Service extends Loggable {
     default <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier) {
-        try {
-            List<T> t = supplier.get();
-            if (t == null) {
-                throw new NoResultException("Entity not found");
-            }
-
-            if (t.size() != 1) {
-                throw new NoResultException("Expected 1; Found " + t.size());
-            }
-
-            return Optional.of(t.get(0));
-        } catch (Exception e) {
-            getLogger().error(e);
+        List<T> t = supplier.get();
+        if (t == null) {
+            return Optional.empty();
         }
 
-        return Optional.empty();
+        if (t.size() != 1) {
+            getLogger().error("Expected 1, found " + t.size() + "!");
+        }
+
+        return Optional.of(t.get(0));
+    }
+
+    default void none(final Supplier supplier) {
+        Object object = supplier.get();
+        if (object != null) {
+            getLogger().error("Expected not to find entity!");
+        }
     }
 
     default <T> Optional<List<T>> any(final Supplier<List<T>> supplier) {
@@ -36,7 +35,13 @@ public interface Service extends Loggable {
     }
 
     default <T> Optional<T> one(final Supplier<T> supplier) {
-        return Optional.ofNullable(supplier.get());
+        T t = supplier.get();
+
+        if (t == null) {
+            getLogger().error("Expected 1 entity!");
+        }
+
+        return Optional.ofNullable(t);
     }
 
     default boolean isResourceOwner(Long id) {

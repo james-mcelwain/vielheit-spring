@@ -11,6 +11,12 @@ public class GraphAbstraction{
     @GraphId
     private Long id;
 
+    private Long abstractionId;
+
+    private String name;
+
+    private String description;
+
     @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private GraphUser user;
 
@@ -26,6 +32,30 @@ public class GraphAbstraction{
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getAbstractionId() {
+        return abstractionId;
+    }
+
+    public void setAbstractionId(Long abstractionId) {
+        this.abstractionId = abstractionId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public GraphUser getUser() {

@@ -11,6 +11,8 @@ public class GraphEntry {
     @GraphId
     private Long id;
 
+    private Long entryId;
+
     @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private GraphUser user;
 
@@ -23,6 +25,14 @@ public class GraphEntry {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(Long entryId) {
+        this.entryId = entryId;
     }
 
     public GraphUser getUser() {

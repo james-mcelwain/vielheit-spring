@@ -18,11 +18,12 @@ public class GraphAbstractionTypeServiceImp implements GraphAbstractionTypeServi
     GraphUserRepository graphUserRepository;
 
     @Override
-    public GraphAbstractionType save(AbstractionType AbstractionType) {
-        GraphAbstractionType graphAbstractionType = new GraphAbstractionType();
-        graphAbstractionType.setType(AbstractionType.getId().getType());
-        graphAbstractionType.setDescrtiption(AbstractionType.getDescription());
-        graphAbstractionType.setUser(graphUserRepository.findByUserId(userId()));
-        return graphAbstractionTypeRepository.save(graphAbstractionType);
+    public GraphAbstractionType create(AbstractionType at) {
+        GraphAbstractionType gat = new GraphAbstractionType();
+        gat.setType(at.getId().getType());
+        gat.setDescrtiption(at.getDescription());
+        gat.setUser(graphUserRepository.findByUserId(userId()));
+        gat.setAbstractionTypeId(at.getId());
+        return graphAbstractionTypeRepository.save(gat);
     }
 }

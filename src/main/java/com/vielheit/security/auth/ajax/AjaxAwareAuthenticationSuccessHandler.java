@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.OneEntityException;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import com.vielheit.security.model.token.JwtToken;
