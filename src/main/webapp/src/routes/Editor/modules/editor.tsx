@@ -4,6 +4,8 @@ import http from '../../../http'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 import {AbstractionType} from '../../../domain/AbstractionType'
 import {Abstraction} from '../../../domain/Abstraction'
+import { notification } from 'antd';
+
 
 export interface EditorState {
   form: string,
@@ -54,6 +56,7 @@ export class EditorModule extends AbstractModule<EditorState> {
       try {
         dispatch(this.SUBMIT_ABSTRACTION_TYPE_START.dispatch())
         await http.post('abstraction/type', abstractionType)
+        this.alertSuccess('Abstraction type submitted!')
         dispatch(this.SUBMIT_ABSTRACTION_TYPE_SUCCESS.dispatch())
         this.getAbstractionTypes()(dispatch)
       } catch (err) {
@@ -68,6 +71,7 @@ export class EditorModule extends AbstractModule<EditorState> {
       try {
         dispatch(this.SUBMIT_ABSTRACTION_START.dispatch())
         await http.post('abstraction', abstraction)
+        this.alertSuccess('Abstraction submitted!')
         dispatch(this.SUBMIT_ABSTRACTION_SUCCESS.dispatch())
       } catch (err) {
         dispatch(this.SUBMIT_ABSTRACTION_FAIL.dispatch(err))
@@ -86,6 +90,13 @@ export class EditorModule extends AbstractModule<EditorState> {
         dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
       }
     }
+  }
+
+  private alertSuccess(message: string, description: string = '') {
+    notification.success({
+      message,
+      description,
+    })
   }
 }
 

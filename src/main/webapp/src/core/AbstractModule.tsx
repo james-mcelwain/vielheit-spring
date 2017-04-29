@@ -1,5 +1,5 @@
 import {DispatchedAction} from '../store/DispatchedAction'
-import {State, AppState} from '../store/appState'
+import {State} from '../store/appState'
 import {Dispatch} from 'react-redux'
 import {ActionCreator, ActionHandler} from './ActionCreator'
 import {ActionType} from './ActionType'

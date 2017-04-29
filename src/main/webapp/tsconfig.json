@@ -6,11 +6,11 @@
     "noImplicitAny": true,
     "module": "commonjs",
     "target": "ES6",
-    "experimentalDecorators": true,
     "lib": [
       "es7",
       "dom"
     ],
+    "strict": true,
     "experimentalDecorators": true,
     "jsx": "react",
     "strictNullChecks": true,

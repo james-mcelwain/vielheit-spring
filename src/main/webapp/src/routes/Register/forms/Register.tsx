@@ -1,4 +1,4 @@
-import { Button, Cascader, Checkbox, Col, Form, Icon, Input, Row, Select, Tooltip } from 'antd'
+import {Button, Form, Input, Select} from 'antd'
 import * as React from 'react'
 import {RegisterUserRequest} from '../modules/register'
 import SyntheticEvent = React.SyntheticEvent

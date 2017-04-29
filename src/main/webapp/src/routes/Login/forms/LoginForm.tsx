@@ -1,11 +1,9 @@
-import {SyntheticEvent} from '@types/react';
-import { Alert, Button, Checkbox, Form, Icon, Input } from 'antd'
+import {SyntheticEvent} from '@types/react'
+import {Alert, Button, Form, Icon, Input} from 'antd'
 import * as React from 'react'
-import { Link } from 'react-router'
-import {LoginState, LoginUserRequest, LoginModule} from '../modules/login'
+import {Link} from 'react-router'
+import {LoginUserRequest} from '../modules/login'
 import './LoginForm.scss'
-import {AsyncReducerMap} from '../../../store/store'
-import {WrappedFormUtils} from 'antd/lib/form/Form'
 import {FormComponentProps} from 'antd/lib/form/Form'
 import {LoginProps} from '../containers/LoginContainer'
 
