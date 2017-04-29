@@ -6,6 +6,7 @@ import javax.persistence.*;
  * jcm - 4/16/17.
  */
 @Entity
+@Table(name = "Entry", schema = "vielheit")
 public class Entry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -20,8 +20,6 @@ public class UserContext {
         return new UserContext(userId, authorities);
     }
 
-
-
     public Long getUserId() {
         return userId;
     }

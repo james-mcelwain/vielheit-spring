@@ -7,6 +7,7 @@ import java.io.Serializable;
  * jcm - 4/15/17.
  */
 @Entity
+@Table(name = "Abstraction", schema = "vielheit")
 public class Abstraction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -35,7 +35,7 @@ public class UserResourceFilter implements ContainerRequestFilter
                 if (!ctxId.equals(id)) {
                     requestContext.abortWith(Response
                             .status(Response.Status.UNAUTHORIZED)
-                            .entity(ErrorResponse.of("Unauthorized", ErrorCode.AUTHENTICATION, Response.Status.UNAUTHORIZED))
+                            .entity(ErrorResponse.of("Unauthorized", ErrorCode.AUTHENTICATION))
                             .build());
                 }
             }
