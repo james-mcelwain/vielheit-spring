@@ -2,6 +2,7 @@ package com.vielheit.core.config;
 
 
 import com.vielheit.core.controller.AbstractionController;
+import com.vielheit.core.controller.JournalController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
 import com.vielheit.core.exception.ApplicationExceptionMapper;
@@ -21,11 +22,10 @@ public class JerseyConfig extends ResourceConfig {
 
     private void registerEndpoints() {
         register(UserResourceFilter.class);
-
+        register(JournalController.class);
         register(TokenController.class);
         register(UserController.class);
         register(RegisterController.class);
         register(AbstractionController.class);
-
     }
 }

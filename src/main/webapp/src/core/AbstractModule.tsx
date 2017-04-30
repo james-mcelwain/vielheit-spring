@@ -4,6 +4,7 @@ import {Dispatch} from 'react-redux'
 import {ActionCreator, ActionHandler} from './ActionCreator'
 import {ActionType} from './ActionType'
 import {message} from 'antd'
+import {store} from '../main'
 
 export function AsyncDispatch(prototype: any, name: string, descriptor: PropertyDescriptor) {
   if (!prototype.asyncActions) {
@@ -55,6 +56,10 @@ export abstract class AbstractModule<S extends State> {
     const handler = this.actions.find((a) => a.compare(action))
 
     return handler ? handler.handler(s, action.payload) : s
+  }
+
+  protected userId() {
+    return (store.getState().application.user || { id: null }).id
   }
 }
 

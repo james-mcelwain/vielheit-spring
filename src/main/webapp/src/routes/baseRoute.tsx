@@ -3,6 +3,7 @@ import User from '../domain/User'
 import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
 import EditorRoute from './Editor/editorRoute'
+import JournalRoute from './Journal/journalRoute'
 import Home from 'routes/Home/homeRoute'
 import LoginRoute from 'routes/Login/loginRoute'
 import Application from 'core/Application'
@@ -17,7 +18,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
     if ($cover) {
       setTimeout(() => {
         $cover.classList.toggle('fade')
-      }, 100)
+      }, 200)
     }
     if (!loggedIn()) {
       if (!pubPaths.includes(location.pathname)) {
@@ -35,6 +36,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
   childRoutes: [
     EditorRoute(store),
     LoginRoute(store),
+    JournalRoute(store),
   ],
 })
 
