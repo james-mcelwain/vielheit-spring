@@ -3,31 +3,26 @@ import * as React from 'react'
 import {store} from '../../../main'
 import './EditorForm.scss'
 import {AbstractionType} from '../../../domain/AbstractionType'
-import {EditorState} from '../modules/editor'
+import {EditorModule, EditorState} from '../modules/editor'
 import SyntheticEvent = React.SyntheticEvent
 import {Abstraction} from '../../../domain/Abstraction'
+import AbstractionTypesRemoteSelect from '../inputs/AbstractionTypesRemoteSelect'
+import {FormComponentProps} from 'antd/lib/form/Form'
+import {EditorProps} from 'routes/Editor/containers/EditorContainer'
 
 const FormItem = Form.Item
 const Option = Select.Option;
 
-class AbstractionForm extends React.Component<{ editor: EditorState, form: any, submitting: boolean, submitAbstraction: (e: Abstraction) => any }, {}> {
+class AbstractionForm extends React.Component<EditorProps & EditorModule & FormComponentProps, {}> {
   private currentAbstractionType: AbstractionType;
 
   public handleSelectChange(type: string) {
-    const abstractionType = this.getAbstractionTypes().find((t: AbstractionType) => t.id.type === type)
+    console.log(type)
+    const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.id.type === type)
     if (abstractionType) {
       this.currentAbstractionType = abstractionType
     }
   }
-
-  public getAbstractionTypes(): Array<AbstractionType> {
-    return (this.props.editor && this.props.editor.abstractionTypes || [])
-  }
-
-  public getOptions() {
-    return this.getAbstractionTypes().map((t: any, i: number) => <Option key={i} value={t.id.type}>{t.id.type}</Option>)
-  }
-
 
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
@@ -52,7 +47,7 @@ class AbstractionForm extends React.Component<{ editor: EditorState, form: any, 
       getFieldDecorator,
     } = this.props.form
 
-    const { submitting } = this.props
+    const { submitting } = this.props.editor
 
     return (
       <Form onSubmit={this.handleSubmit.bind(this)} className="editor-form">
@@ -60,19 +55,8 @@ class AbstractionForm extends React.Component<{ editor: EditorState, form: any, 
         <FormItem>
           {getFieldDecorator('type', {
             rules: [{ required: true, message: 'required' }],
-            onChange: this.handleSelectChange.bind(this),
           })(
-            <Select
-              showSearch
-              style={{ width: 200 }}
-              placeholder="Select a type"
-              optionFilterProp="children"
-              notFoundContent="No types found!"
-              onChange={this.handleSelectChange.bind(this)}
-              filterOption={(input, option: any) => option.props.value.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-            >
-              {this.getOptions()}
-            </Select>,
+            <AbstractionTypesRemoteSelect handleSelectChange={this.handleSelectChange.bind(this)} {...this.props}/>,
           )}
         </FormItem>
         <FormItem>

@@ -13,10 +13,6 @@ export default (store: AppStore): PlainRoute => ({
       const Editor = require('./containers/EditorContainer').default
       const editor: EditorModule = require('./modules/editor').default
       injectReducer<LoginState>(store, { key: 'editor',  reducer: editor.getReducer() })
-
-      const fetchFn = editor.getAbstractionTypes()
-      await fetchFn(store.dispatch.bind(store))
-
       cb(null, Editor)
     }, 'editor')
   },

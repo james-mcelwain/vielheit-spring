@@ -76,6 +76,7 @@
   "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
   "license": "MIT",
   "dependencies": {
+    "@types/lodash": "^4.14.63",
     "antd": "^2.9.0",
     "axios": "^0.15.3",
     "babel-core": "^6.17.0",
@@ -99,6 +100,7 @@
     "ip": "^1.1.2",
     "json-loader": "^0.5.4",
     "less-loader": "^2.2.3",
+    "lodash.debounce": "^4.0.8",
     "node-sass": "^4.0.0",
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",

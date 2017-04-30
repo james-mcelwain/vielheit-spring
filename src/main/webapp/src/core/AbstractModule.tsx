@@ -3,6 +3,7 @@ import {State} from '../store/appState'
 import {Dispatch} from 'react-redux'
 import {ActionCreator, ActionHandler} from './ActionCreator'
 import {ActionType} from './ActionType'
+import {message} from 'antd'
 
 export function AsyncDispatch(prototype: any, name: string, descriptor: PropertyDescriptor) {
   if (!prototype.asyncActions) {
@@ -19,6 +20,10 @@ export abstract class AbstractModule<S extends State> {
 
   public constructor(initialState: S) {
     this.state = initialState
+  }
+
+  public message(type: 'success' | 'error' | 'warning', msg: string) {
+    message[type](msg)
   }
 
   public Action<P>(actionType: ActionType, fn: ActionHandler<S, P> = (s) => s): ActionCreator<S, P> {
