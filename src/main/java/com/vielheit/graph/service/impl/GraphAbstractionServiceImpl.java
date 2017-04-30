@@ -29,8 +29,7 @@ public class GraphAbstractionServiceImpl implements GraphAbstractionService {
     public GraphAbstraction create(Abstraction a) {
         GraphAbstraction ga = new GraphAbstraction();
         GraphUser user = graphUserRepository.findByUserId(userId());
-        GraphAbstractionType gat = user.getGraphAbstractionTypes().stream().filter(t -> t.getType().equals(a.getAbstractionType().getId().getType()))
-                .findFirst().get();
+        GraphAbstractionType gat = gatRepository.getTypeByNameAndUserId(userId(), a.getType());
         ga.setName(a.getName());
         ga.setDescription(a.getDescription());
         ga.setGraphAbstractionType(gat);

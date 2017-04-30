@@ -65,5 +65,9 @@ public class Abstraction implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getType() {
+        return getAbstractionType().getId().getType();
+    }
 }
 
