@@ -20,6 +20,6 @@ public class RegisterController implements OptionalResponse {
 
     @POST
     public Response registerUser(@NotNull @Valid User user) {
-        return okIfPresent(userService.saveUser(user));
+        return okIfPresent(userService.create(user));
     }
 }

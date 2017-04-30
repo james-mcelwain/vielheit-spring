@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Transactional
 public interface GraphUserService {
-    Optional<GraphUser> saveUser(User user);
+    GraphUser create(User user);
 }

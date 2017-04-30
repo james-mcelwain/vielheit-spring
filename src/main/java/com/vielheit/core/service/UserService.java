@@ -9,7 +9,7 @@ import java.util.Optional;
 @Transactional
 public interface UserService extends Service {
 
-    Optional<User> saveUser(User user);
+    Optional<User> create(User user);
 
     Optional<User> getByEmailAddress(String email);
 

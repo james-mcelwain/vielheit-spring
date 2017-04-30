@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface GraphAbstractionTypeRepository extends GraphRepository<GraphAbstractionType> {
      List<GraphAbstractionType> findByGraphUser(GraphUser graphUser);
-     GraphAbstractionType findByAbstractionTypeId(AbstractionType.Id abstractionTypeId);
+     GraphAbstractionType findByTypeAndAndGraphUser(String type, GraphUser user);
 }

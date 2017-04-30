@@ -1,5 +1,6 @@
 package com.vielheit.graph.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vielheit.core.domain.AbstractionType;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -10,8 +11,7 @@ public class GraphAbstractionType {
     @GraphId
     private Long id;
 
-    private AbstractionType.Id abstractionTypeId;
-
+    @JsonIgnore
     @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private GraphUser graphUser;
 
@@ -25,14 +25,6 @@ public class GraphAbstractionType {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public AbstractionType.Id getAbstractionTypeId() {
-        return abstractionTypeId;
-    }
-
-    public void setAbstractionTypeId(AbstractionType.Id abstractionTypeId) {
-        this.abstractionTypeId = abstractionTypeId;
     }
 
     public GraphUser getUser() {

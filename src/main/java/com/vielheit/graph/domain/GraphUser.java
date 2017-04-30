@@ -1,5 +1,6 @@
 package com.vielheit.graph.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -13,10 +14,11 @@ public class GraphUser {
 
     private Long userId;
 
-    @Relationship(type = Rel.OWNS, direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.OWNS)
     private List<GraphEntry> entries;
 
-    @Relationship(type = Rel.OWNS, direction = Relationship.OUTGOING)
+    @JsonIgnore
+    @Relationship(type = Rel.OWNS)
     private List<GraphAbstractionType> graphAbstractionTypes;
 
     public Long getId() {

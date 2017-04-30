@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> saveUser(User user) throws BadRequestException {
+    public Optional<User> create(User user) throws BadRequestException {
         if (!userRepository.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
             throw new BadRequestException();
         }
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService {
         userRole.setId(new UserRole.Id(user.getId(), Role.USER));
         userRoleRepository.save(userRole);
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
-        graphUserService.saveUser(user);
+        graphUserService.create(user);
         return one(() -> userRepository.save(user));
     }
 

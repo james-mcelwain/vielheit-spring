@@ -5,6 +5,8 @@ import com.vielheit.core.domain.User;
 import com.vielheit.core.repository.AbstractionTypeRepository;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.service.AbstractionTypeService;
+import com.vielheit.graph.domain.GraphAbstraction;
+import com.vielheit.graph.domain.GraphAbstractionType;
 import com.vielheit.graph.service.GraphAbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
@@ -31,7 +33,7 @@ public class AbstractionTypeServiceImpl implements AbstractionTypeService {
         User user = userRepository.findOne(userId());
         abstractionType.setUser(user);
         abstractionType = abstractionTypeRepository.save(abstractionType);
-        graphAbstractionTypeService.save(abstractionType);
+        GraphAbstractionType gat = graphAbstractionTypeService.create(abstractionType);
         return Optional.of(abstractionType);
     }
 

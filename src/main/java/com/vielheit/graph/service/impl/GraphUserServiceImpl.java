@@ -15,9 +15,9 @@ public class GraphUserServiceImpl implements GraphUserService {
     private GraphUserRepository graphUserRepository;
 
     @Override
-    public Optional<GraphUser> saveUser(User user) {
+    public GraphUser create(User user) {
         GraphUser graphUser = new GraphUser();
         graphUser.setUserId(user.getId());
-        return Optional.ofNullable(graphUserRepository.save(graphUser));
+        return graphUserRepository.save(graphUser);
     }
 }

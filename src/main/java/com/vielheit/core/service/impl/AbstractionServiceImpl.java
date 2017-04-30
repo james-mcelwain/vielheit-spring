@@ -43,7 +43,8 @@ public class AbstractionServiceImpl implements AbstractionService {
         abstraction.setUser(user);
         abstractionType.getAbstractions().add(abstraction);
         abstractionTypeRepository.save(abstractionType);
-        graphAbstractionService.save(abstraction);
-        return one(() -> abstractionRepository.save(abstraction));
+        graphAbstractionService.create(abstraction);
+        abstraction = abstractionRepository.save(abstraction);
+        return Optional.empty();
     }
 }

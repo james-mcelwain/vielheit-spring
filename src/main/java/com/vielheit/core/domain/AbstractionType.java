@@ -2,6 +2,7 @@ package com.vielheit.core.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.neo4j.ogm.annotation.NodeEntity;
 
 import javax.persistence.*;
 import java.io.Serializable;

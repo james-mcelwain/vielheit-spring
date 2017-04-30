@@ -23,7 +23,6 @@ public class GraphAbstractionTypeServiceImp implements GraphAbstractionTypeServi
         gat.setType(at.getId().getType());
         gat.setDescrtiption(at.getDescription());
         gat.setUser(graphUserRepository.findByUserId(userId()));
-        gat.setAbstractionTypeId(at.getId());
         return graphAbstractionTypeRepository.save(gat);
     }
 }

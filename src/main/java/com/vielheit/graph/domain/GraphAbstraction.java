@@ -1,5 +1,6 @@
 package com.vielheit.graph.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
@@ -17,13 +18,14 @@ public class GraphAbstraction{
 
     private String description;
 
+    @JsonIgnore
     @Relationship(type = Rel.OWNS, direction = Relationship.INCOMING)
     private GraphUser user;
 
     @Relationship(type = Rel.TYPE_OF, direction = Relationship.INCOMING)
     private GraphAbstractionType graphAbstractionType;
 
-    @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
+    @Relationship(type = Rel.RELATES_TO)
     private List<GraphEntry> graphEntryList;
 
     public Long getId() {
