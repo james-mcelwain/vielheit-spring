@@ -4,6 +4,7 @@ import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
 import EditorRoute from './Editor/editorRoute'
 import JournalRoute from './Journal/journalRoute'
+import RegisterRoute from './Register/registerRoute'
 import Home from 'routes/Home/homeRoute'
 import LoginRoute from 'routes/Login/loginRoute'
 import Application from 'core/Application'
@@ -14,12 +15,6 @@ const loggedIn = () => sessionStorage.getItem('token')
 export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => ({
   path: '/',
   onEnter: ({ location }, replace) => {
-    const $cover = document.querySelector('#cover')
-    if ($cover) {
-      setTimeout(() => {
-        $cover.classList.toggle('fade')
-      }, 200)
-    }
     if (!loggedIn()) {
       if (!pubPaths.includes(location.pathname)) {
         replace('/login')
@@ -37,6 +32,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
     EditorRoute(store),
     LoginRoute(store),
     JournalRoute(store),
+    RegisterRoute(store),
   ],
 })
 

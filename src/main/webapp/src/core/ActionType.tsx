@@ -1,5 +1,6 @@
 export type ActionType
     = 'LOGOUT'
+    | 'BOOTSTRAP'
     | 'LOGIN'
     | 'LOCATION_CHANGE'
     | 'RESPONSE_ERROR'

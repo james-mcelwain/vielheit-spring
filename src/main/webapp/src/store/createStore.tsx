@@ -5,6 +5,7 @@ import {AppState} from './appState'
 import makeRootReducer from './reducers'
 import AppStore from './store'
 import Location from '../core/Location'
+import Application from 'core/Application'
 
 declare const module: any
 declare const __DEV__: any
@@ -44,5 +45,6 @@ export default (initialState: AppState) => {
     })
   }
 
+  store.dispatch(Application.BOOTSTRAP.dispatch())
   return store
 }
