@@ -1,6 +1,7 @@
 package com.vielheit.core.controller;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.service.UserService;
 import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class RegisterController implements OptionalResponse {
     UserService userService;
 
     @POST
-    public Response registerUser(@NotNull @Valid User user) {
+    public Response registerUser(@NotNull @Valid User user) throws ApplicationException {
         return okIfPresent(userService.create(user));
     }
 }

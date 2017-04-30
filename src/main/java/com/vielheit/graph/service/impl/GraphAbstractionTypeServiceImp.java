@@ -10,6 +10,10 @@ import com.vielheit.graph.service.GraphAbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
 @Component
 public class GraphAbstractionTypeServiceImp implements GraphAbstractionTypeService, Service {
     @Autowired
@@ -24,5 +28,10 @@ public class GraphAbstractionTypeServiceImp implements GraphAbstractionTypeServi
         gat.setDescrtiption(at.getDescription());
         gat.setUser(graphUserRepository.findByUserId(userId()));
         return graphAbstractionTypeRepository.save(gat);
+    }
+
+    @Override
+    public Optional<List<GraphAbstractionType>> getByUserId(Long userId) {
+        return any(() -> graphAbstractionTypeRepository.findByUserId(userId));
     }
 }

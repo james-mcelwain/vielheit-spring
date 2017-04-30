@@ -1,5 +1,6 @@
 package com.vielheit.core.controller;
 
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.security.UserResource;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.service.UserService;
@@ -20,7 +21,7 @@ public class UserController implements OptionalResponse {
     @GET
     @Path("{user-id}")
     @UserResource
-    public Response getUserById(@PathParam("user-id") Long id) {
+    public Response getUserById(@PathParam("user-id") Long id) throws ApplicationException {
         return okIfPresent(userService.getById(id));
     }
 
@@ -28,7 +29,7 @@ public class UserController implements OptionalResponse {
     @Path("{user-id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UserResource
-    public Response updateUserById(@PathParam("user-id") Long id, User user) {
+    public Response updateUserById(@PathParam("user-id") Long id, User user) throws ApplicationException {
         return okIfPresent(userService.updateUser(id, user));
     }
 }

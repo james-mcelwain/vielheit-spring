@@ -1,6 +1,7 @@
 package com.vielheit.security.controller;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import com.vielheit.security.auth.jwt.verifier.TokenVerifier;
@@ -39,7 +40,7 @@ public class TokenController {
     @Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
 
     @GET
-    public JwtToken refreshToken(@Context HttpHeaders headers) {
+    public JwtToken refreshToken(@Context HttpHeaders headers) throws ApplicationException {
         String payload = tokenExtractor.extract(headers.getHeaderString(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM));
 
         RawAccessJwtToken rawAccessJwtToken = new RawAccessJwtToken(payload);

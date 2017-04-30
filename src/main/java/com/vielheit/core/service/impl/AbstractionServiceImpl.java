@@ -33,12 +33,11 @@ public class AbstractionServiceImpl implements AbstractionService {
     @Override
     public Optional<Abstraction> saveAbstraction(Abstraction abstraction) throws ApplicationException {
         if (!abstractionRepository.findByNameAndUserId(abstraction.getName(), userId()).isEmpty()) {
-            throw new EntityAlreadyExistsException("Abstraction " + abstraction.getName() + " already exists!");
+            throw new EntityAlreadyExistsException(abstraction.getName());
         }
 
         User user = userRepository.findOne(userId());
         AbstractionType abstractionType = abstractionTypeRepository.findOne(abstraction.getAbstractionType().getId());
-
         abstraction.setAbstractionType(abstractionType);
         abstraction.setUser(user);
         abstractionType.getAbstractions().add(abstraction);

@@ -1,6 +1,7 @@
 package com.vielheit.security.endpoint;
 
 import com.vielheit.core.domain.User;
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import com.vielheit.security.auth.jwt.verifier.TokenVerifier;
@@ -39,7 +40,7 @@ public class RefreshTokenEndpoint {
 
     @RequestMapping(value="/api/auth/token", method=RequestMethod.GET, produces={ MediaType.APPLICATION_JSON_VALUE })
     @ResponseBody
-    public JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) {
+    public JwtToken refreshToken(HttpServletRequest request, HttpServletResponse response) throws ApplicationException {
         String tokenPayload = tokenExtractor.extract(request.getHeader(WebSecurityConfig.JWT_TOKEN_HEADER_PARAM));
 
         RawAccessJwtToken rawToken = new RawAccessJwtToken(tokenPayload);

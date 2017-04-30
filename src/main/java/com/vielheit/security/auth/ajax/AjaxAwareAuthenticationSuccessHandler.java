@@ -3,15 +3,13 @@ package com.vielheit.security.auth.ajax;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.vielheit.core.domain.User;
-import com.vielheit.core.exception.OneEntityException;
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import com.vielheit.security.model.token.JwtToken;
@@ -25,7 +23,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.util.Assert;
 
 @Component
 public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
@@ -48,8 +45,12 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
         authResponsePayload.put("token", accessToken.getToken());
         authResponsePayload.put("refreshToken", refreshToken.getToken());
 
-        userService.getById(userContext.getUserId())
-                .ifPresent(u -> authResponsePayload.put("user", u));
+        try {
+            userService.getById(userContext.getUserId())
+                    .ifPresent(u -> authResponsePayload.put("user", u));
+        } catch (ApplicationException apex) {
+            throw new ServletException();
+        }
 
         response.setStatus(HttpStatus.OK.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);

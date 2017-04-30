@@ -1,6 +1,8 @@
 package com.vielheit.core.service.impl;
 
-import com.vielheit.core.exception.OneEntityException;
+import com.vielheit.core.exception.ApplicationException;
+import com.vielheit.core.exception.IllegalRequestException;
+import com.vielheit.core.exception.UnexpectedResultException;
 import com.vielheit.graph.service.GraphUserService;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
@@ -14,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.ws.rs.BadRequestException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
@@ -35,12 +36,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getById(Long id) {
+    public Optional<User> getById(Long id) throws ApplicationException {
         return one(() -> userRepository.findOne(id));
     }
 
     @Override
-    public Optional<User> updateUser(Long id, User user) {
+    public Optional<User> updateUser(Long id, User user) throws ApplicationException {
         if (!id.equals(user.getId())) {
             throw new BadRequestException();
         }
@@ -60,9 +61,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> create(User user) throws BadRequestException {
+    public Optional<User> create(User user) throws ApplicationException {
         if (!userRepository.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
-            throw new BadRequestException();
+            throw new IllegalRequestException();
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
@@ -79,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getByEmailAddress(String emailAddress) {
+    public Optional<User> getByEmailAddress(String emailAddress) throws ApplicationException {
         return oneOrNone(() -> userRepository.findByEmailAddress(emailAddress));
     }
 }
