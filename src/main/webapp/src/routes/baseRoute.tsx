@@ -15,7 +15,9 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
   onEnter: ({ location }, replace) => {
     const $cover = document.querySelector('#cover')
     if ($cover) {
-      setTimeout(() => $cover.remove(), 100)
+      setTimeout(() => {
+        $cover.classList.toggle('fade')
+      }, 100)
     }
     if (!loggedIn()) {
       if (!pubPaths.includes(location.pathname)) {

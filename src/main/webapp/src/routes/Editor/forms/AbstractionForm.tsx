@@ -16,9 +16,8 @@ const Option = Select.Option;
 class AbstractionForm extends React.Component<EditorProps & EditorModule & FormComponentProps, {}> {
   private currentAbstractionType: AbstractionType;
 
-  public handleSelectChange(type: string) {
-    console.log(type)
-    const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.id.type === type)
+  public handleSelectChange(type: any[]) {
+    const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.id.type === type[0])
     if (abstractionType) {
       this.currentAbstractionType = abstractionType
     }
@@ -56,7 +55,11 @@ class AbstractionForm extends React.Component<EditorProps & EditorModule & FormC
           {getFieldDecorator('type', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <AbstractionTypesRemoteSelect handleSelectChange={this.handleSelectChange.bind(this)} {...this.props}/>,
+            <AbstractionTypesRemoteSelect
+              handleSelectChange={this.handleSelectChange.bind(this)}
+              getAbstractionTypes={this.props.getAbstractionTypes.bind(this)}
+              editor={this.props.editor}
+            />,
           )}
         </FormItem>
         <FormItem>

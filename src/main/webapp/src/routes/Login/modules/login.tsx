@@ -46,7 +46,6 @@ export class LoginModule extends AbstractModule<LoginState> {
         sessionStorage.setItem('refreshToken', refreshToken)
         sessionStorage.setItem('user', JSON.stringify(user))
         dispatch(this.LOGIN_SUCCESS.dispatch(new User(user)))
-
         browserHistory.push('/')
       } catch (err) {
         sessionStorage.clear()

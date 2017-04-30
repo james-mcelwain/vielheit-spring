@@ -5,9 +5,26 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <style>
+    #cover.fade {
+      opacity: 0;
+    }
+
+    #cover {
+      opacity: 1;
+      transition: opacity 0.5s;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: black;
+    }
+
+  </style>
 </head>
 <body>
-<div id ="cover" style="position: absolute; top: 0; left: 0; height: 100%; width: 100%; background-color: aqua"></div>
+<div id ="cover"></div>
 <div id="root" style="height: 100%"></div>
 </body>
 </html>

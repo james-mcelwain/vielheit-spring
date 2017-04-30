@@ -2,13 +2,26 @@ import * as React from 'react'
 import { Select, Spin } from 'antd'
 import { debounce } from 'lodash'
 import {EditorProps} from '../containers/EditorContainer'
-import {EditorModule} from '../modules/editor'
+import {EditorModule, EditorState} from '../modules/editor'
 import {AbstractionType} from '../../../domain/AbstractionType'
 import {FormComponentProps} from 'antd/lib/form/Form'
 const Option = Select.Option
 
-class AbstractionTypesRemoteSelect extends React.Component<EditorProps & EditorModule & FormComponentProps & { handleSelectChange: any }, { fetching: boolean, value: any[] }> {
- public state = {
+export interface AbstractionTypesRemoteSelectProps  {
+  handleSelectChange: (value: any[]) => void
+  getAbstractionTypes: () => void
+  editor: EditorState
+}
+
+export interface AbstractionTypesRemoteSelectState {
+  value: any[]
+  fetching: boolean
+}
+
+class AbstractionTypesRemoteSelect
+  extends React.Component<AbstractionTypesRemoteSelectProps, AbstractionTypesRemoteSelectState> {
+
+  public state = {
     value: [],
     fetching: false,
   }
