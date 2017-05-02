@@ -2,14 +2,13 @@ package com.vielheit.core.service.impl;
 
 import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.exception.IllegalRequestException;
-import com.vielheit.core.exception.UnexpectedResultException;
-import com.vielheit.graph.service.GraphUserService;
 import com.vielheit.core.domain.Role;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.domain.UserRole;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.repository.UserRoleRepository;
 import com.vielheit.core.service.UserService;
+import com.vielheit.graph.service.GraphUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

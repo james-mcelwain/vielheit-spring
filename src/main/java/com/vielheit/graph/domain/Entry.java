@@ -7,7 +7,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.Set;
 
 @NodeEntity
-public class GraphEntry {
+public class Entry {
     @GraphId
     private Long id;
 
@@ -17,7 +17,7 @@ public class GraphEntry {
     private GraphUser user;
 
     @Relationship(type = Rel.RELATES_TO, direction = Relationship.OUTGOING)
-    private Set<GraphEntry> entries;
+    private Set<Entry> entries;
 
     public Long getId() {
         return id;
@@ -43,11 +43,11 @@ public class GraphEntry {
         this.user = user;
     }
 
-    public Set<GraphEntry> getEntries() {
+    public Set<Entry> getEntries() {
         return entries;
     }
 
-    public void setEntries(Set<GraphEntry> entries) {
+    public void setEntries(Set<Entry> entries) {
         this.entries = entries;
     }
 }

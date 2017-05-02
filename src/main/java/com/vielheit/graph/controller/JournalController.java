@@ -1,10 +1,8 @@
-package com.vielheit.core.controller;
+package com.vielheit.graph.controller;
 
-import com.vielheit.core.exception.UnexpectedResultException;
-import com.vielheit.core.service.EntryService;
+import com.vielheit.core.controller.ControllerContext;
+import com.vielheit.graph.service.EntryService;
 import com.vielheit.core.utility.OptionalResponse;
-import com.vielheit.graph.service.GraphEntryService;
-import com.vielheit.graph.service.impl.GraphEntryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -25,6 +23,6 @@ public class JournalController implements ControllerContext, OptionalResponse {
     @Path("{userId}")
     @GET
     public Response getEntries(@PathParam("userId") Long userId) {
-        return okIfPresent(entryService.any(() -> entryService.findEntries(userId)));
+        return null;
     }
 }

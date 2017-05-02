@@ -8,7 +8,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import java.util.List;
 
 @NodeEntity
-public class GraphAbstraction{
+public class Abstraction {
     @GraphId
     private Long id;
 
@@ -23,10 +23,10 @@ public class GraphAbstraction{
     private GraphUser user;
 
     @Relationship(type = Rel.TYPE_OF, direction = Relationship.INCOMING)
-    private GraphAbstractionType graphAbstractionType;
+    private AbstractionType abstractionType;
 
     @Relationship(type = Rel.RELATES_TO)
-    private List<GraphEntry> graphEntryList;
+    private List<Entry> entryList;
 
     public Long getId() {
         return id;
@@ -68,19 +68,19 @@ public class GraphAbstraction{
         this.user = user;
     }
 
-    public GraphAbstractionType getGraphAbstractionType() {
-        return graphAbstractionType;
+    public AbstractionType getAbstractionType() {
+        return abstractionType;
     }
 
-    public void setGraphAbstractionType(GraphAbstractionType graphAbstractionType) {
-        this.graphAbstractionType = graphAbstractionType;
+    public void setAbstractionType(AbstractionType abstractionType) {
+        this.abstractionType = abstractionType;
     }
 
-    public List<GraphEntry> getGraphEntryList() {
-        return graphEntryList;
+    public List<Entry> getEntryList() {
+        return entryList;
     }
 
-    public void setGraphEntryList(List<GraphEntry> graphEntryList) {
-        this.graphEntryList = graphEntryList;
+    public void setEntryList(List<Entry> entryList) {
+        this.entryList = entryList;
     }
 }

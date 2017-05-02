@@ -1,13 +1,12 @@
 package com.vielheit.graph.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vielheit.core.domain.AbstractionType;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 
 @NodeEntity
-public class GraphAbstractionType {
+public class AbstractionType {
     @GraphId
     private Long id;
 

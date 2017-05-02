@@ -15,11 +15,11 @@ public class GraphUser {
     private Long userId;
 
     @Relationship(type = Rel.OWNS)
-    private List<GraphEntry> entries;
+    private List<Entry> entries;
 
     @JsonIgnore
     @Relationship(type = Rel.OWNS)
-    private List<GraphAbstractionType> graphAbstractionTypes;
+    private List<AbstractionType> abstractionTypes;
 
     public Long getId() {
         return id;
@@ -37,19 +37,19 @@ public class GraphUser {
         this.userId = userId;
     }
 
-    public List<GraphEntry> getEntries() {
+    public List<Entry> getEntries() {
         return entries;
     }
 
-    public void setEntries(List<GraphEntry> entries) {
+    public void setEntries(List<Entry> entries) {
         this.entries = entries;
     }
 
-    public List<GraphAbstractionType> getGraphAbstractionTypes() {
-        return graphAbstractionTypes;
+    public List<AbstractionType> getAbstractionTypes() {
+        return abstractionTypes;
     }
 
-    public void setGraphAbstractionTypes(List<GraphAbstractionType> graphAbstractionTypes) {
-        this.graphAbstractionTypes = graphAbstractionTypes;
+    public void setAbstractionTypes(List<AbstractionType> abstractionTypes) {
+        this.abstractionTypes = abstractionTypes;
     }
 }

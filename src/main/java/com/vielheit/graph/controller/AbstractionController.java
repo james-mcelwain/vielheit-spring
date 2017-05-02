@@ -1,13 +1,11 @@
-package com.vielheit.core.controller;
+package com.vielheit.graph.controller;
 
+import com.vielheit.core.controller.ControllerContext;
 import com.vielheit.core.exception.ApplicationException;
-import com.vielheit.core.exception.ErrorCode;
-import com.vielheit.core.exception.ErrorResponse;
-import com.vielheit.core.domain.Abstraction;
-import com.vielheit.core.domain.AbstractionType;
-import com.vielheit.core.exception.EntityAlreadyExistsException;
-import com.vielheit.core.service.AbstractionService;
-import com.vielheit.core.service.AbstractionTypeService;
+import com.vielheit.graph.domain.Abstraction;
+import com.vielheit.graph.domain.AbstractionType;
+import com.vielheit.graph.service.AbstractionService;
+import com.vielheit.graph.service.AbstractionTypeService;
 import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,19 +26,18 @@ public class AbstractionController implements OptionalResponse, ControllerContex
 
     @POST
     public Response postAbstraction(Abstraction abstraction) throws ApplicationException {
-        return okIfPresent(abstractionService.saveAbstraction(abstraction));
+        return null;
     }
 
     @Path("type")
     @POST
     public Response postAbstractionType(AbstractionType abstractionType) {
-        return okIfPresent(abstractionTypeService.saveAbstractionType(abstractionType));
+        return null;
     }
 
     @Path("type")
     @GET
     public Response getAbstractionTypes() {
-        Optional abstractionTypes = abstractionTypeService.findByUserId(userId());
-        return okIfPresent(abstractionTypes);
+        return null;
     }
 }
