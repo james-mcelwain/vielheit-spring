@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "UserRole", schema = "vielheit")
-public class UserRole implements  Serializable {
+public class UserRole extends BaseEntity<UserRole> implements  Serializable {
     @Embeddable
     public static class Id implements Serializable {
         private static final long serialVersionUID = 1322120000551624359L;

@@ -12,9 +12,9 @@ import java.util.List;
 public interface AbstractionTypeRepository extends GraphRepository<AbstractionType> {
     List<AbstractionType> findByGraphUser(GraphUser graphUser);
 
-    @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(gat:AbstractionType {type: {type}}) RETURN gat")
+    @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(at:AbstractionType {type: {type}}) RETURN at")
     AbstractionType findTypeByNameAndUserId(@Param("userId") Long userId, @Param("type") String type);
 
-    @Query("MATCH (gat:AbstractionType {userId: {userId}}) RETURN gat")
+    @Query("MATCH (at:AbstractionType {userId: {userId}}) RETURN at")
     List<AbstractionType> findByUserId(@Param("userId") Long userId);
 }

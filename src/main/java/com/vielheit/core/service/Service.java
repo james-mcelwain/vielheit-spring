@@ -1,6 +1,7 @@
 package com.vielheit.core.service;
 
 import com.vielheit.core.exception.UnexpectedResultException;
+import com.vielheit.graph.service.Loggable;
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -52,7 +53,7 @@ public interface Service extends Loggable {
         return jwt.getUserContext().getUserId().equals(id);
     }
 
-    default long userId() {
+    default Long userId() {
         JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
         return jwt.getUserContext().getUserId();
     }
