@@ -1,6 +1,8 @@
 package com.vielheit.security.auth.ajax;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,11 +11,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.vielheit.core.domain.Login;
 import com.vielheit.core.exception.ApplicationException;
+import com.vielheit.core.repository.LoginRepository;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import com.vielheit.security.model.token.JwtToken;
 import com.vielheit.security.model.token.JwtTokenFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,16 +32,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+    private final static Logger logger = LoggerFactory.getLogger(AjaxAwareAuthenticationSuccessHandler.class);
+
     @Autowired
     private ObjectMapper mapper;
     @Autowired
     private JwtTokenFactory tokenFactory;
     @Autowired
     private UserService userService;
+    @Autowired
+    LoginRepository loginRepository;
+
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-            Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication
+    ) throws IOException, ServletException {
         UserContext userContext = (UserContext) authentication.getPrincipal();
         
         JwtToken accessToken = tokenFactory.createAccessJwtToken(userContext);
@@ -47,7 +61,17 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
 
         try {
             userService.getById(userContext.getUserId())
-                    .ifPresent(u -> authResponsePayload.put("user", u));
+                    .ifPresent(u -> {
+                        authResponsePayload.put("user", u);
+                        Login login = new Login();
+                        login.setUserId(u.getId());
+                        String inetAddress = request.getHeader("X-FORWARDED-FOR");
+                        if (inetAddress == null) {
+                            inetAddress = request.getRemoteAddr();
+                        }
+                        login.setInetAddress(inetAddress);
+                        loginRepository.save(login);
+                    });
         } catch (ApplicationException apex) {
             throw new ServletException();
         }

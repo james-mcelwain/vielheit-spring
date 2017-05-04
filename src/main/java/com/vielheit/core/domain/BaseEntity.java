@@ -1,25 +1,28 @@
 package com.vielheit.core.domain;
 
-import com.vielheit.security.auth.JwtAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import java.sql.Timestamp;
 
 /**
  * jcm - 5/3/17.
  */
-public abstract class BaseEntity<T> {
+@MappedSuperclass
+public abstract class BaseEntity {
 
-    @Column(name = "deleted")
+    @Column(name = "deleted", columnDefinition = "boolean default false", nullable = false)
     private boolean deleted = false;
 
-    @Column(name = "createUser")
-    private Long createUser = userId();
+    @CreationTimestamp
+    @Column(name = "createDate")
+    private Timestamp createDate;
 
-    public Long userId() {
-        JwtAuthenticationToken jwt = (JwtAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        return jwt.getUserContext().getUserId();
-    }
+    @UpdateTimestamp
+    @Column(name = "updateDate")
+    private Timestamp updateDate;
 
     public boolean isDeleted() {
         return deleted;
@@ -29,11 +32,19 @@ public abstract class BaseEntity<T> {
         this.deleted = deleted;
     }
 
-    public Long getCreateUser() {
-        return createUser;
+    public Timestamp getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateUser(Long createUser) {
-        this.createUser = createUser;
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    public Timestamp getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Timestamp updateDate) {
+        this.updateDate = updateDate;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "\"User\"", schema = "vielheit")
-public class User extends BaseEntity<User> implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
