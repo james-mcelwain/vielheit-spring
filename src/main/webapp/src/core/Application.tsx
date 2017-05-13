@@ -12,7 +12,7 @@ export interface ApplicationState extends State {
 
 class Application extends AbstractModule<ApplicationState> {
   public RESPONSE_ERROR = this.Action<Error>('RESPONSE_ERROR', (state, payload) => {
-    this.message('error', 'An error occured! ' + payload)
+    this.message('error', 'An error occured! ' + JSON.stringify(payload))
     return {error: payload, ...state}
   })
   public LOGOUT = this.Action('LOGOUT', (state) => ({ ...state, loggedIn: false, user: null }))

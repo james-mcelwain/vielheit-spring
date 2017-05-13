@@ -1,28 +1,29 @@
 package com.vielheit.core.domain;
 
+import com.vielheit.core.utility.Audit;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * jcm - 5/3/17.
  */
 @MappedSuperclass
+@EntityListeners({Audit.class})
 public abstract class BaseEntity {
 
     @Column(name = "deleted", columnDefinition = "boolean default false", nullable = false)
     private boolean deleted = false;
 
-    @CreationTimestamp
     @Column(name = "createDate")
-    private Timestamp createDate;
+    private LocalDateTime createDate;
 
-    @UpdateTimestamp
     @Column(name = "updateDate")
-    private Timestamp updateDate;
+    private LocalDateTime updateDate;
 
     public boolean isDeleted() {
         return deleted;
@@ -32,19 +33,19 @@ public abstract class BaseEntity {
         this.deleted = deleted;
     }
 
-    public Timestamp getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Timestamp createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public Timestamp getUpdateDate() {
+    public LocalDateTime getUpdateDate() {
         return updateDate;
     }
 
-    public void setUpdateDate(Timestamp updateDate) {
+    public void setUpdateDate(LocalDateTime updateDate) {
         this.updateDate = updateDate;
     }
 }

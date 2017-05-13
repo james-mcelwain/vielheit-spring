@@ -11,7 +11,7 @@ import java.util.function.Supplier;
 public interface Service extends Loggable {
     default <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier) throws UnexpectedResultException {
         List<T> t = supplier.get();
-        if (t == null) {
+        if (t == null || t.size() == 0) {
             return Optional.empty();
         }
 

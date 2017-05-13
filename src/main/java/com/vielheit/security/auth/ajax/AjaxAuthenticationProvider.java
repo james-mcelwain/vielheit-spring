@@ -1,11 +1,12 @@
 package com.vielheit.security.auth.ajax;
 
+import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.exception.ApplicationException;
+import com.vielheit.core.repository.LoginAttemptRepository;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import org.apache.log4j.Logger;
-import org.glassfish.jersey.jaxb.internal.XmlJaxbElementProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,18 +21,27 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.ws.rs.InternalServerErrorException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private final BCryptPasswordEncoder encoder;
+    private final LoginAttemptRepository loginAttemptRepository;
     private final UserService userService;
+    private final int LOGIN_THROTTLE = 5;
+
     private final Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
 
     @Autowired
-    public AjaxAuthenticationProvider(final UserService userService, final BCryptPasswordEncoder encoder) {
+    public AjaxAuthenticationProvider(
+            final UserService userService,
+            final LoginAttemptRepository loginAttemptRepository,
+            final BCryptPasswordEncoder encoder
+    ) {
         this.userService = userService;
+        this.loginAttemptRepository = loginAttemptRepository;
         this.encoder = encoder;
     }
 
@@ -42,7 +52,8 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         String emailAddress = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        log.info("Attempting to authenticate " + emailAddress);
+        List<LoginAttempt> attempts = loginAttemptRepository.getRecentLoginAttempts(emailAddress, LocalDateTime.now(), LocalDateTime.now().minusMinutes(LOGIN_THROTTLE));
+        log.info("Attempting to authenticate " + emailAddress + " attempts " + attempts.size());
 
         User user;
         try {
