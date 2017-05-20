@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 
+import static java.util.Objects.nonNull;
+
 @Component
 @Cacheable("users")
 public class UserServiceImpl implements UserService {
@@ -61,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> create(User user) throws ApplicationException {
-        if (!userRepository.findByEmailAddress(user.getEmailAddress()).isEmpty()) {
+        if (nonNull(userRepository.findByEmailAddress(user.getEmailAddress()))) {
             throw new IllegalRequestException();
         }
 
@@ -80,6 +82,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getByEmailAddress(String emailAddress) throws ApplicationException {
-        return oneOrNone(() -> userRepository.findByEmailAddress(emailAddress));
+        return Optional.ofNullable(userRepository.findByEmailAddress(emailAddress));
     }
 }

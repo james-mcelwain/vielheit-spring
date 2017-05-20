@@ -27,23 +27,15 @@ import java.util.stream.Collectors;
 
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
-    private final BCryptPasswordEncoder encoder;
-    private final LoginAttemptRepository loginAttemptRepository;
-    private final UserService userService;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+    @Autowired
+    private LoginAttemptRepository loginAttemptRepository;
+    @Autowired
+    private UserService userService;
     private final int LOGIN_THROTTLE = 5;
 
     private final Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
-
-    @Autowired
-    public AjaxAuthenticationProvider(
-            final UserService userService,
-            final LoginAttemptRepository loginAttemptRepository,
-            final BCryptPasswordEncoder encoder
-    ) {
-        this.userService = userService;
-        this.loginAttemptRepository = loginAttemptRepository;
-        this.encoder = encoder;
-    }
 
     @Override
     public Authentication authenticate(Authentication authentication) {
@@ -59,6 +51,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         try {
             user = userService.getByEmailAddress(emailAddress).orElseThrow(() -> new UsernameNotFoundException("User not found: " + emailAddress));
         } catch (ApplicationException apex) {
+            log.error(apex.getMessage());
             throw new InternalServerErrorException();
         }
 
