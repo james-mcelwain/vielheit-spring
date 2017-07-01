@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getById(Long id) throws ApplicationException {
-        return one(() -> userRepository.findOne(id));
+        return userRepository.findById(id);
     }
 
     @Override
@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
 
-        return one(() -> userRepository.save(u));
+        return Optional.ofNullable(userRepository.save(u));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> getByEmailAddress(String emailAddress) throws ApplicationException {
-        return Optional.ofNullable(userRepository.findByEmailAddress(emailAddress));
+        return userRepository.findByEmailAddress(emailAddress);
     }
 
     /**
@@ -95,7 +95,7 @@ public class UserServiceImpl implements UserService {
     public void createAdminUser() {
         getLogger().info("Creating admin user if not exists...");
 
-        User user = userRepository.findByEmailAddress("admin@vielhe.it");
+        User user = userRepository.findByEmailAddress("admin@vielhe.it").get();
         GraphUser graphUser = graphUserService.find(user);
         if (isNull(graphUser)) {
             getLogger().info("Did not find admin user, creating...");

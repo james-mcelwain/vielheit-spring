@@ -33,7 +33,7 @@ public class UserRepositoryTest {
         user.setPassword("password");
         userRepository.save(user);
 
-        User foundUser = userRepository.findByEmailAddress(user.getEmailAddress());
+        User foundUser = userRepository.findByEmailAddress(user.getEmailAddress()).orElseGet(User::new);
         assertEquals(foundUser.getEmailAddress(), user.getEmailAddress());
         assertEquals(foundUser.getId(), user.getId());
     }

@@ -1,10 +1,12 @@
 package com.vielheit.core.domain;
 
 import com.vielheit.core.utility.Audit;
+import com.vielheit.core.utility.LocalDateTimeConverter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
@@ -20,9 +22,11 @@ public abstract class BaseEntity {
     private boolean deleted = false;
 
     @Column(name = "createDate")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime createDate;
 
     @Column(name = "updateDate")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime updateDate;
 
     public boolean isDeleted() {

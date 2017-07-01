@@ -31,9 +31,10 @@ const logout = () => {
 http.interceptors.response.use((response) => {
   return response
 }, (error) => {
+  console.log(error, error.message, error.errorCode)
 
   const applicationErr = error.response && error.response.data
-  if (applicationErr) {
+  if (applicationErr && error.status !== 404) {
     store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
   } else {
     console.log(error)

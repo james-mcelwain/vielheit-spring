@@ -1,10 +1,8 @@
 package com.vielheit.core.domain;
 
-import org.apache.tomcat.jni.Local;
-import org.hibernate.annotations.CreationTimestamp;
+import com.vielheit.core.utility.LocalDateTimeConverter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
@@ -26,6 +24,7 @@ public class LoginAttempt extends BaseEntity {
     private String emailAddress;
 
     @Column(name = "loginAttemptDate")
+    @Convert(converter = LocalDateTimeConverter.class)
     private LocalDateTime loginAttemptDate = LocalDateTime.now();
 
     public Long getId() {
