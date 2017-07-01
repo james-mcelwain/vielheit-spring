@@ -9,30 +9,12 @@ import java.util.Optional;
 import java.util.function.Supplier;
 
 public interface Service extends Loggable {
-    default <T> Optional<T> oneOrNone(final Supplier<List<T>> supplier) throws UnexpectedResultException {
-        List<T> t = supplier.get();
-        if (t == null || t.size() == 0) {
-            return Optional.empty();
-        }
-
-        if (t.size() != 1) {
-            getLogger().error("Expected one or none: " + t.size() + " " + t.toString());
-            throw new UnexpectedResultException();
-        }
-
-        return Optional.of(t.get(0));
-    }
-
     default void none(final Supplier supplier) throws UnexpectedResultException {
         Object object = supplier.get();
         if (object != null) {
             getLogger().error("Expected none: " + object.toString());
             throw new UnexpectedResultException();
         }
-    }
-
-    default <T> Optional<List<T>> any(final Supplier<List<T>> supplier) {
-        return Optional.ofNullable(supplier.get());
     }
 
     default <T> Optional<T> one(final Supplier<T> supplier) throws UnexpectedResultException {
