@@ -6,6 +6,8 @@ import com.vielheit.graph.service.AbstractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 /**
  * jcm - 4/16/17.
  */
@@ -15,7 +17,7 @@ public class AbstractionServiceImpl implements AbstractionService {
     AbstractionRepository abstractionRepository;
 
     @Override
-    public Abstraction create(Abstraction abstraction) {
-        return abstractionRepository.save(abstraction);
+    public Optional<Abstraction> create(Abstraction abstraction) {
+        return Optional.ofNullable(abstractionRepository.save(abstraction));
     }
 }

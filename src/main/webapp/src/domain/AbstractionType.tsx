@@ -1,7 +1,4 @@
 export interface AbstractionType {
-  id: {
-    userId: number,
-    type: string,
-  },
+  type: string
   description: string
 }

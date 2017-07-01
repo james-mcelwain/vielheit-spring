@@ -10,6 +10,7 @@ import com.vielheit.graph.service.AbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -24,14 +25,14 @@ public class AbstractionController implements OptionalResponse, ControllerContex
     AbstractionService abstractionService;
 
     @POST
-    public Response postAbstraction(Abstraction abstraction) throws ApplicationException {
-        return Response.ok(abstractionService.create(abstraction)).build();
+    public Abstraction postAbstraction(Abstraction abstraction) throws ApplicationException {
+        return abstractionService.create(abstraction).orElseThrow(BadRequestException::new);
     }
 
     @Path("type")
     @POST
-    public Response postAbstractionType(AbstractionType abstractionType) {
-        return null;
+    public AbstractionType postAbstractionType(AbstractionType abstractionType) {
+        return abstractionTypeService.create(abstractionType).orElseThrow(BadRequestException::new);
     }
 
     @Path("type")

@@ -63,7 +63,7 @@ class AbstractionTypesRemoteSelect
         onChange={this.handleChange.bind(this)}
         style={{ width: '100%' }}
       >
-        {abstractionTypes.map((d) => <Option key={d.id.type}>{d.id.type}</Option>)}
+        {abstractionTypes.map((d) => <Option key={d.type}>{d.type}</Option>)}
       </Select>
     )
   }

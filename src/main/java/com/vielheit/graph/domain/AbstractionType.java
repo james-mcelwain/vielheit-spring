@@ -16,7 +16,7 @@ public class AbstractionType {
 
     private String type;
 
-    private String descrtiption;
+    private String description;
 
     public Long getId() {
         return id;
@@ -42,11 +42,11 @@ public class AbstractionType {
         this.type = type;
     }
 
-    public String getDescrtiption() {
-        return descrtiption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescrtiption(String descrtiption) {
-        this.descrtiption = descrtiption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

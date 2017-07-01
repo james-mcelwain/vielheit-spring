@@ -17,10 +17,7 @@ class AbstractionTypeForm extends React.Component<{ form: any, submitting: boole
         if (user) {
           const abstractionType = {
             description: resource.description,
-            id : {
-              userId: user.id,
-              type: resource.type,
-            },
+            type: resource.type,
           }
 
           this.props.submitAbstractionType(abstractionType)

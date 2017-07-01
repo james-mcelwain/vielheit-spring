@@ -17,7 +17,7 @@ class AbstractionForm extends React.Component<EditorProps & EditorModule & FormC
   private currentAbstractionType: AbstractionType;
 
   public handleSelectChange(type: any[]) {
-    const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.id.type === type[0])
+    const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.type === type[0])
     if (abstractionType) {
       this.currentAbstractionType = abstractionType
     }
