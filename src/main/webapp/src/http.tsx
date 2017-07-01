@@ -21,20 +21,26 @@ http.interceptors.request.use((config) => {
   return config
 })
 
-http.interceptors.response.use((response) => {
-  return response
-}, (error) => {
-
-  const applicationErr = error.response.data
-  if (applicationErr) {
-    store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
-  }
-
-  if (error.response && error.response.status === 401) {
+const logout = () => {
     localStorage.clear()
     sessionStorage.clear()
     store.dispatch(Application.LOGOUT.dispatch())
     browserHistory.push('/login')
+}
+
+http.interceptors.response.use((response) => {
+  return response
+}, (error) => {
+
+  const applicationErr = error.response && error.response.data
+  if (applicationErr) {
+    store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
+  } else {
+    console.log(error)
+  }
+
+  if (error.response && error.response.status === 401) {
+    return logout()
   }
 
   return Promise.reject(error)

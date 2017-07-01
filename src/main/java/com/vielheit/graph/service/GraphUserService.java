@@ -7,4 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface GraphUserService {
     GraphUser create(User user);
+    GraphUser find(User user);
 }

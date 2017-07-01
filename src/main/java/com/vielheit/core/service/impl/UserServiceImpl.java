@@ -8,18 +8,21 @@ import com.vielheit.core.domain.UserRole;
 import com.vielheit.core.repository.UserRepository;
 import com.vielheit.core.repository.UserRoleRepository;
 import com.vielheit.core.service.UserService;
+import com.vielheit.graph.domain.GraphUser;
 import com.vielheit.graph.service.GraphUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.ws.rs.BadRequestException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 
 import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 @Component
 @Cacheable("users")
@@ -83,5 +86,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> getByEmailAddress(String emailAddress) throws ApplicationException {
         return Optional.ofNullable(userRepository.findByEmailAddress(emailAddress));
+    }
+
+    /**
+     * FOR DEV ONLY
+     */
+    @PostConstruct
+    public void createAdminUser() {
+        getLogger().info("Creating admin user if not exists...");
+
+        User user = userRepository.findByEmailAddress("admin@vielhe.it");
+        GraphUser graphUser = graphUserService.find(user);
+        if (isNull(graphUser)) {
+            getLogger().info("Did not find admin user, creating...");
+            graphUserService.create(user);
+        }
     }
 }

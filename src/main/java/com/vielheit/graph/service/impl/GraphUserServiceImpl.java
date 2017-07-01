@@ -18,4 +18,9 @@ public class GraphUserServiceImpl implements GraphUserService {
         graphUser.setUserId(user.getId());
         return graphUserRepository.save(graphUser);
     }
+
+    @Override
+    public GraphUser find(User user) {
+        return graphUserRepository.findByUserId(user.getId());
+    }
 }

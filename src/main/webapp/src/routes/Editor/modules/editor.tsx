@@ -53,7 +53,7 @@ export class EditorModule extends AbstractModule<EditorState> {
     return async (dispatch: Dispatch<EditorState>) => {
       try {
         dispatch(this.SUBMIT_ABSTRACTION_TYPE_START.dispatch())
-        await http.post('abstraction/type', abstractionType)
+        await http.post(`${this.userId()}/abstraction/type`, abstractionType)
         this.message('success', 'Abstraction type submitted!')
         dispatch(this.SUBMIT_ABSTRACTION_TYPE_SUCCESS.dispatch())
         this.getAbstractionTypes()(dispatch)
@@ -68,7 +68,7 @@ export class EditorModule extends AbstractModule<EditorState> {
     return async (dispatch: Dispatch<EditorState>) => {
       try {
         dispatch(this.SUBMIT_ABSTRACTION_START.dispatch())
-        await http.post('abstraction', abstraction)
+        await http.post(`${this.userId()}/abstraction`, abstraction)
         this.message('success', 'Abstraction submitted!')
         dispatch(this.SUBMIT_ABSTRACTION_SUCCESS.dispatch())
       } catch (err) {
@@ -82,7 +82,7 @@ export class EditorModule extends AbstractModule<EditorState> {
     return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.SUBMIT_ENTRY_START.dispatch())
       try {
-        await http.post('entry', entry)
+        await http.post(`${this.userId()}/entry`, entry)
         dispatch(this.SUBMIT_ENTRY_SUCCESS.dispatch())
       } catch (err) {
         dispatch(this.SUBMIT_ENTRY_FAIL.dispatch(err))
