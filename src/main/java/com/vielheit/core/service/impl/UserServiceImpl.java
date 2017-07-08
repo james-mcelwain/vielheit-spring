@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
         userRoleRepository.save(userRole);
         user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
         graphUserService.create(user);
-        return one(() -> userRepository.save(user));
+        return Optional.ofNullable(userRepository.save(user));
     }
 
     @Override

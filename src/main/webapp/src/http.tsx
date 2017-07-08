@@ -1,6 +1,6 @@
 import Axios from 'axios'
 import { browserHistory } from 'react-router'
-import { store } from './main'
+import {store} from './main'
 import Application from 'core/Application'
 
 const http = Axios.create({
@@ -31,9 +31,22 @@ const logout = () => {
 http.interceptors.response.use((response) => {
   return response
 }, (error) => {
-  console.log(error, error.message, error.errorCode)
+  Reflect.set(window, 'lastError', error)
 
   const applicationErr = error.response && error.response.data
+  if (applicationErr && applicationErr.errorCode === 11) {
+    const refreshToken = sessionStorage.getItem("refreshToken")
+    if (refreshToken) {
+      http.get('auth/token', {
+        headers: {
+          'X-Authorization': `Bearer ${refreshToken}`
+        }
+      }).then(response => {
+        console.log(response)
+      }).catch(logout)
+    }
+  }
+
   if (applicationErr && error.status !== 404) {
     store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
   } else {

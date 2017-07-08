@@ -8,6 +8,7 @@ import com.vielheit.graph.domain.AbstractionType;
 import com.vielheit.graph.service.AbstractionService;
 import com.vielheit.graph.service.AbstractionTypeService;
 import com.vielheit.security.UserResource;
+import com.vielheit.security.exception.JwtExpiredTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

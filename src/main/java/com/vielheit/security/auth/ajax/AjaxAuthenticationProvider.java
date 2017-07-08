@@ -44,7 +44,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         String emailAddress = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        List<LoginAttempt> attempts = loginAttemptRepository.getRecentLoginAttempts(emailAddress, LocalDateTime.now(), LocalDateTime.now().minusMinutes(LOGIN_THROTTLE));
+        List<LoginAttempt> attempts = loginAttemptRepository.getRecentLoginAttempts(emailAddress, LocalDateTime.now().minusMinutes(LOGIN_THROTTLE), LocalDateTime.now());
         log.info("Attempting to authenticate " + emailAddress + " attempts " + attempts.size());
 
         User user;

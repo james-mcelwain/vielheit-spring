@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 /**
  * jcm - 5/4/17.
  */
-public class Audit {
+public class AuditListener {
     @PrePersist
     public void setCreate(BaseEntity baseEntity) {
         baseEntity.setCreateDate(LocalDateTime.now());
