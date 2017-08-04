@@ -1,6 +1,6 @@
 import {PlainRoute} from 'react-router'
-import { injectReducer } from '../../store/reducers'
-import {AppStore} from '../../store/store'
+import {injectReducer} from 'store/reducers'
+import {AppStore} from 'store/store'
 
 declare const require: any
 

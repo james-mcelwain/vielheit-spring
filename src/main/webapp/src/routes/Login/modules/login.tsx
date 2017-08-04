@@ -1,11 +1,8 @@
-import {browserHistory, PlainRoute} from 'react-router'
-import {Dispatch, Reducer} from 'redux'
-import User from '../../../domain/User'
-import http from '../../../http'
-import {AppState} from '../../../store/appState'
-import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
-import {ActionCreator} from '../../../core/ActionCreator'
-import construct = Reflect.construct
+import {browserHistory} from 'react-router'
+import {Dispatch} from 'redux'
+import User from 'domain/User'
+import http from 'http'
+import {AbstractModule, AsyncDispatch} from 'core/AbstractModule'
 
 export interface LoginUserRequest {
   emailAddress: string
