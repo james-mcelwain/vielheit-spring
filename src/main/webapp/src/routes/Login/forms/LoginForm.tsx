@@ -1,4 +1,3 @@
-import {SyntheticEvent} from '@types/react'
 import {Alert, Button, Form, Icon, Input} from 'antd'
 import * as React from 'react'
 import {Link} from 'react-router'
@@ -6,6 +5,7 @@ import {LoginUserRequest} from '../modules/login'
 import './LoginForm.scss'
 import {FormComponentProps} from 'antd/lib/form/Form'
 import {LoginProps} from '../containers/LoginContainer'
+import {SyntheticEvent} from 'react'
 
 const FormItem = Form.Item
 
@@ -17,7 +17,7 @@ class LoginForm extends React.Component<LoginProps & FormComponentProps, {}> {
         this.props.login(values)
       }
     })
-  }
+}
 
   public render() {
     const {

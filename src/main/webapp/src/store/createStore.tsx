@@ -27,7 +27,7 @@ export default (initialState: AppState) => {
   }
 
   const store: AppStore = createStore<AppState>(
-    makeRootReducer(),
+    makeRootReducer({}),
     initialState,
     composeEnhancers(
       applyMiddleware(...middleware),

@@ -1,8 +1,7 @@
 import {PlainRoute} from 'react-router'
 import {injectReducer} from '../../store/reducers'
 import {AppStore} from '../../store/store'
-import {LoginState} from '../Login/modules/login'
-import {EditorModule} from './modules/editor'
+import {EditorModule, EditorState} from './modules/editor'
 
 declare const require: any
 
@@ -12,7 +11,7 @@ export default (store: AppStore): PlainRoute => ({
     require.ensure([], async function(require: any) {
       const Editor = require('./containers/EditorContainer').default
       const editor: EditorModule = require('./modules/editor').default
-      injectReducer<LoginState>(store, { key: 'editor',  reducer: editor.getReducer() })
+      injectReducer<EditorState>(store, { key: 'editor',  reducer: editor.getReducer() })
       cb(null, Editor)
     }, 'editor')
   },

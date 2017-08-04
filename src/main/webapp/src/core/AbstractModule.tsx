@@ -5,6 +5,7 @@ import {ActionCreator, ActionHandler} from './ActionCreator'
 import {ActionType} from './ActionType'
 import {message} from 'antd'
 import {store} from '../main'
+import {Reducer} from 'redux'
 
 export function AsyncDispatch(prototype: any, name: string, descriptor: PropertyDescriptor) {
   if (!prototype.asyncActions) {
@@ -43,7 +44,7 @@ export abstract class AbstractModule<S extends State> {
     return actions
   }
 
-  public getReducer() {
+  public getReducer(): Reducer<S> {
     // return bound instance for injection
     return this.reducer.bind(this)
   }

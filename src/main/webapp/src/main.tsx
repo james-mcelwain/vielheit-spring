@@ -41,7 +41,7 @@ if (__DEV__) {
       try {
         renderApp()
       } catch (error) {
-        console.error(error)
+        console.log(error)
         renderError(error)
       }
     }
