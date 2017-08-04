@@ -3,7 +3,7 @@
   "rules": {
     "max-line-length": 140,
     "ban-types": false,
-    "quotemark": [true, "single", "avoid-escape"],
+    "quotemark": [true, "single", "avoid-escape", "jsx-double"],
     "semicolon": false,
     "interface-name": false,
     "no-empty-interface": false,
