@@ -11,9 +11,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 
-/**
- * jcm - 4/30/17.
- */
 @Controller
 @Path("api/journal")
 public class JournalController implements ControllerContext, OptionalResponse {

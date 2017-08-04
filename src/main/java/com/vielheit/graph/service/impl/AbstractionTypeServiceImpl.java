@@ -8,6 +8,7 @@ import com.vielheit.graph.service.AbstractionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 import static java.util.Objects.nonNull;
@@ -31,5 +32,11 @@ public class AbstractionTypeServiceImpl implements AbstractionTypeService {
         } else {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public Optional<List<AbstractionType>> findAll() {
+        GraphUser user = userRepository.findByUserId(userId());
+        return Optional.ofNullable(user.getAbstractionTypes());
     }
 }

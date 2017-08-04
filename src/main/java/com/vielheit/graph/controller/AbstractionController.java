@@ -8,11 +8,9 @@ import com.vielheit.graph.domain.AbstractionType;
 import com.vielheit.graph.service.AbstractionService;
 import com.vielheit.graph.service.AbstractionTypeService;
 import com.vielheit.security.UserResource;
-import com.vielheit.security.exception.JwtExpiredTokenException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.ws.rs.BadRequestException;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -28,21 +26,21 @@ public class AbstractionController implements OptionalResponse, ControllerContex
 
     @UserResource
     @POST
-    public Abstraction postAbstraction(Abstraction abstraction) throws ApplicationException {
-        return abstractionService.create(abstraction).orElseThrow(BadRequestException::new);
+    public Response postAbstraction(Abstraction abstraction) throws ApplicationException {
+        return okIfPersisted(abstractionService.create(abstraction));
     }
 
     @UserResource
     @Path("type")
     @POST
-    public AbstractionType postAbstractionType(AbstractionType abstractionType) {
-        return abstractionTypeService.create(abstractionType).orElseThrow(BadRequestException::new);
+    public Response postAbstractionType(AbstractionType abstractionType) {
+        return okIfPersisted(abstractionTypeService.create(abstractionType));
     }
 
     @UserResource
     @Path("type")
     @GET
     public Response getAbstractionTypes() {
-        return null;
+        return okIfPresent(abstractionTypeService.findAll());
     }
 }
