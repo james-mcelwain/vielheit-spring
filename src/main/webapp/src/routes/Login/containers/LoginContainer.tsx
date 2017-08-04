@@ -1,7 +1,7 @@
 import {connect, Dispatch} from 'react-redux'
 import loginModule from '../modules/login'
 
-import {AppState} from '../../../store/appState'
+import {AppState} from 'store/appState'
 import Login from '../components/Login'
 import {LoginState} from '../modules/login'
 

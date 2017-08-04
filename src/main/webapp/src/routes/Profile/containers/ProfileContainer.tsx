@@ -1,12 +1,10 @@
 import { connect } from 'react-redux'
-import { profile } from '../modules/profile'
+import profileModule from '../modules/profile'
 
-import {AppState} from '../../../store/appState'
+import {AppState} from 'store/appState'
 import Profile from '../components/Profile'
 
-const mapDispatchToProps = {
-  profile,
-}
+const mapDispatchToProps = profileModule.getAsyncActions()
 
 const mapStateToProps = (state: AppState) => ({
   profileState: state.profile,

@@ -7,6 +7,7 @@ import JournalRoute from './Journal/journalRoute'
 import RegisterRoute from './Register/registerRoute'
 import Home from 'routes/Home/homeRoute'
 import LoginRoute from 'routes/Login/loginRoute'
+import ProfileRoute from 'routes/Profile/profileRoute'
 import Application from 'core/Application'
 
 const pubPaths = ['/login', '/register']
@@ -33,6 +34,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
     LoginRoute(store),
     JournalRoute(store),
     RegisterRoute(store),
+    ProfileRoute(store),
   ],
 })
 

@@ -4,5 +4,7 @@ export interface ProfileState {
 
 }
 
-export default class ProfileModule extends AbstractModule<ProfileState> {
+export class ProfileModule extends AbstractModule<ProfileState> {
 }
+
+export default new ProfileModule({})
