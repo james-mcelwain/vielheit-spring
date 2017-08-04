@@ -38,7 +38,7 @@ export class EditorModule extends AbstractModule<EditorState> {
   public getAbstractionTypes() {
     return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.FETCH_ABSTRACTION_TYPES_START.dispatch())
-      const { data } = await http.get('abstraction/type')
+      const { data } = await http.get(`${this.userId()}/abstraction/type`)
       await dispatch(this.FETCH_ABSTRACTION_TYPES_SUCCESS.dispatch(data))
     }
   }

@@ -1,10 +1,7 @@
 import * as React from 'react'
 import { Select, Spin } from 'antd'
 import { debounce } from 'lodash'
-import {EditorProps} from '../containers/EditorContainer'
 import {EditorModule, EditorState} from '../modules/editor'
-import {AbstractionType} from '../../../domain/AbstractionType'
-import {FormComponentProps} from 'antd/lib/form/Form'
 const Option = Select.Option
 
 export interface AbstractionTypesRemoteSelectProps  {
