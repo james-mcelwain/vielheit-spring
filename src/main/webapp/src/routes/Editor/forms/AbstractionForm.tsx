@@ -3,18 +3,17 @@ import * as React from 'react'
 import {store} from '../../../main'
 import './EditorForm.scss'
 import {AbstractionType} from '../../../domain/AbstractionType'
-import {EditorModule, EditorState} from '../modules/editor'
+import {EditorModule} from '../modules/editor'
 import SyntheticEvent = React.SyntheticEvent
-import {Abstraction} from '../../../domain/Abstraction'
 import AbstractionTypesRemoteSelect from '../inputs/AbstractionTypesRemoteSelect'
 import {FormComponentProps} from 'antd/lib/form/Form'
 import {EditorProps} from 'routes/Editor/containers/EditorContainer'
 
 const FormItem = Form.Item
-const Option = Select.Option;
+const Option = Select.Option
 
 class AbstractionForm extends React.Component<EditorProps & EditorModule & FormComponentProps, {}> {
-  private currentAbstractionType: AbstractionType;
+  private currentAbstractionType: AbstractionType
 
   public handleSelectChange(type: any[]) {
     const abstractionType = this.props.editor.abstractionTypes.find((t: AbstractionType) => t.type === type[0])
