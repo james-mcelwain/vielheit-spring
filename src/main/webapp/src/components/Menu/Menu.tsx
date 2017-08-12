@@ -39,7 +39,6 @@ export default class Sider extends React.Component<{}, { openKeys: string[], cur
       case 'Logout':
         store.dispatch(Application.LOGOUT.dispatch())
         sessionStorage.clear()
-        // browserHistory.go('/login')
         break
       case 'Profile':
         break
