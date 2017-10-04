@@ -2,7 +2,6 @@ import {PlainRoute} from 'react-router'
 import User from '../domain/User'
 import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
-import EditorRoute from './Editor/editorRoute'
 import JournalRoute from './Journal/journalRoute'
 import RegisterRoute from './Register/registerRoute'
 import Home from 'routes/Home/homeRoute'
@@ -30,7 +29,6 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
   component: CoreLayout,
   indexRoute: Home,
   childRoutes: [
-    EditorRoute(store),
     LoginRoute(store),
     JournalRoute(store),
     RegisterRoute(store),
