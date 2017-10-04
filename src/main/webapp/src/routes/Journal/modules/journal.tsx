@@ -1,5 +1,4 @@
 import {AbstractModule, AsyncDispatch} from 'core/AbstractModule'
-import construct = Reflect.construct
 import {Dispatch} from 'redux'
 import http from '../../../http'
 
