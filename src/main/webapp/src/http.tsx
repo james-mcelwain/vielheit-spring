@@ -2,6 +2,7 @@ import Axios from 'axios'
 import { browserHistory } from 'react-router'
 import {store} from './main'
 import Application from 'core/Application'
+import { ErrorCode } from './domain/ErrorCode'
 
 const http = Axios.create({
   baseURL: 'http://localhost:8080/api/',
@@ -34,7 +35,7 @@ http.interceptors.response.use((response) => {
   Reflect.set(window, 'lastError', error)
 
   const applicationErr = error.response && error.response.data
-  if (applicationErr && applicationErr.errorCode === 11) {
+  if (applicationErr && applicationErr.errorCode === ErrorCode.JWT_EXPIRED) {
     const refreshToken = sessionStorage.getItem("refreshToken")
     if (refreshToken) {
       http.get('auth/token', {

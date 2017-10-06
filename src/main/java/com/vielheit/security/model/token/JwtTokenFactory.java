@@ -4,6 +4,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.Date;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -19,14 +20,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+
 @Component
 public class JwtTokenFactory {
     private final JwtSettings settings;
     private final RSAPrivateKey privateKey;
 
-    @Autowired
-    public JwtTokenFactory(JwtSettings settings) throws Exception {
-        this.settings = settings;
+    @Inject
+    public JwtTokenFactory(@NotNull  JwtSettings settings) throws Exception {
+        this.settings = Objects.requireNonNull(settings);
         this.privateKey = (RSAPrivateKey) KeyReader.readPrivateKey();
     }
 

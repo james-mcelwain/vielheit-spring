@@ -5,11 +5,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.constraints.NotNull;
 
 import com.vielheit.core.domain.Login;
 import com.vielheit.core.exception.ApplicationException;
@@ -32,17 +35,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Component
 public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private final static Logger logger = LoggerFactory.getLogger(AjaxAwareAuthenticationSuccessHandler.class);
+    private Logger logger = LoggerFactory.getLogger(AjaxAwareAuthenticationSuccessHandler.class);
 
-    @Autowired
     private ObjectMapper mapper;
-    @Autowired
     private JwtTokenFactory tokenFactory;
-    @Autowired
     private UserService userService;
-    @Autowired
-    LoginRepository loginRepository;
+    private LoginRepository loginRepository;
 
+    @Inject
+    public AjaxAwareAuthenticationSuccessHandler(
+            @NotNull ObjectMapper objectMapper,
+            @NotNull JwtTokenFactory tokenFactory,
+            @NotNull UserService userService,
+            @NotNull LoginRepository loginRepository
+    ) {
+        this.mapper = Objects.requireNonNull(objectMapper);
+        this.tokenFactory = Objects.requireNonNull(tokenFactory);
+        this.userService = Objects.requireNonNull(userService);
+        this.loginRepository = Objects.requireNonNull(loginRepository);
+    }
 
     @Override
     public void onAuthenticationSuccess(

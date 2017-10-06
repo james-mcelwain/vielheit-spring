@@ -8,15 +8,22 @@ import com.vielheit.core.utility.OptionalResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.Objects;
 
 @Controller
 @Path("/api/users")
 public class UserController implements OptionalResponse {
-    @Autowired
     private UserService userService;
+
+    @Inject
+    public UserController(@NotNull UserService userService) {
+        userService = Objects.requireNonNull(userService);
+    }
 
     @GET
     @Path("{user-id}")

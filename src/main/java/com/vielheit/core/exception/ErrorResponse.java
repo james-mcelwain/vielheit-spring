@@ -7,11 +7,8 @@ import java.util.Date;
 
 public class ErrorResponse {
     private final HttpStatus status;
-
     private final String message;
-
     private final ErrorCode errorCode;
-
     private final Date timestamp;
 
     protected ErrorResponse(final String message, final ErrorCode errorCode, HttpStatus status) {

@@ -19,14 +19,14 @@ public class RedisConfig {
     private String host;
 
     @Bean
-    JedisConnectionFactory jedisConnectionFactory() {
+    public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setHostName(host);
         return factory;
     }
 
     @Bean
-    RedisTemplate<Object, Object> redisTemplate() {
+    public RedisTemplate<Object, Object> redisTemplate() {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         logger.info("flushing redis...");
@@ -36,7 +36,7 @@ public class RedisConfig {
     }
 
     @Bean
-    RedisCacheManager cacheManager() {
+    public RedisCacheManager cacheManager() {
         return new RedisCacheManager(redisTemplate());
     }
 

@@ -11,18 +11,27 @@ import com.vielheit.security.UserResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
+import java.util.Objects;
 
 @Controller
 @Path("api/{user-id}/abstraction")
 public class AbstractionController implements OptionalResponse, ControllerContext {
-    @Autowired
-    AbstractionTypeService abstractionTypeService;
-    @Autowired
-    AbstractionService abstractionService;
+    private AbstractionService abstractionService;
+    private AbstractionTypeService abstractionTypeService;
+
+    @Inject
+    public AbstractionController(
+            @NotNull  AbstractionService as,
+            @NotNull  AbstractionTypeService ats) {
+        abstractionService = Objects.requireNonNull(as);
+        abstractionTypeService = Objects.requireNonNull(ats);
+    }
 
     @UserResource
     @POST

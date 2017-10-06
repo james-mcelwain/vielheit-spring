@@ -16,9 +16,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.BadRequestException;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 
 import static java.util.Objects.nonNull;
@@ -32,11 +35,14 @@ public class UserServiceImpl implements UserService {
    private GraphUserService graphUserService;
    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository, GraphUserService graphUserService) {
-        this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
-        this.graphUserService = graphUserService;
+    @Inject
+    public UserServiceImpl(
+            @NotNull UserRepository userRepository,
+            @NotNull UserRoleRepository userRoleRepository,
+            @NotNull GraphUserService graphUserService) {
+        this.userRepository = Objects.requireNonNull(userRepository);
+        this.userRoleRepository = Objects.requireNonNull(userRoleRepository);
+        this.graphUserService = Objects.requireNonNull(graphUserService);
     }
 
     @Override

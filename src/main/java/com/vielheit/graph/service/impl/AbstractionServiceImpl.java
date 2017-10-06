@@ -6,6 +6,9 @@ import com.vielheit.graph.service.AbstractionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -13,8 +16,12 @@ import java.util.Optional;
  */
 @Component
 public class AbstractionServiceImpl implements AbstractionService {
-    @Autowired
-    AbstractionRepository abstractionRepository;
+    private AbstractionRepository abstractionRepository;
+
+    @Inject
+    public AbstractionServiceImpl(@NotNull AbstractionRepository ar) {
+        this.abstractionRepository = Objects.requireNonNull(ar);
+    }
 
     @Override
     public Optional<Abstraction> create(Abstraction abstraction) {

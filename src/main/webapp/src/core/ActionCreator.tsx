@@ -1,7 +1,6 @@
 import {Action as ReduxAction} from 'redux'
 import {DispatchedAction} from '../store/DispatchedAction'
 import {ActionType} from './ActionType'
-import {Callable, Call} from './type-utils/Callable'
 import {AppState, State} from '../store/appState'
 
 export type ActionHandler<S, P> = (s: S, p: P) => S

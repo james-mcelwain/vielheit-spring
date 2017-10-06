@@ -1,5 +1,6 @@
 package com.vielheit.security.auth.ajax;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.exception.ApplicationException;
@@ -7,7 +8,6 @@ import com.vielheit.core.repository.LoginAttemptRepository;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
@@ -20,22 +20,34 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.InternalServerErrorException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
-    @Autowired
+    private Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
+
     private BCryptPasswordEncoder encoder;
-    @Autowired
     private LoginAttemptRepository loginAttemptRepository;
-    @Autowired
     private UserService userService;
+
     private final int LOGIN_THROTTLE = 5;
 
-    private final Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
+    @Inject
+    public AjaxAuthenticationProvider(
+            @NotNull BCryptPasswordEncoder bCryptPasswordEncoder,
+            @NotNull LoginAttemptRepository loginAttemptRepository,
+            @NotNull UserService userService
+    ) {
+        this.encoder = Objects.requireNonNull(bCryptPasswordEncoder);
+        this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
+        this.userService = Objects.requireNonNull(userService);
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) {

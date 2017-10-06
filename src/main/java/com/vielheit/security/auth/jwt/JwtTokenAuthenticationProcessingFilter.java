@@ -1,11 +1,14 @@
 package com.vielheit.security.auth.jwt;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotNull;
 
 import com.vielheit.security.auth.JwtAuthenticationToken;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
@@ -24,12 +27,14 @@ public class JwtTokenAuthenticationProcessingFilter extends AbstractAuthenticati
     private final AuthenticationFailureHandler failureHandler;
     private final TokenExtractor tokenExtractor;
     
-    @Autowired
-    public JwtTokenAuthenticationProcessingFilter(AuthenticationFailureHandler failureHandler, 
-            TokenExtractor tokenExtractor, RequestMatcher matcher) {
+    @Inject
+    public JwtTokenAuthenticationProcessingFilter(
+            @NotNull AuthenticationFailureHandler failureHandler,
+            @NotNull TokenExtractor tokenExtractor,
+            @NotNull RequestMatcher matcher) {
         super(matcher);
-        this.failureHandler = failureHandler;
-        this.tokenExtractor = tokenExtractor;
+        this.failureHandler = Objects.requireNonNull(failureHandler);
+        this.tokenExtractor = Objects.requireNonNull(tokenExtractor);
     }
 
     @Override

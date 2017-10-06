@@ -22,22 +22,38 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 
+import javax.inject.Inject;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Controller
 @Path("/api/auth/token")
 public class TokenController {
-    Logger log = Logger.getLogger(TokenController.class);
+    private Logger log = Logger.getLogger(TokenController.class);
 
-    @Autowired private JwtTokenFactory tokenFactory;
-    @Autowired private UserService userService;
-    @Autowired private TokenVerifier tokenVerifier;
-    @Autowired @Qualifier("jwtHeaderTokenExtractor") private TokenExtractor tokenExtractor;
+    private JwtTokenFactory tokenFactory;
+    private UserService userService;
+    private TokenVerifier tokenVerifier;
+    private TokenExtractor tokenExtractor;
+
+    @Inject
+    public TokenController(
+            @NotNull JwtTokenFactory jwtTokenFactory,
+            @NotNull UserService userService,
+            @NotNull TokenVerifier tokenVerifier,
+            @NotNull @Qualifier("jwtHeaderTokenExtractor") TokenExtractor tokenExtractor
+    ) {
+        this.tokenFactory = Objects.requireNonNull(jwtTokenFactory);
+        this.userService = Objects.requireNonNull(userService);
+        this.tokenVerifier = Objects.requireNonNull(tokenVerifier);
+        this.tokenFactory = Objects.requireNonNull(tokenFactory);
+    }
 
     @GET
     public JwtToken refreshToken(@Context HttpHeaders headers) throws ApplicationException {

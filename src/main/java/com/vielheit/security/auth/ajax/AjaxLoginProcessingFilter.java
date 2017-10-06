@@ -1,7 +1,9 @@
 package com.vielheit.security.auth.ajax;
 
 import java.io.IOException;
+import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -30,24 +32,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private static Logger log = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
 
-    @Autowired
-    LoginAttemptRepository loginAttemptRepository;
-
+    private final LoginAttemptRepository loginAttemptRepository;
     private final AuthenticationSuccessHandler successHandler;
     private final AuthenticationFailureHandler failureHandler;
-
     private final ObjectMapper objectMapper;
 
     public AjaxLoginProcessingFilter(
             String defaultProcessUrl,
             AuthenticationSuccessHandler successHandler,
             AuthenticationFailureHandler failureHandler,
-            ObjectMapper mapper
+            ObjectMapper mapper,
+            LoginAttemptRepository loginAttemptRepository
     ) {
         super(defaultProcessUrl);
-        this.successHandler = successHandler;
-        this.failureHandler = failureHandler;
-        this.objectMapper = mapper;
+        this.successHandler = Objects.requireNonNull(successHandler);
+        this.failureHandler = Objects.requireNonNull(failureHandler);
+        this.objectMapper = Objects.requireNonNull(mapper);
+        this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
     }
 
     @Override

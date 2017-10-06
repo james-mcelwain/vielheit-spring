@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Provider
 public class ValidationExceptionMapper implements ExceptionMapper<ConstraintViolationException> {
-    Logger logger = Logger.getLogger(ValidationExceptionMapper.class);
+    private Logger logger = Logger.getLogger(ValidationExceptionMapper.class);
 
     @Override
     public Response toResponse(ConstraintViolationException vex) {
