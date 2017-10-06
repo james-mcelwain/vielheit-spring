@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
 
-    private BCryptPasswordEncoder encoder;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private LoginAttemptRepository loginAttemptRepository;
     private UserService userService;
 
@@ -40,13 +40,12 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
     @Inject
     public AjaxAuthenticationProvider(
-            @NotNull BCryptPasswordEncoder bCryptPasswordEncoder,
             @NotNull LoginAttemptRepository loginAttemptRepository,
             @NotNull UserService userService
     ) {
-        this.encoder = Objects.requireNonNull(bCryptPasswordEncoder);
         this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
         this.userService = Objects.requireNonNull(userService);
+
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.vielheit.security.auth.jwt.JwtTokenAuthenticationProcessingFilter;
 import com.vielheit.security.auth.jwt.SkipPathRequestMatcher;
 import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,7 +18,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -49,38 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
     public static final String REGISTER_POINT = "/api/auth/register";
 
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-    private AuthenticationFailureHandler authenticationFailureHandler;
-    private AjaxAuthenticationProvider ajaxAuthenticationProvider;
-    private JwtAuthenticationProvider jwtAuthenticationProvider;
-    private TokenExtractor tokenExtractor;
-    private AuthenticationManager authenticationManager;
-    private ObjectMapper objectMapper;
-    private LoginAttemptRepository loginAttemptRepository;
-
-    @Inject
-    public WebSecurityConfig(
-            @NotNull RestAuthenticationEntryPoint restAuthenticationEntryPoint,
-            @NotNull AuthenticationSuccessHandler authenticationSuccessHandler,
-            @NotNull AuthenticationFailureHandler authenticationFailureHandler,
-            @NotNull AjaxAuthenticationProvider ajaxAuthenticationProvider,
-            @NotNull JwtAuthenticationProvider jwtAuthenticationProvider,
-            @NotNull TokenExtractor tokenExtractor,
-            @NotNull AuthenticationManager authenticationManager,
-            @NotNull ObjectMapper objectMapper,
-            @NotNull LoginAttemptRepository loginAttemptRepository
-    ) {
-        this.restAuthenticationEntryPoint = Objects.requireNonNull(restAuthenticationEntryPoint);
-        this.authenticationSuccessHandler = Objects.requireNonNull(authenticationSuccessHandler);
-        this.authenticationFailureHandler = Objects.requireNonNull(authenticationFailureHandler);
-        this.ajaxAuthenticationProvider = Objects.requireNonNull(ajaxAuthenticationProvider);
-        this.jwtAuthenticationProvider = Objects.requireNonNull(jwtAuthenticationProvider);
-        this.tokenExtractor = Objects.requireNonNull(tokenExtractor);
-        this.authenticationManager = Objects.requireNonNull(authenticationManager);
-        this.objectMapper = Objects.requireNonNull(objectMapper);
-        this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
-    }
+    @Inject  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Inject  private AuthenticationSuccessHandler authenticationSuccessHandler;
+    @Inject  private AuthenticationFailureHandler authenticationFailureHandler;
+    @Inject  private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    @Inject  private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Inject  private TokenExtractor tokenExtractor;
+    @Inject  private AuthenticationManager authenticationManager;
+    @Inject  private ObjectMapper objectMapper;
+    @Inject  private LoginAttemptRepository loginAttemptRepository;
 
     @Bean
     protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() {
@@ -118,11 +93,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         loggingFilter.setIncludeQueryString(true);
         loggingFilter.setIncludePayload(true);
         return loggingFilter;
-    }
-
-    @Bean
-    protected BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 
     // HACKY CORS FILTER

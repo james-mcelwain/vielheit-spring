@@ -1,22 +1,13 @@
 package com.vielheit.security.auth.ajax;
 
-import java.io.IOException;
-import java.util.Objects;
-
-import javax.inject.Inject;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.repository.LoginAttemptRepository;
 import com.vielheit.security.exception.AuthMethodNotSupportedException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,16 +17,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.inject.Inject;
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Objects;
 
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
-    private static Logger log = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
+    private Logger log = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
 
-    private final LoginAttemptRepository loginAttemptRepository;
-    private final AuthenticationSuccessHandler successHandler;
-    private final AuthenticationFailureHandler failureHandler;
-    private final ObjectMapper objectMapper;
+    private LoginAttemptRepository loginAttemptRepository;
+    private AuthenticationSuccessHandler successHandler;
+    private AuthenticationFailureHandler failureHandler;
+    private ObjectMapper objectMapper;
 
     public AjaxLoginProcessingFilter(
             String defaultProcessUrl,
@@ -67,6 +65,7 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
             if (inetAddress == null) {
                 inetAddress = request.getRemoteAddr();
             }
+
             loginAttempt.setInetAddress(inetAddress);
             loginAttemptRepository.save(loginAttempt);
 
