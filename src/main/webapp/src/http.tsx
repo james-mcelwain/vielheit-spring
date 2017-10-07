@@ -43,7 +43,11 @@ http.interceptors.response.use((response) => {
           'X-Authorization': `Bearer ${refreshToken}`,
         },
       }).then((response) => {
-        console.log(response)
+        sessionStorage.setItem('token', response.data)
+        return http.request(Object.assign({
+        headers: {
+          'X-Authorization': `Bearer ${response.data}`,
+        }}, error.config))
       }).catch(logout)
     }
   }

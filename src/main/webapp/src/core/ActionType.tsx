@@ -1,3 +1,6 @@
+/**
+ * Application action types
+ */
 export type ActionType
     = 'LOGOUT'
     | 'BOOTSTRAP'
@@ -14,9 +17,7 @@ export type ActionType
     | 'EDITOR_SUBMIT_START'
     | 'EDITOR_SUBMIT_SUCCESS'
     | 'EDITOR_SUBMIT_FAIL'
-    | 'FETCH_ABSTRACTION_TYPES_START'
-    | 'FETCH_ABSTRACTION_TYPES_SUCCESS'
-    | 'FETCH_ABSTRACTION_TYPES_FAIL'
-    | 'FETCH_ENTRIES_START'
-    | 'FETCH_ENTRIES_SUCCESS'
-    | 'FETCH_ENTRIES_FAIL'
+    | 'FETCH_TYPES_START'
+    | 'FETCH_TYPES_SUCCESS'
+    | 'FETCH_TYPES_FAIL'
+    | 'EDITOR_SELECT_ITEM'

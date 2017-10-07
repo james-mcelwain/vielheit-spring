@@ -19,7 +19,6 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
   }
 
   public render() {
-    console.log(this.props)
     const {getFieldDecorator} = this.props.form
 
     const formItemLayout = {

@@ -9,11 +9,12 @@ const mapDispatchToProps = editorModule.getAsyncActions()
 
 const mapStateToProps = (state: AppState) => ({
   editorState: state.editor,
+  editor: editorModule,
 })
 
 export interface EditorProps {
   editorState: EditorState,
-  editor: EditorModule
+  editor: EditorModule,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)
