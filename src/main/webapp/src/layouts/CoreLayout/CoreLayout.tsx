@@ -27,10 +27,10 @@ export const CoreLayout = ({children}: { children: JSX.Element[] }) => {
       <Header>
         <div className="logo"/>
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} style={{lineHeight: '64px'}}>
-          <Menu.Item key="1">{loggedIn && <Create/>}</Menu.Item>
-          <Menu.Item key="2"><Link to="/journal">journal</Link></Menu.Item>
-          <Menu.Item key="3"><Link to="/editor">editor</Link></Menu.Item>
-          <Menu.Item key="4"><Link to="/profile">profile</Link></Menu.Item>
+          <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
+          <Menu.Item key="2"><Link to="/journal">Journal</Link></Menu.Item>
+          <Menu.Item key="3"><Link to="/editor">Editor</Link></Menu.Item>
+          <Menu.Item key="4"><Link to="/profile">Profile</Link></Menu.Item>
           <Menu.Item key="99" style={{float: 'right'}}>{loggedIn && <Button onClick={logout} type="primary">Logout</Button>}</Menu.Item>
         </Menu>
       </Header>

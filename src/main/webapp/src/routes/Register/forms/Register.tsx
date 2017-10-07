@@ -14,7 +14,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
   public isPristine() {
     const fields = ['firstName', 'lastName', 'emailAddress', 'password', 'confirm']
     const fieldVals = fields.map(this.props.form.getFieldValue)
-    return !fieldVals.every((x) => x !== void 0)
+    return !fieldVals.every((x) => x !== void 1)
   }
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()

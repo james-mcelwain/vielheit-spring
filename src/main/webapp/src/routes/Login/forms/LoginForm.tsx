@@ -36,14 +36,14 @@ class LoginForm extends React.Component<LoginProps & FormComponentProps, {}> {
           {getFieldDecorator('emailAddress', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input addonBefore={<Icon type="user" />} placeholder="Email" />,
+            <Input addonBefore={<Icon type="user" />} placeholder="Email" />
           )}
         </FormItem>
         <FormItem>
           {getFieldDecorator('password', {
             rules: [{ required: true, message: 'required' }],
           })(
-            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />,
+            <Input addonBefore={<Icon type="lock" />} type="password" placeholder="Password" />
           )}
         </FormItem>
         <FormItem>

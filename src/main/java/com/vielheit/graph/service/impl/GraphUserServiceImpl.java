@@ -27,6 +27,11 @@ public class GraphUserServiceImpl implements GraphUserService {
     }
 
     @Override
+    public GraphUser find(Long userId) {
+        return graphUserRepository.findByUserId(userId);
+    }
+
+    @Override
     public GraphUser find(User user) {
         return graphUserRepository.findByUserId(user.getId());
     }

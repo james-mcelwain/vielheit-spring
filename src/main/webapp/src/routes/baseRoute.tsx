@@ -4,6 +4,7 @@ import CoreLayout from '../layouts/CoreLayout'
 import {AppStore} from '../store/store'
 import JournalRoute from './Journal/journalRoute'
 import RegisterRoute from './Register/registerRoute'
+import EditorRoute from './Editor/editorRoute'
 import Home from 'routes/Home/homeRoute'
 import LoginRoute from 'routes/Login/loginRoute'
 import ProfileRoute from 'routes/Profile/profileRoute'
@@ -31,6 +32,7 @@ export const createRoutes: (s: AppStore) => PlainRoute  = (store: AppStore) => (
   childRoutes: [
     LoginRoute(store),
     JournalRoute(store),
+    EditorRoute(store),
     RegisterRoute(store),
     ProfileRoute(store),
   ],
