@@ -4,6 +4,7 @@ import com.vielheit.core.controller.ControllerContext;
 import com.vielheit.core.utility.OptionalResponse;
 import com.vielheit.graph.domain.AbstractionType;
 import com.vielheit.graph.service.JournalService;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 
 import javax.inject.Inject;
@@ -32,6 +33,7 @@ public class JournalController implements ControllerContext, OptionalResponse {
     }
 
     @GET
+    @Path("types")
     public Response getTypes() {
         return Response.ok(journalService.types()).build();
     }

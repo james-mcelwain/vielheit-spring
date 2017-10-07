@@ -52,7 +52,7 @@ public class TokenController {
         this.tokenFactory = Objects.requireNonNull(jwtTokenFactory);
         this.userService = Objects.requireNonNull(userService);
         this.tokenVerifier = Objects.requireNonNull(tokenVerifier);
-        this.tokenFactory = Objects.requireNonNull(tokenFactory);
+        this.tokenExtractor = Objects.requireNonNull(tokenExtractor);
     }
 
     @GET
