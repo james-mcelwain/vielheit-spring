@@ -1,5 +1,5 @@
 import {connect, Dispatch} from 'react-redux'
-import editorModule, { EditorModule } from '../modules/editor'
+import editorModule, { AbstractionType, EditorModule } from '../modules/editor'
 
 import {AppState} from '../../../store/appState'
 import Editor from '../components/Editor'
@@ -15,6 +15,7 @@ const mapStateToProps = (state: AppState) => ({
 export interface EditorProps {
   editorState: EditorState,
   editor: EditorModule,
+  submitAbstractionType: (type: AbstractionType) => void
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor)

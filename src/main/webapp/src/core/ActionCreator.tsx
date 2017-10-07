@@ -21,6 +21,7 @@ export class ActionCreator<S extends State, P> implements ReduxAction {
   }
 
   public dispatch(payload?: P): DispatchedAction<S> {
+    // return explicit falsy values like 0 or false
     return payload !== void 0 || payload !== null ? { type: this.type, payload } : { type: this.type }
   }
 

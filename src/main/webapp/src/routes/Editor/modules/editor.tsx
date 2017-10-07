@@ -14,6 +14,7 @@ export interface EditorState {
 }
 
 export interface AbstractionType {
+  id?: number
   type: string
   description: string
 }
