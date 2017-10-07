@@ -21,7 +21,7 @@ export class ActionCreator<S extends State, P> implements ReduxAction {
   }
 
   public dispatch(payload?: P): DispatchedAction<S> {
-    return payload ? { type: this.type, payload } : { type: this.type }
+    return payload !== void 0 || payload !== null ? { type: this.type, payload } : { type: this.type }
   }
 
   public toString() {
