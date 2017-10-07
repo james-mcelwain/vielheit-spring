@@ -14,6 +14,6 @@ public interface AbstractionTypeRepository extends GraphRepository<AbstractionTy
     @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(at:AbstractionType {type: {type}}) RETURN at")
     AbstractionType findTypeByNameAndUserId(@Param("userId") Long userId, @Param("type") String type);
 
-    @Query("MATCH (at:AbstractionType {userId: {userId}}) RETURN at")
+    @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(at:AbstractionType) RETURN at")
     Set<AbstractionType> findByUserId(@Param("userId") Long userId);
 }
