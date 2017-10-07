@@ -36,13 +36,13 @@ http.interceptors.response.use((response) => {
 
   const applicationErr = error.response && error.response.data
   if (applicationErr && applicationErr.errorCode === ErrorCode.JWT_EXPIRED) {
-    const refreshToken = sessionStorage.getItem("refreshToken")
+    const refreshToken = sessionStorage.getItem('refreshToken')
     if (refreshToken) {
       http.get('auth/token', {
         headers: {
-          'X-Authorization': `Bearer ${refreshToken}`
-        }
-      }).then(response => {
+          'X-Authorization': `Bearer ${refreshToken}`,
+        },
+      }).then((response) => {
         console.log(response)
       }).catch(logout)
     }

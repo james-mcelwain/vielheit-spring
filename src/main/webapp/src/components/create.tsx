@@ -13,13 +13,13 @@ export default class Create extends React.Component<{}, CreateState> {
   public constructor() {
     super()
     this.setState({
-      visible: false
+      visible: false,
     })
   }
 
   public cancel() {
     this.setState({
-      visible: false
+      visible: false,
     })
   }
 
@@ -31,7 +31,7 @@ export default class Create extends React.Component<{}, CreateState> {
     const toggle = () => this.setState({visible: !isVisible})
 
     return <div>
-      <Button onClick={toggle}>Create</Button>,
+      <Button onClick={toggle}>Create</Button>
       <Modal
         title={null}
         width={getWidth() * 0.8}

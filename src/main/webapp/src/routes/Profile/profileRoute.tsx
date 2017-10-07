@@ -9,7 +9,8 @@ declare const require: any
 export default (store: AppStore): PlainRoute => ({
   path: 'profile',
   getComponent(nextState, cb) {
-    require.ensure([], function (require: any) {
+    // tslint:disable-next-line
+    require.ensure([], function(require: any) {
       const Profile = require('./containers/ProfileContainer').default
       const reducer: Reducer<ProfileState> = require('./modules/profile').default
 

@@ -8,7 +8,8 @@ export default function(store: AppStore): PlainRoute {
   return {
     path: 'login',
     getComponent(nextState, cb) {
-      require.ensure([], function (require: any) {
+      // tslint:disable-next-line
+      require.ensure([], function(require: any) {
         const Login = require('./containers/LoginContainer').default
         const module = require('./modules/login').default
 

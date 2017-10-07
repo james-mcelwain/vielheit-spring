@@ -7,6 +7,7 @@ declare const require: any
 export default (store: AppStore) => ({
   path : 'register',
   getComponent(nextState, cb) {
+      // tslint:disable-next-line
       require.ensure([], function(require: any) {
       const Register = require('./containers/RegisterContainer').default
       const reducer = require('./modules/register').default

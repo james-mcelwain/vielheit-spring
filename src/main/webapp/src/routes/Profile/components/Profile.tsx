@@ -6,7 +6,7 @@ import {ProfileState} from '../modules/profile'
 
 export class Profile extends React.Component<{ application: ApplicationState, profileState: ProfileState }, { isEdit: boolean }> {
   public state = {
-    isEdit: false
+    isEdit: false,
   }
 
   public render() {

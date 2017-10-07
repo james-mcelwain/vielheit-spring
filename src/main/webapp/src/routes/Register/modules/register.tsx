@@ -4,7 +4,6 @@ import http from '../../../http'
 import {AppState, State} from '../../../store/appState'
 import {AbstractModule, AsyncDispatch} from '../../../core/AbstractModule'
 
-
 export interface RegisterUserRequest {
   emailAddress: string
   firstName: string
@@ -23,7 +22,7 @@ class Register extends AbstractModule<RegisterState> {
 
   @AsyncDispatch
   public register({emailAddress, firstName, lastName, password}: RegisterUserRequest) {
-    return async(dispatch: Dispatch<AppState>) => {
+    return async (dispatch: Dispatch<AppState>) => {
       dispatch(this.REGISTER_START.dispatch())
       try {
         const response = await http.post(

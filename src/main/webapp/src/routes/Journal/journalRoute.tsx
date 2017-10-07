@@ -8,7 +8,8 @@ export default function(store: AppStore): PlainRoute {
   return {
     path: 'journal',
     getComponent(nextState, cb) {
-      require.ensure([], async function (require: any) {
+      // tslint:disable-next-line
+      require.ensure([], async function(require: any) {
         const Journal = require('./containers/JournalContainer').default
         const module = (require('./modules/journal').default as any)
 

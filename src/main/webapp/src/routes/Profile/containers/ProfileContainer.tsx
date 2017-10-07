@@ -8,7 +8,7 @@ const mapDispatchToProps = profileModule.getAsyncActions()
 
 const mapStateToProps = (state: AppState) => ({
   profileState: state.profile,
-  application: state.application
+  application: state.application,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
