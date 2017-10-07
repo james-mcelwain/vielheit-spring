@@ -13,6 +13,8 @@ export default function(store: AppStore): PlainRoute {
         const Journal = require('./containers/JournalContainer').default
         const module = (require('./modules/journal').default as any)
 
+        console.log(module)
+
         await module.getEntries()(store.dispatch.bind(store))
         injectReducer(store, {key: 'journal', reducer: module.getReducer() })
         cb(null, Journal)

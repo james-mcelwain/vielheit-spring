@@ -22,9 +22,8 @@ public class JournalController implements ControllerContext, OptionalResponse {
         this.journalService = Objects.requireNonNull(journalService);
     }
 
-    @Path("{userId}")
     @GET
     public Response getEntries() {
-        return null;
+        return Response.ok(journalService.entries()).build();
     }
 }

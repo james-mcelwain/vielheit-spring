@@ -73,6 +73,7 @@ public class TokenController {
 
         if (user.getRoles() == null)
             throw new InsufficientAuthenticationException("User has no roles assigned");
+
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(authority -> new SimpleGrantedAuthority(authority.getRole().authority()))
                 .collect(Collectors.toList());
