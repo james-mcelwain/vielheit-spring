@@ -47,15 +47,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String TOKEN_REFRESH_ENTRY_POINT = "/api/auth/token";
     public static final String REGISTER_POINT = "/api/auth/register";
 
-    @Inject  private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    @Inject  private AuthenticationSuccessHandler authenticationSuccessHandler;
-    @Inject  private AuthenticationFailureHandler authenticationFailureHandler;
-    @Inject  private AjaxAuthenticationProvider ajaxAuthenticationProvider;
-    @Inject  private JwtAuthenticationProvider jwtAuthenticationProvider;
-    @Inject  private TokenExtractor tokenExtractor;
-    @Inject  private AuthenticationManager authenticationManager;
-    @Inject  private ObjectMapper objectMapper;
-    @Inject  private LoginAttemptRepository loginAttemptRepository;
+    @Inject private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    @Inject private AuthenticationSuccessHandler authenticationSuccessHandler;
+    @Inject private AuthenticationFailureHandler authenticationFailureHandler;
+    @Inject private AjaxAuthenticationProvider ajaxAuthenticationProvider;
+    @Inject private JwtAuthenticationProvider jwtAuthenticationProvider;
+    @Inject private TokenExtractor tokenExtractor;
+    @Inject private AuthenticationManager authenticationManager;
+    @Inject private ObjectMapper objectMapper;
+    @Inject private LoginAttemptRepository loginAttemptRepository;
 
     @Bean
     protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() {
