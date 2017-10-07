@@ -22,16 +22,19 @@ export const CoreLayout = ({children}: { children: JSX.Element[] }) => {
     .split('/')
     .map((path: string, i) => <Breadcrumb.Item key={i}>{path}</Breadcrumb.Item>)
 
+  const menuItems = ['home', 'journal', 'editor', 'profile']
+  const currentLoc = menuItems.find(item => browserHistory.getCurrentLocation().pathname.includes(item)) || 'home'
+
   return (
     <Layout className="layout">
       <Header>
         <div className="logo"/>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']} style={{lineHeight: '64px'}}>
-          <Menu.Item key="1"><Link to="/">Home</Link></Menu.Item>
-          <Menu.Item key="2"><Link to="/journal">Journal</Link></Menu.Item>
-          <Menu.Item key="3"><Link to="/editor">Editor</Link></Menu.Item>
-          <Menu.Item key="4"><Link to="/profile">Profile</Link></Menu.Item>
-          <Menu.Item key="99" style={{float: 'right'}}>{loggedIn && <Button onClick={logout} type="primary">Logout</Button>}</Menu.Item>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[currentLoc]} style={{lineHeight: '64px'}}>
+          <Menu.Item key="home"><Link to="/">Home</Link></Menu.Item>
+          <Menu.Item key="journal"><Link to="/journal">Journal</Link></Menu.Item>
+          <Menu.Item key="editor"><Link to="/editor">Editor</Link></Menu.Item>
+          <Menu.Item key="profile"><Link to="/profile">Profile</Link></Menu.Item>
+          <Menu.Item key="logout" style={{float: 'right'}}>{loggedIn && <Button onClick={logout} type="primary">Logout</Button>}</Menu.Item>
         </Menu>
       </Header>
       <Content style={{padding: '0 50px'}}>
