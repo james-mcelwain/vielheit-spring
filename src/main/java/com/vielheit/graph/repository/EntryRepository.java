@@ -6,11 +6,10 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface EntryRepository extends GraphRepository<Entry> {
-
     @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(entries:Entry) RETURN entries")
-    List<Entry> findByUserId(@Param("userId") Long userId);
+    Set<Entry> findByUserId(@Param("userId") Long userId);
 }

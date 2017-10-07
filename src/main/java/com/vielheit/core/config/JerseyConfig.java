@@ -1,7 +1,6 @@
 package com.vielheit.core.config;
 
 
-import com.vielheit.graph.controller.AbstractionController;
 import com.vielheit.graph.controller.JournalController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
@@ -26,6 +25,5 @@ public class JerseyConfig extends ResourceConfig {
         register(TokenController.class);
         register(UserController.class);
         register(RegisterController.class);
-        register(AbstractionController.class);
     }
 }
