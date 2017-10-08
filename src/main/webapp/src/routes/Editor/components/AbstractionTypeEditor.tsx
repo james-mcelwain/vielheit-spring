@@ -23,6 +23,8 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
   }
 
   public selectItem(idx: number) {
+    console.log(idx, this.props.types[idx])
+
     this.setState({
       selectedItemIdx: idx,
       selectedItem: idx === -1 ? {type: '', description: ''} : this.props.types[idx]

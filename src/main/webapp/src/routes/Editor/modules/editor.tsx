@@ -70,10 +70,10 @@ export class EditorModule extends AbstractModule<EditorState> {
         const types: AbstractionType[] = await http.get('journal/types').then(r => r.data)
         dispatch(this.FETCH_TYPES_SUCCESS.dispatch(types))
 
-        const idx = types.findIndex(t => t.type === type.type && t.description === type.description)
-
-        // "new" is always idx 0
-        dispatch(this.EDITOR_SELECT_ITEM.dispatch(idx + 1))
+        // const idx = types.findIndex(t => t.type === type.type && t.description === type.description)
+        //
+        // // "new" is always idx 0
+        // dispatch(this.EDITOR_SELECT_ITEM.dispatch(idx + 1))
       } catch(e) {
         dispatch(this.FETCH_TYPES_FAIL.dispatch(e))
       }

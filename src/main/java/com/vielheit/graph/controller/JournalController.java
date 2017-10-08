@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 import java.util.Objects;
@@ -25,17 +26,18 @@ public class JournalController implements ControllerContext, OptionalResponse {
         this.journalService = Objects.requireNonNull(journalService);
     }
 
-    @POST
-    @Path("type")
-    public Response submitType(AbstractionType type) {
-        journalService.create(type);
-        return Response.ok().build();
-    }
 
     @GET
     @Path("types")
     public Response getTypes() {
         return Response.ok(journalService.types()).build();
+    }
+
+    @POST
+    @Path("type")
+    public Response submitType(AbstractionType type) {
+        journalService.create(type);
+        return Response.ok().build();
     }
 
     @GET

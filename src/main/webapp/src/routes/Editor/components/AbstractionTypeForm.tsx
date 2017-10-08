@@ -52,7 +52,6 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
       },
     }
 
-
     return (
       <Form onSubmit={this.handleSubmit.bind(this)}>
         <Form.Item {...formItemLayout} label="Type">
