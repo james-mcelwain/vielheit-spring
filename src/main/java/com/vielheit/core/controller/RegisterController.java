@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
@@ -26,7 +27,7 @@ public class RegisterController implements OptionalResponse {
     }
 
     @POST
-    public Response registerUser(@NotNull @Valid User user) throws ApplicationException {
-        return okIfPresent(userService.create(user));
+    public User registerUser(@NotNull @Valid User user) throws ApplicationException {
+        return userService.create(user).orElseThrow(BadRequestException::new);
     }
 }

@@ -14,6 +14,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.Objects;
+import java.util.Optional;
 
 @Controller
 @Path("/api/users")
@@ -28,15 +29,15 @@ public class UserController implements OptionalResponse {
     @GET
     @Path("{user-id}")
     @UserResource
-    public Response getUserById(@PathParam("user-id") Long id) throws ApplicationException {
-        return okIfPresent(userService.getById(id));
+    public User getUserById(@PathParam("user-id") Long id) throws ApplicationException {
+        return userService.getById(id).orElseThrow(BadRequestException::new);
     }
 
     @PUT
     @Path("{user-id}")
     @Consumes(MediaType.APPLICATION_JSON)
     @UserResource
-    public Response updateUserById(@PathParam("user-id") Long id, User user) throws ApplicationException {
-        return okIfPresent(userService.updateUser(id, user));
+    public User updateUserById(@PathParam("user-id") Long id, User user) throws ApplicationException {
+        return userService.updateUser(id, user).orElseThrow(BadRequestException::new);
     }
 }

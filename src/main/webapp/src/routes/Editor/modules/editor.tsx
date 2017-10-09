@@ -19,6 +19,13 @@ export interface AbstractionType {
   description: string
 }
 
+export interface Abstraction {
+  id?: number
+  name: string
+  description: string
+  type: AbstractionType
+}
+
 export interface UserGraph {
   types: AbstractionType[]
 }

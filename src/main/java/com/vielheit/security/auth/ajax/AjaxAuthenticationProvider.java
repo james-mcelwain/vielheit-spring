@@ -3,14 +3,12 @@ package com.vielheit.security.auth.ajax;
 import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.exception.ApplicationException;
-import com.vielheit.core.exception.FakeInternalServerErrorException;
 import com.vielheit.core.service.LoginService;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import org.apache.log4j.Logger;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import sun.net.www.ApplicationLaunchException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -61,9 +58,9 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
 
         User user;
         try {
-            Optional<User> u = userService.getByEmailAddress(emailAddress);
-            if (u.isPresent()) {
-                user = u.get();
+            Optional<User> userOptional = userService.getByEmailAddress(emailAddress);
+            if (userOptional.isPresent()) {
+                user = userOptional.get();
             } else {
                 loginService.createLoginAttempt(request, emailAddress, LoginAttempt.FailureReason.EMAIL);
                 throw new UsernameNotFoundException("Username not found: " + emailAddress);

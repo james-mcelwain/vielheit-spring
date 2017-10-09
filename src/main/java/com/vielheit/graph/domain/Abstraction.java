@@ -12,8 +12,6 @@ public class Abstraction {
     @GraphId
     private Long id;
 
-    private Long abstractionId;
-
     private String name;
 
     private String description;
@@ -34,14 +32,6 @@ public class Abstraction {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getAbstractionId() {
-        return abstractionId;
-    }
-
-    public void setAbstractionId(Long abstractionId) {
-        this.abstractionId = abstractionId;
     }
 
     public String getName() {

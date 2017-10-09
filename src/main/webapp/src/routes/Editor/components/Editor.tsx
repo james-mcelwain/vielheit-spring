@@ -4,6 +4,9 @@ import { Layout } from 'antd'
 import { EditorProps } from '../containers/EditorContainer'
 import EditorMenu from './EditorMenu'
 import AbstractionTypeEditor from './AbstractionTypeEditor'
+import AbstractionForm from './AbstractionForm'
+import { Abstraction } from '../modules/editor'
+import AbstractionEditor from './AbstractionEditor'
 
 
 export interface EditorState {
@@ -16,7 +19,7 @@ export class Editor extends React.Component<EditorProps, EditorState> {
       types={this.props.editorState.types}
       editorState={this.props.editorState}
       editor={this.props.editor}/>
-  private Abstraction = () => <div>STUB ABSTRACTION</div>
+  private Abstraction = () => <AbstractionEditor types={this.props.editorState.types}/>
   private Entry = () => <div>STUB ENTRY</div>
 
   public state = {
