@@ -3,10 +3,13 @@ package com.vielheit.security.auth.ajax;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vielheit.core.repository.LoginAttemptRepository;
+import com.vielheit.security.config.WebSecurityConfig;
 import com.vielheit.security.exception.AuthMethodNotSupportedException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.session.SessionProperties;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,42 +22,45 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
+import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.InternalServerErrorException;
 import java.io.IOException;
 import java.util.Objects;
+
+import static java.util.Objects.nonNull;
 
 public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
     private Logger log = LoggerFactory.getLogger(AjaxLoginProcessingFilter.class);
 
-    private LoginAttemptRepository loginAttemptRepository;
     private AuthenticationSuccessHandler successHandler;
     private AuthenticationFailureHandler failureHandler;
     private ObjectMapper objectMapper;
+    private RedisTemplate<String, String> redisTemplate;
 
     public AjaxLoginProcessingFilter(
             String defaultProcessUrl,
             AuthenticationSuccessHandler successHandler,
             AuthenticationFailureHandler failureHandler,
             ObjectMapper mapper,
-            LoginAttemptRepository loginAttemptRepository
+            RedisTemplate<String, String> redisTemplate
     ) {
         super(defaultProcessUrl);
         this.successHandler = Objects.requireNonNull(successHandler);
         this.failureHandler = Objects.requireNonNull(failureHandler);
         this.objectMapper = Objects.requireNonNull(mapper);
-        this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
+        this.redisTemplate = Objects.requireNonNull(redisTemplate);
     }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) req);
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) res);
-        super.doFilter(requestWrapper, responseWrapper, chain);
+        super.doFilter(requestWrapper, res, chain);
     }
 
     @Override
@@ -66,6 +72,16 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
         try {
             LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
+
+            String inetAddress = request.getHeader("X-FORWARDED-FOR");
+            if (inetAddress == null) {
+                inetAddress = request.getRemoteAddr();
+            }
+
+            if (checkBanned(inetAddress)) {
+                throw new InternalServerErrorException();
+            }
+
             if (StringUtils.isBlank(loginRequest.getEmailAddress()) || StringUtils.isBlank(loginRequest.getPassword())) {
                 throw new AuthenticationServiceException("Username or Password not provided");
             }
@@ -98,5 +114,15 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     ) throws IOException, ServletException {
         SecurityContextHolder.clearContext();
         failureHandler.onAuthenticationFailure(request, response, failed);
+    }
+
+    private boolean checkBanned(String inetAddress) {
+        final String key = "la:" + inetAddress;
+        String timesAttempted = redisTemplate.opsForValue().get(key);
+        if (nonNull(timesAttempted)) {
+            return Integer.valueOf(timesAttempted) >= WebSecurityConfig.LOGIN_ATTEMPT_LIMIT;
+        }
+
+        return false;
     }
 }

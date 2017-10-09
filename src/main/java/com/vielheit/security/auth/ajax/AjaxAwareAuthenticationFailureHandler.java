@@ -80,7 +80,7 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
     }
 
     private void setInRedis(String inetAddress) {
-       final String key = "la:" + inetAddress;
+        final String key = "la:" + inetAddress;
         redis.opsForValue().setIfAbsent(key, "0");
         redis.opsForValue().increment(key, 1);
         redis.expire(key, WebSecurityConfig.LOGIN_ATTEMPT_TIMEOUT, TimeUnit.SECONDS);

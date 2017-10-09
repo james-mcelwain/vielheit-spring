@@ -12,6 +12,7 @@ import com.vielheit.security.auth.jwt.extractor.TokenExtractor;
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -56,11 +58,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Inject private TokenExtractor tokenExtractor;
     @Inject private AuthenticationManager authenticationManager;
     @Inject private ObjectMapper objectMapper;
-    @Inject private LoginAttemptRepository loginAttemptRepository;
+    @Inject private RedisTemplate<String, String> redisTemplate;
 
     @Bean
     protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() {
-        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, authenticationSuccessHandler, authenticationFailureHandler, objectMapper, loginAttemptRepository);
+        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, authenticationSuccessHandler, authenticationFailureHandler, objectMapper, redisTemplate);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }
