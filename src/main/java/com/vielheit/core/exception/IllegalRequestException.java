@@ -5,6 +5,6 @@ package com.vielheit.core.exception;
  */
 public class IllegalRequestException extends ApplicationException {
     public IllegalRequestException() {
-        super("Unauotherized", ErrorCode.ILLEGAL_REQUEST);
+        super("Unauthorized", ErrorCode.ILLEGAL_REQUEST);
     }
 }
