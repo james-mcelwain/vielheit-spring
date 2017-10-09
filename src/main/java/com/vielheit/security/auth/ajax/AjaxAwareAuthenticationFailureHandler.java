@@ -30,18 +30,12 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFailureHandler {
     private ObjectMapper mapper;
-    private LoginAttemptRepository loginAttemptRepo;
-    private RedisTemplate<String, String> redis;
 
     @Inject
     public AjaxAwareAuthenticationFailureHandler(
-            @NotNull ObjectMapper mapper,
-            @NotNull LoginAttemptRepository loginAttemptRepo,
-            @NotNull RedisTemplate<String, String> redis
+            @NotNull ObjectMapper mapper
     ) {
         this.mapper = Objects.requireNonNull(mapper);
-        this.loginAttemptRepo = Objects.requireNonNull(loginAttemptRepo);
-        this.redis = Objects.requireNonNull(redis);
     }
 
     @Override
@@ -50,21 +44,6 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
             HttpServletResponse response,
             AuthenticationException e
     ) throws IOException, ServletException {
-
-        LoginRequest loginRequest = mapper.readValue(((ContentCachingRequestWrapper) request).getContentAsByteArray(), LoginRequest.class);
-        LoginAttempt loginAttempt = new LoginAttempt();
-        loginAttempt.setEmailAddress(loginRequest.getEmailAddress());
-
-        String inetAddress = request.getHeader("X-FORWARDED-FOR");
-        if (inetAddress == null) {
-            inetAddress = request.getRemoteAddr();
-        }
-
-        loginAttempt.setInetAddress(inetAddress);
-        loginAttemptRepo.save(loginAttempt);
-
-        setInRedis(inetAddress);
-
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
@@ -77,12 +56,5 @@ public class AjaxAwareAuthenticationFailureHandler implements AuthenticationFail
         }
 
         mapper.writeValue(response.getWriter(), ErrorResponse.of("Authentication failed", ErrorCode.AUTHENTICATION));
-    }
-
-    private void setInRedis(String inetAddress) {
-        final String key = "la:" + inetAddress;
-        redis.opsForValue().setIfAbsent(key, "0");
-        redis.opsForValue().increment(key, 1);
-        redis.expire(key, WebSecurityConfig.LOGIN_ATTEMPT_TIMEOUT, TimeUnit.SECONDS);
     }
 }

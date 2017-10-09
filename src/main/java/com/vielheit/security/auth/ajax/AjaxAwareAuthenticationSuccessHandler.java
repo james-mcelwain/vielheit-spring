@@ -40,19 +40,16 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
     private ObjectMapper mapper;
     private JwtTokenFactory tokenFactory;
     private UserService userService;
-    private LoginRepository loginRepository;
 
     @Inject
     public AjaxAwareAuthenticationSuccessHandler(
             @NotNull ObjectMapper objectMapper,
             @NotNull JwtTokenFactory tokenFactory,
-            @NotNull UserService userService,
-            @NotNull LoginRepository loginRepository
+            @NotNull UserService userService
     ) {
         this.mapper = Objects.requireNonNull(objectMapper);
         this.tokenFactory = Objects.requireNonNull(tokenFactory);
         this.userService = Objects.requireNonNull(userService);
-        this.loginRepository = Objects.requireNonNull(loginRepository);
     }
 
     @Override
@@ -74,14 +71,6 @@ public class AjaxAwareAuthenticationSuccessHandler implements AuthenticationSucc
             userService.getById(userContext.getUserId())
                     .ifPresent(u -> {
                         authResponsePayload.put("user", u);
-                        Login login = new Login();
-                        login.setUserId(u.getId());
-                        String inetAddress = request.getHeader("X-FORWARDED-FOR");
-                        if (inetAddress == null) {
-                            inetAddress = request.getRemoteAddr();
-                        }
-                        login.setInetAddress(inetAddress);
-                        loginRepository.save(login);
                     });
         } catch (ApplicationException apex) {
             throw new ServletException();

@@ -5,6 +5,7 @@ import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.repository.LoginAttemptRepository;
+import com.vielheit.core.service.LoginService;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import org.apache.log4j.Logger;
@@ -19,13 +20,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.InternalServerErrorException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -33,44 +39,52 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
     private Logger log = Logger.getLogger(AjaxAuthenticationProvider.class);
 
     private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    private LoginAttemptRepository loginAttemptRepository;
     private UserService userService;
-
-    private final int LOGIN_THROTTLE = 5;
+    private LoginService loginService;
 
     @Inject
     public AjaxAuthenticationProvider(
-            @NotNull LoginAttemptRepository loginAttemptRepository,
-            @NotNull UserService userService
+            @NotNull UserService userService,
+            @NotNull LoginService loginService
     ) {
-        this.loginAttemptRepository = Objects.requireNonNull(loginAttemptRepository);
         this.userService = Objects.requireNonNull(userService);
-
+        this.loginService = Objects.requireNonNull(loginService);
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) {
         Assert.notNull(authentication, "No authentication data provided");
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+
+        if (loginService.isBanned(request)) {
+            throw new InternalServerErrorException();
+        }
 
         String emailAddress = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
 
-        List<LoginAttempt> attempts = loginAttemptRepository.getRecentLoginAttempts(emailAddress, LocalDateTime.now().minusMinutes(LOGIN_THROTTLE), LocalDateTime.now());
-        log.info("Attempting to authenticate " + emailAddress + " attempts " + attempts.size());
-
         User user;
         try {
-            user = userService.getByEmailAddress(emailAddress).orElseThrow(() -> new UsernameNotFoundException("User not found: " + emailAddress));
+            Optional<User> u = userService.getByEmailAddress(emailAddress);
+            if (u.isPresent()) {
+                user = u.get();
+            } else {
+                loginService.createLoginAttempt(request, emailAddress, LoginAttempt.FailureReason.EMAIL);
+                throw new UsernameNotFoundException("Username not found: " + emailAddress);
+            }
         } catch (ApplicationException apex) {
             log.error(apex.getMessage());
+            loginService.createLoginAttempt(request, emailAddress, LoginAttempt.FailureReason.UNKNOWN);
             throw new InternalServerErrorException();
         }
 
         if (!encoder.matches(password, user.getPassword())) {
+            loginService.createLoginAttempt(request, emailAddress, LoginAttempt.FailureReason.PASSWORD);
             throw new BadCredentialsException("Authentication Failed. Username or Password not valid.");
         }
 
         if (user.getRoles() == null) {
+            loginService.createLoginAttempt(request, emailAddress, LoginAttempt.FailureReason.UNKNOWN);
             throw new InsufficientAuthenticationException("User has no roles assigned");
         }
 
@@ -79,6 +93,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
                 .collect(Collectors.toList());
 
         UserContext userContext = UserContext.create(user.getId(), authorities);
+        loginService.createLogin(request, user.getId());
 
         return new UsernamePasswordAuthenticationToken(userContext, null, userContext.getAuthorities());
     }

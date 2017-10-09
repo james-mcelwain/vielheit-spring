@@ -11,6 +11,22 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "\"LoginAttempt\"", schema = "vielheit")
 public class LoginAttempt extends BaseEntity {
+    public enum FailureReason {
+        EMAIL("INVALID_EMAIL"),
+        PASSWORD("INVALID_PASSWORD"),
+        UNKNOWN("UNKOWN");
+
+        private String failureReason;
+
+        private FailureReason(String failureReason) {
+            this.failureReason = failureReason;
+        }
+
+        @Override
+        public String toString() {
+            return this.failureReason;
+        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +38,10 @@ public class LoginAttempt extends BaseEntity {
 
     @Column(name = "emailAddress")
     private String emailAddress;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "failureReason")
+    private FailureReason failureReason;
 
     @Column(name = "loginAttemptDate")
     @Convert(converter = LocalDateTimeConverter.class)
@@ -49,6 +69,14 @@ public class LoginAttempt extends BaseEntity {
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public FailureReason getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(FailureReason failureReason) {
+        this.failureReason = failureReason;
     }
 
     public LocalDateTime getLoginAttemptDate() {
