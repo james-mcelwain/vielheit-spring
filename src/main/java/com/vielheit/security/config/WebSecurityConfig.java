@@ -58,11 +58,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Inject private TokenExtractor tokenExtractor;
     @Inject private AuthenticationManager authenticationManager;
     @Inject private ObjectMapper objectMapper;
-    @Inject private RedisTemplate<String, String> redisTemplate;
 
     @Bean
     protected AjaxLoginProcessingFilter buildAjaxLoginProcessingFilter() {
-        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, authenticationSuccessHandler, authenticationFailureHandler, objectMapper, redisTemplate);
+        AjaxLoginProcessingFilter filter = new AjaxLoginProcessingFilter(FORM_BASED_LOGIN_ENTRY_POINT, authenticationSuccessHandler, authenticationFailureHandler, objectMapper);
         filter.setAuthenticationManager(this.authenticationManager);
         return filter;
     }

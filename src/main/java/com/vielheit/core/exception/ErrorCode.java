@@ -14,7 +14,7 @@ public enum ErrorCode {
     BAD_REQUEST(40, Response.Status.BAD_REQUEST),
     ILLEGAL_REQUEST(41, Response.Status.UNAUTHORIZED),
 
-    UNEXPECTED_RESULT(50, Response.Status.INTERNAL_SERVER_ERROR);
+    INTERNAL_ERROR(50, Response.Status.INTERNAL_SERVER_ERROR);
 
 
     private int code;

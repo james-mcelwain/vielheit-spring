@@ -1,19 +1,16 @@
 package com.vielheit.security.auth.ajax;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.domain.User;
 import com.vielheit.core.exception.ApplicationException;
-import com.vielheit.core.repository.LoginAttemptRepository;
+import com.vielheit.core.exception.FakeInternalServerErrorException;
 import com.vielheit.core.service.LoginService;
 import com.vielheit.core.service.UserService;
 import com.vielheit.security.model.UserContext;
 import org.apache.log4j.Logger;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,13 +19,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.util.ContentCachingRequestWrapper;
+import sun.net.www.ApplicationLaunchException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.InternalServerErrorException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -57,7 +53,7 @@ public class AjaxAuthenticationProvider implements AuthenticationProvider {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 
         if (loginService.isBanned(request)) {
-            throw new InternalServerErrorException();
+            throw new AuthenticationServiceException("banned");
         }
 
         String emailAddress = (String) authentication.getPrincipal();

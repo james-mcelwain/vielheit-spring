@@ -1,11 +1,11 @@
 package com.vielheit.core.config;
 
-
-import com.vielheit.graph.controller.JournalController;
 import com.vielheit.core.controller.RegisterController;
 import com.vielheit.core.controller.UserController;
 import com.vielheit.core.exception.ApplicationExceptionMapper;
+import com.vielheit.core.exception.ServerErrorExceptionMapper;
 import com.vielheit.core.exception.ValidationExceptionMapper;
+import com.vielheit.graph.controller.JournalController;
 import com.vielheit.security.UserResourceFilter;
 import com.vielheit.security.controller.TokenController;
 import org.glassfish.jersey.server.ResourceConfig;
@@ -17,6 +17,7 @@ public class JerseyConfig extends ResourceConfig {
         registerEndpoints();
         register(ValidationExceptionMapper.class);
         register(ApplicationExceptionMapper.class);
+        register(ServerErrorExceptionMapper.class);
     }
 
     private void registerEndpoints() {
