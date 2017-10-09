@@ -2,7 +2,6 @@ package com.vielheit.security.auth.ajax;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.vielheit.core.domain.LoginAttempt;
 import com.vielheit.core.repository.LoginAttemptRepository;
 import com.vielheit.security.exception.AuthMethodNotSupportedException;
 import org.apache.commons.lang3.StringUtils;
@@ -17,11 +16,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.stereotype.Component;
+import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.util.ContentCachingResponseWrapper;
 
-import javax.inject.Inject;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -50,6 +51,13 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
     }
 
     @Override
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper((HttpServletRequest) req);
+        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper((HttpServletResponse) res);
+        super.doFilter(requestWrapper, responseWrapper, chain);
+    }
+
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         if (!HttpMethod.POST.name().equals(request.getMethod())) { // we removed is ajax from here
             log.debug("Authentication method not supported. Request method: " + request.getMethod());
@@ -58,17 +66,6 @@ public class AjaxLoginProcessingFilter extends AbstractAuthenticationProcessingF
 
         try {
             LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
-            LoginAttempt loginAttempt = new LoginAttempt();
-            loginAttempt.setEmailAddress(loginRequest.getEmailAddress());
-
-            String inetAddress = request.getHeader("X-FORWARDED-FOR");
-            if (inetAddress == null) {
-                inetAddress = request.getRemoteAddr();
-            }
-
-            loginAttempt.setInetAddress(inetAddress);
-            loginAttemptRepository.save(loginAttempt);
-
             if (StringUtils.isBlank(loginRequest.getEmailAddress()) || StringUtils.isBlank(loginRequest.getPassword())) {
                 throw new AuthenticationServiceException("Username or Password not provided");
             }

@@ -2,13 +2,13 @@ package com.vielheit.core.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
@@ -18,7 +18,17 @@ public class RedisConfig {
 
     private String host;
 
+    /*
+    Weird dependency issue right now...
     @Bean
+    public LettuceConnectionFactory lettuceConnectionFactory() {
+        LettuceConnectionFactory factory = new LettuceConnectionFactory();
+        factory.setHostName(host);
+        return factory;
+    } */
+
+    @Bean
+    @Primary
     public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setHostName(host);

@@ -39,6 +39,9 @@ import java.util.List;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final Logger log = Logger.getLogger(WebSecurityConfig.class);
 
+    public static final int LOGIN_ATTEMPT_LIMIT = 10;
+    public static final int LOGIN_ATTEMPT_TIMEOUT = 60;
+
     public static final String JWT_TOKEN_HEADER_PARAM = "X-Authorization";
     public static final String FORM_BASED_LOGIN_ENTRY_POINT = "/api/auth/login";
     public static final String TOKEN_BASED_AUTH_ENTRY_POINT = "/api/**";
