@@ -1,5 +1,6 @@
 package com.vielheit.graph.service;
 
+import com.vielheit.core.exception.ApplicationException;
 import com.vielheit.core.service.Service;
 import com.vielheit.graph.domain.Abstraction;
 import com.vielheit.graph.domain.AbstractionType;
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 public interface JournalService extends Service {
     Optional<Entry> create(Entry entry);
-    Optional<AbstractionType> create(AbstractionType type);
+    Optional<AbstractionType> create(AbstractionType type) throws ApplicationException;
     Optional<Abstraction> create(Abstraction abstraction);
 
     Set<Entry> entries();

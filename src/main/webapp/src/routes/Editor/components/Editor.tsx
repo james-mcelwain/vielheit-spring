@@ -15,11 +15,14 @@ export interface EditorState {
 
 export class Editor extends React.Component<EditorProps, EditorState> {
   private AbstractionType = () => <AbstractionTypeEditor
-      submitAbstractionType={this.props.submitAbstractionType}
-      types={this.props.editorState.types}
-      editorState={this.props.editorState}
-      editor={this.props.editor}/>
-  private Abstraction = () => <AbstractionEditor types={this.props.editorState.types}/>
+    submitAbstractionType={this.props.submitAbstractionType}
+    types={this.props.editorState.types}
+    editorState={this.props.editorState}
+    editor={this.props.editor}/>
+
+  private Abstraction = () => <AbstractionEditor
+    types={this.props.editorState.types}/>
+
   private Entry = () => <div>STUB ENTRY</div>
 
   public state = {

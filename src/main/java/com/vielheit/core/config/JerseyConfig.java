@@ -16,8 +16,9 @@ public class JerseyConfig extends ResourceConfig {
     public JerseyConfig() {
         registerEndpoints();
         register(ValidationExceptionMapper.class);
+
+        // register(ServerErrorExceptionMapper.class);
         register(ApplicationExceptionMapper.class);
-        register(ServerErrorExceptionMapper.class);
     }
 
     private void registerEndpoints() {

@@ -12,7 +12,7 @@ import java.util.Set;
 
 public interface AbstractionTypeRepository extends GraphRepository<AbstractionType> {
     @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(at:AbstractionType {type: {type}}) RETURN at")
-    AbstractionType findTypeByNameAndUserId(@Param("userId") Long userId, @Param("type") String type);
+    AbstractionType findTypeByTypeAndUserId(@Param("userId") Long userId, @Param("type") String type);
 
     @Query("MATCH (user:GraphUser {userId: {userId}})-[:OWNS]->(at:AbstractionType) RETURN at")
     Set<AbstractionType> findByUserId(@Param("userId") Long userId);
