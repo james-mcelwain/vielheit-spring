@@ -53,7 +53,7 @@ http.interceptors.response.use((response) => {
   }
 
   if (applicationErr && error.status !== 404) {
-    store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr))
+    store.dispatch(Application.RESPONSE_ERROR.dispatch(applicationErr.message))
   } else {
     console.log(error)
   }

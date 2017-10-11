@@ -28,9 +28,13 @@ export class Editor extends React.Component<EditorProps, EditorState> {
     })
   }
 
+  public state = {
+    editor: this.AbstractionType
+  }
+
   public render() {
     const selectedItem = this.props.editorState.selectedItem + ''
-    const Editor = this.state.editor || this.Abstraction
+    const Editor = this.state.editor
 
     return (
       <div className="editor-container">

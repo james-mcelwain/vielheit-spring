@@ -22,3 +22,4 @@ export type ActionType
     | 'FETCH_TYPES_FAIL'
     | 'EDITOR_SELECT_ITEM'
     | 'EDITOR_CHANGE_FORM'
+    | 'EDITOR_RESET_ERROR'

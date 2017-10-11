@@ -32,23 +32,24 @@ export interface UserGraph {
 
 export class EditorModule extends AbstractModule<EditorState> {
   public EDITOR_SUBMIT_START =
-    this.Action('EDITOR_SUBMIT_START', (state) => ({...state, error: null, submitting: true}))
+    this.Action('EDITOR_SUBMIT_START', (state) => ({...state, submitting: true}))
   public EDIT_SUBMIT_SUCCESS =
-    this.Action('EDITOR_SUBMIT_SUCCESS', (state) => ({...state, error: null, submitting: false}))
+    this.Action('EDITOR_SUBMIT_SUCCESS', (state) => ({...state, submitting: false}))
   public EDIT_SUBMIT_FAIL =
     this.Action<Error>('EDITOR_SUBMIT_FAIL', (state, payload) => ({...state, error: payload, submitting: false}))
 
   public FETCH_TYPES_START =
-    this.Action('FETCH_TYPES_START', (state) => ({...state, error: null, fetching: true}))
+    this.Action('FETCH_TYPES_START', (state) => ({...state, fetching: true}))
   public FETCH_TYPES_SUCCESS =
     this.Action<AbstractionType[]>('FETCH_TYPES_SUCCESS', (state, payload) => ({
       ...state,
       types: payload,
       fetching: false,
-      error: null,
     }))
   public FETCH_TYPES_FAIL =
     this.Action<Error>('FETCH_TYPES_FAIL', (state, payload) => ({...state, error: payload, fetching: false}))
+
+  public EDITOR_RESET_ERROR = this.Action('EDITOR_RESET_ERROR', (state) => ({...state, error: null}))
 
   public EDITOR_SELECT_ITEM = this.Action<number>('EDITOR_SELECT_ITEM', (state, item) => console.log('select', item) || ({
     ...state,
@@ -71,13 +72,16 @@ export class EditorModule extends AbstractModule<EditorState> {
 
   @AsyncDispatch
   public submitAbstractionType(type: AbstractionType) {
+    this.resetError()
     return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.EDITOR_SUBMIT_START.dispatch())
       try {
         await http.post(`journal/type`, type)
         dispatch(this.EDIT_SUBMIT_SUCCESS.dispatch())
       } catch (e) {
-        dispatch((this.EDIT_SUBMIT_FAIL.dispatch(e)))
+        const error = e.response.data.message
+
+        dispatch((this.EDIT_SUBMIT_FAIL.dispatch(error)))
       }
 
       try {
@@ -97,6 +101,10 @@ export class EditorModule extends AbstractModule<EditorState> {
 
   public selectItem(idx: number) {
     store.dispatch(this.EDITOR_SELECT_ITEM.dispatch(idx))
+  }
+
+  public resetError() {
+    store.dispatch(this.EDITOR_RESET_ERROR.dispatch())
   }
 }
 
