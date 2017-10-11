@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, Alert } from 'antd'
 import { FormComponentProps } from 'antd/lib/form/Form'
 import { AbstractionType } from '../modules/editor'
 
@@ -8,25 +8,43 @@ interface AbstractionTypeFormProps {
   submitAbstractionType: (type: AbstractionType) => void
 }
 
+interface AbstractionTypeFormState {
+  error: null | Error
+}
+
 type Props = FormComponentProps & AbstractionTypeFormProps
 
-class AbstractionTypeForm extends React.Component<Props, {}> {
+class AbstractionTypeForm extends React.Component<Props, AbstractionTypeFormState> {
+  public state: AbstractionTypeFormState = {
+    error: null
+  }
+
   public handleSubmit(e: React.SyntheticEvent<{}>) {
     e.preventDefault()
-    this.props.form.validateFields((err: Error, values: AbstractionType) => {
+    this.props.form.validateFields(async (err: Error, values: AbstractionType) => {
       if (!err) {
         // update....
         if (this.props.model.id) {
           values.id = this.props.model.id
         }
 
-        this.props.submitAbstractionType(values)
+        try {
+          await this.props.submitAbstractionType(values)
+        } catch(error) {
+          this.setState({
+            error,
+          })
+        }
+
       }
     })
   }
 
   public render() {
     const { getFieldDecorator } = this.props.form
+    const { error } = this.state
+
+    console.log(this.props.form)
 
     const formItemLayout = {
       labelCol: {
@@ -53,10 +71,8 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
     }
 
     return (
-      <Form
-        onSubmit={this.handleSubmit.bind(this)}
-
-      >
+      <Form onSubmit={this.handleSubmit.bind(this)}>
+        {error && <Alert type="error" message={error.message}/>}
         <Form.Item {...formItemLayout} label="Type">
           {getFieldDecorator('type', {
             initialValue: this.props.model.type,

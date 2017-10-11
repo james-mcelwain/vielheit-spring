@@ -31,9 +31,6 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
 
   public render() {
     const submitAbstractionType = this.props.submitAbstractionType
-    const error = this.props.editorState.error
-
-    console.log(error)
 
     return (
       <Row>
@@ -50,7 +47,6 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
         </Col>
         <Col span={22}>
           <Card title={<b>Abstraction Type</b>} noHovering={true}>
-            {error && <Alert style={{ marginBottom: '20px' }} type="error" message={error}/>}
             <AbstractionTypeForm
               model={this.state.selectedItem}
               submitAbstractionType={submitAbstractionType}/>
