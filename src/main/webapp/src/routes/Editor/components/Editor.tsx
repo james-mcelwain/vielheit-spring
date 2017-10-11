@@ -4,40 +4,33 @@ import { Layout } from 'antd'
 import { EditorProps } from '../containers/EditorContainer'
 import EditorMenu from './EditorMenu'
 import AbstractionTypeEditor from './AbstractionTypeEditor'
-import AbstractionForm from './AbstractionForm'
-import { Abstraction } from '../modules/editor'
 import AbstractionEditor from './AbstractionEditor'
-
 
 export interface EditorState {
   editor: () => JSX.Element
 }
 
 export class Editor extends React.Component<EditorProps, EditorState> {
-  private AbstractionType = () => <AbstractionTypeEditor
+  public AbstractionType = () => <AbstractionTypeEditor
     submitAbstractionType={this.props.submitAbstractionType}
     types={this.props.editorState.types}
     editorState={this.props.editorState}
     editor={this.props.editor}/>
 
-  private Abstraction = () => <AbstractionEditor
+  public Abstraction = () => <AbstractionEditor
     types={this.props.editorState.types}/>
 
-  private Entry = () => <div>STUB ENTRY</div>
-
-  public state = {
-    editor: this.AbstractionType
-  }
+  public Entry = () => <div>STUB ENTRY</div>
 
   public selectEditor(editor: 'Abstraction' | 'AbstractionType' | 'Entry') {
     this.setState({
-      editor: this[editor]
+      editor: this[editor],
     })
   }
 
   public render() {
-    const selectedItem = this.props.editorState.selectedItem + ""
-    const Editor = this.state.editor
+    const selectedItem = this.props.editorState.selectedItem + ''
+    const Editor = this.state.editor || this.Abstraction
 
     return (
       <div className="editor-container">

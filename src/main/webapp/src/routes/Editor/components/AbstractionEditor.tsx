@@ -19,7 +19,7 @@ export default class AbstractionEditor extends React.Component<AbstractionEditor
       <AbstractionForm
         types={this.props.types}
         model={{name: '', description: '', type: {type: '', description: ''}}}
-        submitAbstraction={(a: Abstraction) => {}}/>
+        submitAbstraction={(a: Abstraction) => { /**/ }}/>
     )
   }
 }

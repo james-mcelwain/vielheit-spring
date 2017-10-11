@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Form, Input, Button } from 'antd'
-import { FormComponentProps } from "antd/lib/form/Form";
+import { FormComponentProps } from 'antd/lib/form/Form'
 import { AbstractionType } from '../modules/editor'
 
 interface AbstractionTypeFormProps {
@@ -26,7 +26,7 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
   }
 
   public render() {
-    const {getFieldDecorator} = this.props.form
+    const { getFieldDecorator } = this.props.form
 
     const formItemLayout = {
       labelCol: {
@@ -59,8 +59,8 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
             initialValue: this.props.model.type,
             rules: [{
               required: true,
-              message: 'required'
-            }]
+              message: 'required',
+            }],
           })(<Input placeholder="type"/>)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="Description">
@@ -68,8 +68,8 @@ class AbstractionTypeForm extends React.Component<Props, {}> {
             initialValue: this.props.model.description,
             rules: [{
               required: true,
-              message: 'required'
-            }]
+              message: 'required',
+            }],
           })(<Input placeholder="description"/>)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>

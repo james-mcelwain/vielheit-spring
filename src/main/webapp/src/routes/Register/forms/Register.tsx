@@ -1,21 +1,21 @@
-import {Button, Form, Input, Select} from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 import * as React from 'react'
-import {RegisterUserRequest} from '../modules/register'
+import { RegisterUserRequest } from '../modules/register'
 import SyntheticEvent = React.SyntheticEvent
 
 const Option = Select.Option
 
 class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
-  public getInitialState() {
-    return {
-      passwordDirty: false,
-    }
+  public state = {
+    passwordDirty: false,
   }
+
   public isPristine() {
     const fields = ['firstName', 'lastName', 'emailAddress', 'password', 'confirm']
     const fieldVals = fields.map(this.props.form.getFieldValue)
-    return !fieldVals.every((x) => x !== void 1)
+    return !fieldVals.every((x) => x !== void 0)
   }
+
   public handleSubmit(e: SyntheticEvent<any>) {
     e.preventDefault()
     this.props.form.validateFieldsAndScroll((err: Error, values: RegisterUserRequest) => {
@@ -24,10 +24,12 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
       }
     })
   }
+
   public handlePasswordBlur(e: any) {
     const value = e.target.value
-    this.setState({ passwordDirty: this.state.passwordDirty || !!value })
+    this.setState({passwordDirty: this.state.passwordDirty || !!value})
   }
+
   public checkPassword(rule: any, value: any, callback: any) {
     const form = this.props.form
     if (value && value !== form.getFieldValue('password')) {
@@ -36,19 +38,20 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
       callback()
     }
   }
+
   public checkConfirm(rule: any, value: any, callback: any) {
     const form = this.props.form
     if (value && this.state.passwordDirty) {
-      form.validateFields(['confirm'], { force: true })
+      form.validateFields(['confirm'], {force: true})
     }
     callback()
   }
 
   public render() {
-    const { getFieldDecorator } = this.props.form
+    const {getFieldDecorator} = this.props.form
     const formItemLayout = {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
+      labelCol: {span: 6},
+      wrapperCol: {span: 14},
     }
 
     const prefixSelector = getFieldDecorator('prefix', {
@@ -60,24 +63,24 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
     )
     return (
       <Form onSubmit={this.handleSubmit}>
-      <Form.Item
+        <Form.Item
           {...formItemLayout}
           label="First Name"
         >
           {getFieldDecorator('firstName', {
-            rules: [{ required: true, message: 'Please input your first name!' }],
+            rules: [{required: true, message: 'Please input your first name!'}],
           })(
-            <Input />,
+            <Input/>,
           )}
-      </Form.Item>
-      <Form.Item
+        </Form.Item>
+        <Form.Item
           {...formItemLayout}
           label="Last Name"
         >
           {getFieldDecorator('lastName', {
-            rules: [{ required: true, message: 'Please input your last name!' }],
+            rules: [{required: true, message: 'Please input your last name!'}],
           })(
-            <Input />,
+            <Input/>,
           )}
         </Form.Item>
         <Form.Item
@@ -92,7 +95,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               required: true, message: 'Please input your email!',
             }],
           })(
-            <Input />,
+            <Input/>,
           )}
         </Form.Item>
         <Form.Item
@@ -107,7 +110,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               validator: this.checkConfirm,
             }],
           })(
-            <Input type="password" onBlur={this.handlePasswordBlur} />,
+            <Input type="password" onBlur={this.handlePasswordBlur}/>,
           )}
         </Form.Item>
         <Form.Item
@@ -122,7 +125,7 @@ class RegisterForm extends React.Component<any, { passwordDirty: boolean }> {
               validator: this.checkPassword,
             }],
           })(
-            <Input type="password" />,
+            <Input type="password"/>,
           )}
         </Form.Item>
         <Form.Item>

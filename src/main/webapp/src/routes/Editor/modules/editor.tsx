@@ -41,18 +41,26 @@ export class EditorModule extends AbstractModule<EditorState> {
   public FETCH_TYPES_START =
     this.Action('FETCH_TYPES_START', (state) => ({...state, error: null, fetching: true}))
   public FETCH_TYPES_SUCCESS =
-    this.Action<AbstractionType[]>('FETCH_TYPES_SUCCESS', (state, payload) => ({...state, types: payload, fetching: false, error: null}))
+    this.Action<AbstractionType[]>('FETCH_TYPES_SUCCESS', (state, payload) => ({
+      ...state,
+      types: payload,
+      fetching: false,
+      error: null,
+    }))
   public FETCH_TYPES_FAIL =
     this.Action<Error>('FETCH_TYPES_FAIL', (state, payload) => ({...state, error: payload, fetching: false}))
 
-  public EDITOR_SELECT_ITEM = this.Action<number>('EDITOR_SELECT_ITEM', (state, item) => console.log('select', item) || ({ ...state, selectedItem: item}))
+  public EDITOR_SELECT_ITEM = this.Action<number>('EDITOR_SELECT_ITEM', (state, item) => console.log('select', item) || ({
+    ...state,
+    selectedItem: item,
+  }))
 
   @AsyncDispatch
   public fetchUserData() {
     return async (dispatch: Dispatch<EditorState>) => {
       dispatch(this.FETCH_TYPES_START.dispatch())
       try {
-        const types = await http.get('journal/types').then(r => r.data)
+        const types = await http.get('journal/types').then((r) => r.data)
         setTimeout(() => dispatch(this.FETCH_TYPES_SUCCESS.dispatch(types)))
       } catch (e) {
         dispatch(this.FETCH_TYPES_FAIL.dispatch(e))
@@ -81,7 +89,7 @@ export class EditorModule extends AbstractModule<EditorState> {
         //
         // // "new" is always idx 0
         // dispatch(this.EDITOR_SELECT_ITEM.dispatch(idx + 1))
-      } catch(e) {
+      } catch (e) {
         dispatch(this.FETCH_TYPES_FAIL.dispatch(e))
       }
     }
@@ -98,5 +106,5 @@ export default new EditorModule({
   types: [],
   selectedItem: 0,
   fetching: false,
-  form: 'type'
+  form: 'type',
 })

@@ -18,8 +18,8 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
     selectedItemIdx: 0,
     selectedItem: {
       type: '',
-      description: ''
-    }
+      description: '',
+    },
   }
 
   public selectItem(idx: number) {
@@ -27,7 +27,7 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
 
     this.setState({
       selectedItemIdx: idx,
-      selectedItem: idx === -1 ? {type: '', description: ''} : this.props.types[idx]
+      selectedItem: idx === -1 ? {type: '', description: '' } : this.props.types[idx],
     })
   }
 
@@ -39,7 +39,7 @@ export default class AbstractionTypeEditor extends React.Component<AbstractionTy
         <Col span={2}>
           <Menu selectedKeys={[this.state.selectedItemIdx + '']}
                 onClick={({key}) => this.selectItem(+key)}
-                defaultSelectedKeys={["-1"]}>
+                defaultSelectedKeys={['-1']}>
             <Menu.Item key={-1}>
               <Icon type="plus"/>
               <span>New</span>

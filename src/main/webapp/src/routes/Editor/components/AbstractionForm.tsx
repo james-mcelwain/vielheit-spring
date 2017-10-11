@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Form, Input, Button } from 'antd'
-import { FormComponentProps } from "antd/lib/form/Form";
+import { FormComponentProps } from 'antd/lib/form/Form'
 import { Abstraction, AbstractionType } from '../modules/editor'
 import AbstractionTypeSelect from './AbstractionTypeSelect'
 
@@ -61,8 +61,8 @@ class AbstractionForm extends React.Component<Props, {}> {
             initialValue: this.props.model.type,
             rules: [{
               required: true,
-              message: 'required'
-            }]
+              message: 'required',
+            }],
           })(<AbstractionTypeSelect types={this.props.types}/>)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="Type">
@@ -70,8 +70,8 @@ class AbstractionForm extends React.Component<Props, {}> {
             initialValue: this.props.model.type,
             rules: [{
               required: true,
-              message: 'required'
-            }]
+              message: 'required',
+            }],
           })(<Input placeholder="type"/>)}
         </Form.Item>
         <Form.Item {...formItemLayout} label="Description">
@@ -79,8 +79,8 @@ class AbstractionForm extends React.Component<Props, {}> {
             initialValue: this.props.model.description,
             rules: [{
               required: true,
-              message: 'required'
-            }]
+              message: 'required',
+            }],
           })(<Input placeholder="description"/>)}
         </Form.Item>
         <Form.Item {...tailFormItemLayout}>

@@ -23,7 +23,7 @@ export const CoreLayout = ({children}: { children: JSX.Element[] }) => {
     .map((path: string, i) => <Breadcrumb.Item key={i}>{path}</Breadcrumb.Item>)
 
   const menuItems = ['home', 'journal', 'editor', 'profile']
-  const currentLoc = menuItems.find(item => browserHistory.getCurrentLocation().pathname.includes(item)) || 'home'
+  const currentLoc = menuItems.find((item) => browserHistory.getCurrentLocation().pathname.includes(item)) || 'home'
 
   return (
     <Layout className="layout">
