@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    properties:
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+vielheit:
+  db:
+    url: jdbc:postgresql://localhost:5432/vielheit
+    username: vielheit
+    password: vielheit
+  neo4j:
+    uri: bolt://localhost:7687
+    username: neo4j
+    password: vielheit
+
+---
+spring:
+  profiles: test
+vielheit:
+  db:
+    url: jdbc:postgresql://localhost:5432/vielheit_test
+
