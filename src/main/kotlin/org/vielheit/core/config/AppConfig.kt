@@ -10,6 +10,10 @@ import org.springframework.transaction.PlatformTransactionManager
 
 @Configuration
 class AppConfig {
+    companion object {
+        val API_BASE  = "/api"
+    }
+
     @Bean
     fun transactionManager(
             @Qualifier("coreTxManager") coreTxManager: PlatformTransactionManager,

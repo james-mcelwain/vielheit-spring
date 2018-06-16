@@ -12,7 +12,7 @@ class UserRepositoryTest : BaseTest() {
 
     @Test
     fun findByEmail() {
-        val user = User(active = true, firstName = "test", lastName = "user", email = "test@user.com")
+        val user = User(active = true, firstName = "test", lastName = "user", email = "test@user.com", password = "")
         userRepository.save(user)
         val foundUser = userRepository.findByEmail("test@user.com")!!
         Assert.assertEquals("test@user.com", foundUser.email)

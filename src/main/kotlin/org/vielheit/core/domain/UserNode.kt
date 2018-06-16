@@ -5,11 +5,12 @@ import org.neo4j.ogm.annotation.Id
 import org.neo4j.ogm.annotation.Index
 import org.neo4j.ogm.annotation.NodeEntity
 
-@NodeEntity
+@NodeEntity(label = "User")
 class UserNode {
     @Id
     @GeneratedValue
     var id: Long? = null
 
+    @Index(unique = true)
     var userId: Int? = null
 }

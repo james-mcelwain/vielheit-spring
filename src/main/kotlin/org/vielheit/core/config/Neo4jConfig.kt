@@ -35,5 +35,6 @@ class Neo4jConfig(val props: Neo4jProperties) {
     fun configuration(): org.neo4j.ogm.config.Configuration = org.neo4j.ogm.config.Configuration.Builder()
             .uri(props.uri)
             .credentials(props.username, props.password)
+            .autoIndex("assert")
             .build()
 }

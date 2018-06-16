@@ -15,7 +15,7 @@ class UserNodeRepositoryTest : BaseTest() {
 
     @Test
     fun findById() {
-        val user = User(firstName = "test", lastName = "user", email = "test@user.com")
+        val user = User(firstName = "test", lastName = "user", email = "test@user.com", password = "")
         userRepository.save(user)
         val userNode = UserNode()
         userNode.userId = user.id

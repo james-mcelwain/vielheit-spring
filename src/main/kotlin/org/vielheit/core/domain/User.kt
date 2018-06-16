@@ -1,6 +1,5 @@
 package org.vielheit.core.domain
 
-import org.neo4j.ogm.annotation.NodeEntity
 import javax.persistence.*
 
 @Entity
@@ -8,6 +7,7 @@ import javax.persistence.*
 data class User(
         @Id
         @GeneratedValue
+        @Column(name = "userId")
         val id: Int? = null,
 
         @Column(nullable = false)
@@ -20,5 +20,12 @@ data class User(
         val lastName: String,
 
         @Column(nullable = false, unique = true)
-        val email: String
+        val email: String,
+
+        @Column(nullable = false)
+        val password: String,
+
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        @JoinColumn(name = "userId")
+        val roles: Set<UserRole> = emptySet()
 )
