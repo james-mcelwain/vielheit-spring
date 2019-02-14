@@ -4,11 +4,10 @@ import cc.kojeve.vielheit.TestCase
 import cc.kojeve.vielheit.domain.User
 import cc.kojeve.vielheit.util.VielheitException
 import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Test
 
 import org.junit.Assert.*
-import org.mockito.ArgumentMatchers.isNotNull
-import org.mockito.ArgumentMatchers.notNull
 import org.springframework.beans.factory.annotation.Autowired
 
 class UserServiceTest : TestCase() {
@@ -17,16 +16,22 @@ class UserServiceTest : TestCase() {
 
     @Test
     fun save() {
-        var user = User("Bob")
-        user = userService.save(user)
+        var bob = User("Bob")
+        bob = userService.save(bob)
 
-        assertNotNull("User was not saved.", user.id)
+        assertNotNull("User was not saved.", bob.id)
 
         try {
-            userService.save(user)
+            userService.save(bob)
             fail("Saving existing user")
-        } catch(ex: VielheitException) {
+        } catch(ex: VielheitException) { }
+    }
 
-        }
+    @Test
+    fun findByUserId() {
+        val beep = userService.save(User("Beep"))
+
+        assertNotNull("User was not found.", userService.findById(beep.id!!))
+        assertThat("User has wrong name.", userService.findById(beep.id!!)!!.firstName, `is`(equalTo("Beep")))
     }
 }

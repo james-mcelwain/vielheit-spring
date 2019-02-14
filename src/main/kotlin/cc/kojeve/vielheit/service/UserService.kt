@@ -1,7 +1,6 @@
 package cc.kojeve.vielheit.service
 
 import cc.kojeve.vielheit.domain.User
-import cc.kojeve.vielheit.repository.UserRepository
 import cc.kojeve.vielheit.util.VielheitException
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Component
@@ -17,5 +16,10 @@ class UserService(override val repository: CrudRepository<User, Long>): Service<
         }
 
         return repository.save(user)
+    }
+
+
+    fun findById(id: Long): User? {
+        return repository.findById(id).orElse(null)
     }
 }
