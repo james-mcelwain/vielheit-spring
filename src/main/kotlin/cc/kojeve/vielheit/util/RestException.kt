@@ -9,4 +9,8 @@ sealed class RestException: RuntimeException() {
     class NotFound: RestException()
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     class Unauthorized: RestException()
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    class BadRequest: RestException()
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    class InternalServeError: RestException()
 }

@@ -4,5 +4,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ResponseStatus
 import java.lang.RuntimeException
 
-@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-class VielheitException(override val message: String) : RuntimeException()
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+class ValidationException: RuntimeException() {
+}
