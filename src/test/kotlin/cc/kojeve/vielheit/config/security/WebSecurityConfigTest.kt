@@ -25,7 +25,7 @@ class WebSecurityConfigTest : TestCase() {
     @Test
     fun auth() {
 
-        userService.save(RegistrationData("asdf", "asdf"))
+        val user = userService.save(RegistrationData("asdf", "asdf"))
 
         mockMvc.perform(post("/user/auth")
                 .content(""" { "username": "asdf", "password": "asdff" } """)
@@ -33,10 +33,15 @@ class WebSecurityConfigTest : TestCase() {
                 .andDo(::println)
                 .andExpect(status().`is`(403))
 
-        mockMvc.perform(post("/user/auth")
+        val token = mockMvc.perform(post("/user/auth")
                 .content(""" { "username": "asdf", "password": "asdf" } """)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(::println)
+                .andExpect(status().`is`(200))
+                .andReturn().response.contentAsString
+
+        mockMvc.perform(get("/user/${user.id}")
+                .header("Authorization", "Bearer $token"))
                 .andExpect(status().`is`(200))
     }
 }
