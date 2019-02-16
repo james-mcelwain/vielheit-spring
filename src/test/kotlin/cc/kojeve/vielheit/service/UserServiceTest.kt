@@ -24,7 +24,7 @@ class UserServiceTest : TestCase() {
     fun findByUserId() {
         val beep = userService.save(RegistrationData("findByUserId", ""))
 
-        assertNotNull("User was not found.", userService.findById(beep.id!!))
-        assertThat("User has wrong name.", userService.findById(beep.id!!)!!.username, `is`(equalTo(beep.username)))
+        assertNotNull("User was not found.", userService.findById(beep.id))
+        assertThat("User has wrong name.", userService.findById(beep.id)!!.username, `is`(equalTo(beep.username)))
     }
 }

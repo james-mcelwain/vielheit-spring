@@ -9,14 +9,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.stereotype.Component
 import java.time.Instant
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
-@Component
 class JwtTokenProvider(val userDetailsService: UserDetailsService) {
-    fun createToken(username: String, roles: Set<Role>) : String {
+    val secretKey = Base64.getEncoder().encodeToString("iluiluilisdafajflkdskljdfjkldsfkjldsfjlkdfsjkldfsjkldsfjlkdfu-ok".toByteArray())
+
+    fun createToken(username: String, roles: List<Role>) : String {
         val claims = Jwts.claims()
         claims.subject = username
         claims.put("auth", roles.map { SimpleGrantedAuthority(it.authority) })
@@ -28,7 +28,7 @@ class JwtTokenProvider(val userDetailsService: UserDetailsService) {
                 .setClaims(claims)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(expiration))
-                .signWith(SignatureAlgorithm.HS256, "")
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact()
     }
 
@@ -38,7 +38,7 @@ class JwtTokenProvider(val userDetailsService: UserDetailsService) {
     }
 
     fun getUsername(token: String): String {
-        return Jwts.parser().setSigningKey("").parseClaimsJws(token).body.subject;
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).body.subject;
     }
 
     fun resolveToken(req: HttpServletRequest): String? {
@@ -50,14 +50,13 @@ class JwtTokenProvider(val userDetailsService: UserDetailsService) {
 
     fun validateToken(token: String): Boolean {
         try {
-            Jwts.parser().setSigningKey("").parseClaimsJws(token)
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token)
             return true
         } catch (e: JwtException) {
             throw RestException.InternalServeError()
         } catch (e: IllegalArgumentException) {
             throw RestException.InternalServeError()
         }
-
     }
 
 }
