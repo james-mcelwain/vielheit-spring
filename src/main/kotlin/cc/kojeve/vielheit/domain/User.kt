@@ -1,18 +1,18 @@
 package cc.kojeve.vielheit.domain
 
 import cc.kojeve.vielheit.dto.UserData
-import javax.persistence.Column
-import javax.persistence.ElementCollection
-import javax.persistence.Entity
-import javax.persistence.FetchType
+import javax.persistence.*
 
 @Entity
-class User(
+data class User(
         @Column(unique = true)
         val username: String,
         @Column
         val password: String,
         @ElementCollection(fetch = FetchType.EAGER)
-        val roles: List<Role>
-
+        val roles: List<Role> = emptyList(),
+        @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+        val tags: Set<Tag> = emptySet(),
+        @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL])
+        var entries: MutableSet<Entry> = mutableSetOf()
 ) : Domain()

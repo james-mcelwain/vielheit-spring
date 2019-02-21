@@ -24,7 +24,6 @@ class WebSecurityConfigTest : TestCase() {
 
     @Test
     fun auth() {
-
         val user = userService.save(RegistrationData("asdf", "asdf"))
 
         mockMvc.perform(post("/user/auth")

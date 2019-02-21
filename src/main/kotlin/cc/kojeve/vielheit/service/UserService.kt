@@ -38,7 +38,7 @@ class UserService(
     }
 
     fun auth(username: String, password: String): String {
-        val auth = authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
+        authenticationManager.authenticate(UsernamePasswordAuthenticationToken(username, password))
         return jwtTokenProvider.createToken(username, repository.findByUsername<User>(username)?.roles!!)
     }
 
