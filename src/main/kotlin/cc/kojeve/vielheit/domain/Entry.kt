@@ -10,5 +10,7 @@ class Entry(
         @Column
         val title: String,
         @ManyToMany(mappedBy = "entries", cascade = [CascadeType.ALL])
-        val tags: MutableSet<Tag> = mutableSetOf()
+        val tags: MutableSet<Tag> = mutableSetOf(),
+        @ManyToMany(mappedBy = "entries", cascade = [CascadeType.ALL])
+        val relations: MutableSet<Relation> = mutableSetOf()
 ) : Domain()

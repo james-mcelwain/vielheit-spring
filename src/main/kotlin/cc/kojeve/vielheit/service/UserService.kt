@@ -3,15 +3,13 @@ package cc.kojeve.vielheit.service
 import cc.kojeve.vielheit.config.security.JwtTokenProvider
 import cc.kojeve.vielheit.domain.Role
 import cc.kojeve.vielheit.domain.User
-import cc.kojeve.vielheit.dto.RegistrationData
+import cc.kojeve.vielheit.request.RegistrationRequest
 import cc.kojeve.vielheit.dto.UserData
 import cc.kojeve.vielheit.repository.UserRepository
 import cc.kojeve.vielheit.repository.findByUsername
-import cc.kojeve.vielheit.util.VielheitException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Component
-import org.apache.tomcat.jni.User.username
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 
 @Component
@@ -20,11 +18,12 @@ class UserService(
         val passwordEncoder: PasswordEncoder,
         val authenticationManager: AuthenticationManager,
         val jwtTokenProvider: JwtTokenProvider
-): Service<User>() {
-    fun save(registrationData: RegistrationData): UserData {
+) : Service<User, UserData, RegistrationRequest>() {
+
+    override fun save(registrationRequest: RegistrationRequest): UserData {
         val user = User(
-                username = registrationData.username,
-                password = passwordEncoder.encode(registrationData.password),
+                username = registrationRequest.username,
+                password = passwordEncoder.encode(registrationRequest.password),
                 roles = listOf(Role.ADMIN)
         )
 

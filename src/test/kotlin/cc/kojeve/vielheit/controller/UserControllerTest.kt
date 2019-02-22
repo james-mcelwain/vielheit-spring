@@ -1,8 +1,7 @@
 package cc.kojeve.vielheit.controller
 
 import cc.kojeve.vielheit.TestCase
-import cc.kojeve.vielheit.domain.User
-import cc.kojeve.vielheit.dto.RegistrationData
+import cc.kojeve.vielheit.request.RegistrationRequest
 import cc.kojeve.vielheit.service.UserService
 import org.hamcrest.CoreMatchers.containsString
 import org.junit.Test
@@ -25,7 +24,7 @@ class UserControllerTest : TestCase() {
         mockMvc.perform(get("/user/123456789"))
                 .andExpect(status().`is`(404))
 
-        val user = userService.findById(1) ?: userService.save(RegistrationData("Bob", ""))
+        val user = userService.findById(1) ?: userService.save(RegistrationRequest("Bob", ""))
 
         mockMvc.perform(get("/user/1"))
                 .andExpect(status().`is`(200))
