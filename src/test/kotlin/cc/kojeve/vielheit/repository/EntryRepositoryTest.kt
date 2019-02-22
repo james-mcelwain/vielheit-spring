@@ -19,14 +19,11 @@ class EntryRepositoryTest: TestCase() {
     lateinit var userRepository: UserRepository
     @Autowired
     lateinit var tagRepository: TagRepository
-    @PersistenceContext
-    lateinit var entityManager: EntityManager
 
     @Test
-    fun `find entries by tag`() {
+    fun `find entries by user`() {
         val user = userRepository.save(User("1", ""))
         user.entries.add(Entry(user, "entry"))
-        entityManager.flush()
 
         var entries = entryRepository.findByUser(user)
         assertThat(entries.size, `is`(equalTo(1)))
@@ -42,5 +39,18 @@ class EntryRepositoryTest: TestCase() {
 
         entries = entryRepository.findByUser(user)
         assertThat(entries.size, `is`(equalTo(2)))
+    }
+
+    @Test
+    fun `find by user and tag`() {
+        val user = userRepository.save(User("1", ""))
+        val entry = Entry(user, "entry")
+        val tag = Tag(user, "tag")
+        entry.tags.add(tag)
+        tag.entries.add(entry)
+        user.entries.add(entry)
+
+        val entries = entryRepository.findByUserAndTags(user, tag)
+        assertThat(entries.size, `is`(equalTo(1)))
     }
 }

@@ -8,4 +8,6 @@ import javax.transaction.Transactional
 
 interface EntryRepository : CrudRepository<Entry, Long> {
     fun findByUser(user: User): Set<Entry>
+
+    fun findByUserAndTags(user: User, tag: Tag): Set<Entry>
 }

@@ -5,12 +5,11 @@ import javax.persistence.*
 @Table(uniqueConstraints = [UniqueConstraint(columnNames = ["name", "user_id"])])
 @Entity
 class Tag(
-        @Column
-        val name: String
-): Domain() {
-        @ManyToMany(mappedBy = "tags")
-        lateinit var entries: Set<Entry>
         @ManyToOne
         @JoinColumn(name = "user_id")
-        lateinit var user: User
-}
+        val user: User,
+        @Column
+        val name: String,
+        @ManyToMany
+        val entries: MutableSet<Entry> = mutableSetOf()
+): Domain()

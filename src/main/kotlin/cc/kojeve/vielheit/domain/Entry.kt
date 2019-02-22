@@ -9,6 +9,6 @@ class Entry(
         var user: User,
         @Column
         val title: String,
-        @ManyToMany
+        @ManyToMany(mappedBy = "entries", cascade = [CascadeType.ALL])
         val tags: MutableSet<Tag> = mutableSetOf()
 ) : Domain()
