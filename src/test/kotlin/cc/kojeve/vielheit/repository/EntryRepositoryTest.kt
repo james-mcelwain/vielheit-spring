@@ -52,5 +52,6 @@ class EntryRepositoryTest: TestCase() {
 
         val entries = entryRepository.findByUserAndTags(user, tag)
         assertThat(entries.size, `is`(equalTo(1)))
+        assertThat(entries.first().title, `is`(equalTo(entry.title)))
     }
 }

@@ -4,6 +4,7 @@ import cc.kojeve.vielheit.dto.UserData
 import javax.persistence.*
 
 @Entity
+@Table(name="\"user\"")
 data class User(
         @Column(unique = true)
         val username: String,
