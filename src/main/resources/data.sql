@@ -1,2 +1,2 @@
 INSERT INTO public."user" (id, create_date, create_user, update_date, update_user, password, username)
-VALUES (1, current_date, 1, current_date, null, 'foo', 'admin');
+VALUES (666, current_date, 1, current_date, null, '$2a$10$Zx6RLi5glDhxcsyauuv9duYGWkZ2OkMLrbxZMd/evaQTJbCFOGhxi', 'admin');

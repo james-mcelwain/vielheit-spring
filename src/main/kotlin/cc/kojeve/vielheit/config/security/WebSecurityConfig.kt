@@ -4,10 +4,8 @@ import cc.kojeve.vielheit.repository.UserRepository
 import cc.kojeve.vielheit.repository.findByUsername
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Primary
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -17,6 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.session.SessionManagementFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+
 
 @Configuration
 @EnableWebSecurity
@@ -50,8 +55,24 @@ class WebSecurityConfig(val userRepository: UserRepository) : WebSecurityConfigu
         return JwtTokenProvider(userDetailsService)
     }
 
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf("*")
+        configuration.allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+        configuration.allowedHeaders = listOf("authorization", "content-type", "x-auth-token")
+        configuration.exposedHeaders = listOf("x-auth-token")
+        configuration.applyPermitDefaultValues();
+        configuration.allowCredentials = true;// this line is important it sends only specified domain instead of *
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
+    }
+
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
+
+        http.cors()
 
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
