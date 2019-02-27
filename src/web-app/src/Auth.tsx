@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
-import {AppState} from "./AppState";
+import {State} from "./State";
 import {observer} from "mobx-react";
 import Login from './Login'
 
 @observer
-export default class Auth extends Component<{ appState: AppState }> {
+export default class Auth extends Component<{ state: State }> {
 
     render(): React.ReactNode {
-        const { loggedIn } = this.props.appState;
+        const { loggedIn } = this.props.state;
 
         if (loggedIn) {
             return <div>
-                Logged in!
+                {JSON.stringify(this.props.state.user)}
             </div>
         } else {
             return <div>
-                <Login state={this.props.appState}/>
+                <Login state={this.props.state}/>
             </div>
         }
     }

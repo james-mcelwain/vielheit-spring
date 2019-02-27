@@ -1,13 +1,13 @@
 import React, {Component, SyntheticEvent} from 'react';
 import {Button, Form, Icon, Input,} from 'antd';
-import {AppState} from "./AppState";
+import {State} from "./State";
 import {WrappedFormUtils} from "antd/lib/form/Form";
 
 function hasErrors(fieldsError: any): boolean {
     return Object.keys(fieldsError).some(field => !!fieldsError[field]);
 }
 
-class HorizontalLoginForm extends Component<{ state: AppState, form: WrappedFormUtils }> {
+class HorizontalLoginForm extends Component<{ state: State, form: WrappedFormUtils }> {
     componentDidMount() {
         this.props.form.validateFields();
     }
