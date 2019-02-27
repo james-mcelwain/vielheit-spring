@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {AppState} from "./App";
+import {AppState} from "./AppState";
 import {observer} from "mobx-react";
+import Login from './Login'
 
 @observer
 export default class Auth extends Component<{ appState: AppState }> {
@@ -14,7 +15,7 @@ export default class Auth extends Component<{ appState: AppState }> {
             </div>
         } else {
             return <div>
-                logged out :(
+                <Login state={this.props.appState}/>
             </div>
         }
     }

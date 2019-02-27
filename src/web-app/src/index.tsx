@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App, {AppState} from './App';
+import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {AppState} from "./AppState";
 
 ReactDOM.render(<App appState={new AppState()} />, document.getElementById('root'));
 

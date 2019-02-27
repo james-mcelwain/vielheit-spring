@@ -7,7 +7,7 @@
     "@types/node": "11.9.5",
     "@types/react": "16.8.4",
     "@types/react-dom": "16.8.2",
-    "antd": "^3.13.5",
+    "antd": "^3.13.6",
     "axios": "^0.18.0",
     "config": "^3.0.1",
     "mobx": "^5.9.0",
