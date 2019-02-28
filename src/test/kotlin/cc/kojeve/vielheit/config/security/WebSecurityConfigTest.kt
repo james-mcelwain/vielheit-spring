@@ -37,7 +37,7 @@ class WebSecurityConfigTest : TestCase() {
                 .andExpect(status().`is`(200))
                 .andReturn().response.contentAsString
 
-        mockMvc.perform(get("/user/${user.id}")
+        mockMvc.perform(get("/user")
                 .header("Authorization", "Bearer $token"))
                 .andExpect(status().`is`(200))
                 .andExpect(content().string(containsString(user.username)))
