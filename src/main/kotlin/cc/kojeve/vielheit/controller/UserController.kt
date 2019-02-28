@@ -17,9 +17,8 @@ class UserController(val userService: UserService) {
         return AuthResponse(token, user)
     }
 
-    @GetMapping("/{id}")
-    fun getUser(@PathVariable("id") id: Long): Any {
-        val user = userService.findById(id) ?: throw RestException.NotFound()
-        return user
+    @GetMapping
+    fun getUser(): Any {
+        return userService.getUser()
     }
 }

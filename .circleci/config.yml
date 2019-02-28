@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  test-java:
+    docker:
+      - image: maven:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: maven-{{ checksum "pom.xml" }}
+      - run: mvn clean install
+      - save_cache:
+          paths:
+            - ~/.m2
+          key: maven-{{ checksum "pom.xml" }}
+      - run: mvn test

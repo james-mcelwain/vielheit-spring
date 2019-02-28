@@ -6,6 +6,8 @@ export class State {
     public loggedIn = false;
     @observable
     public user: object | null = null;
+    @observable
+    public error: string | null = null;
 
     @computed
     get token() {
@@ -16,8 +18,7 @@ export class State {
         this.loggedIn = !!this.token;
 
         if (this.loggedIn) {
-            const userId = localStorage.getItem("userId");
-            http.get(`/user/${userId}`).then(({ data }) => {
+            http.get(`/user`).then(({ data }) => {
                 this.user = data
             })
         }
@@ -25,6 +26,8 @@ export class State {
 
     @action
     public async logIn(username: String, password: String) {
+        this.resetError();
+
         try {
             const { data } = await http.post('/user/auth', {
                 username,
@@ -32,11 +35,14 @@ export class State {
             });
             const { token, user } = data;
             this.loggedIn = true;
-            this.user = user;
             localStorage.setItem("userId", user.id);
             localStorage.setItem('token', token);
         } catch (error) {
-            console.error(error)
+            this.error = error
         }
+    }
+
+    private resetError() {
+        this.error = null
     }
 }
