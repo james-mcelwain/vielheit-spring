@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test-java:
+  build:
     docker:
       - image: maven:latest
     steps:
