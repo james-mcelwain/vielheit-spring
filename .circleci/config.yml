@@ -12,4 +12,3 @@ jobs:
           paths:
             - ~/.m2
           key: maven-{{ checksum "pom.xml" }}
-      - run: mvn test
