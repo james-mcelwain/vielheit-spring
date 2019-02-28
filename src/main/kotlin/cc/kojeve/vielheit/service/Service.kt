@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository
 import javax.transaction.Transactional
 
 @Transactional
-abstract class Service<DomainT: Domain, DtoT: Dto<DomainT>, SaveReqT: Request> {
+abstract class Service<DomainT : Domain, DtoT : Dto<DomainT>, SaveReqT : Request> {
     abstract protected val repository: CrudRepository<DomainT, Long>
     abstract fun save(req: SaveReqT): DtoT
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest
 class JwtTokenProvider(val userDetailsService: UserDetailsService) {
     val secretKey = Base64.getEncoder().encodeToString("iluiluilisdafajflkdskljdfjkldsfkjldsfjlkdfsjkldfsjkldsfjlkdfu-ok".toByteArray())
 
-    fun createToken(username: String, roles: List<Role>) : String {
+    fun createToken(username: String, roles: List<Role>): String {
         val claims = Jwts.claims()
         claims.subject = username
         claims.put("auth", roles.map { SimpleGrantedAuthority(it.authority) })

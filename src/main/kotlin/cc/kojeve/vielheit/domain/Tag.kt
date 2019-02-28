@@ -19,4 +19,4 @@ class Tag(
         val name: String,
         @ManyToMany
         val entries: MutableSet<Entry> = mutableSetOf()
-): Domain()
+) : Domain()

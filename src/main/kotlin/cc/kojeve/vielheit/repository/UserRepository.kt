@@ -3,7 +3,6 @@ package cc.kojeve.vielheit.repository
 import cc.kojeve.vielheit.domain.Role
 import cc.kojeve.vielheit.domain.User
 import org.springframework.data.repository.CrudRepository
-import javax.transaction.Transactional
 
 interface UserRepository : CrudRepository<User, Long> {
     fun <T> findByUsername(username: String, type: Class<T>): T

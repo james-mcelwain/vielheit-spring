@@ -7,6 +7,6 @@ import org.springframework.boot.runApplication
 class VielheitApplication
 
 fun main(args: Array<String>) {
-	runApplication<VielheitApplication>(*args)
+    runApplication<VielheitApplication>(*args)
 }
 

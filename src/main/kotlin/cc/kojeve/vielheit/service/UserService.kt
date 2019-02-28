@@ -3,17 +3,16 @@ package cc.kojeve.vielheit.service
 import cc.kojeve.vielheit.config.security.JwtTokenProvider
 import cc.kojeve.vielheit.domain.Role
 import cc.kojeve.vielheit.domain.User
-import cc.kojeve.vielheit.request.RegistrationRequest
 import cc.kojeve.vielheit.dto.UserData
 import cc.kojeve.vielheit.repository.UserRepository
 import cc.kojeve.vielheit.repository.findByUsername
+import cc.kojeve.vielheit.request.RegistrationRequest
 import cc.kojeve.vielheit.util.RestException
 import org.springframework.security.authentication.AuthenticationManager
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.stereotype.Component
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import javax.annotation.PostConstruct
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.stereotype.Component
 
 @Component
 class UserService(

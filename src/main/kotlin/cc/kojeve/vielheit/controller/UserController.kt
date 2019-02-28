@@ -2,7 +2,6 @@ package cc.kojeve.vielheit.controller
 
 import cc.kojeve.vielheit.request.AuthRequest
 import cc.kojeve.vielheit.service.UserService
-import cc.kojeve.vielheit.util.RestException
 import org.springframework.web.bind.annotation.*
 
 @RestController

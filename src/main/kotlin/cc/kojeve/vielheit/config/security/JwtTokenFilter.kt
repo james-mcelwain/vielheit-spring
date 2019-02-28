@@ -16,7 +16,7 @@ class JwtTokenFilter(val jwtTokenProvider: JwtTokenProvider) : OncePerRequestFil
                 val auth = jwtTokenProvider.getAuthentication(token)
                 SecurityContextHolder.getContext().authentication = auth
             }
-        } catch(ex: RestException) {
+        } catch (ex: RestException) {
             SecurityContextHolder.clearContext()
             throw ex
         }
